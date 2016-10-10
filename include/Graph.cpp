@@ -1,11 +1,8 @@
 #include "Graph.hpp"
 
-using SERIALIZER = std::lock_guard<std::mutex>;
-#define SERIALIZE SERIALIZER lg(mut_);
-
 Graph::Graph(const Graph& rhs)
 {
-  SERIALIZE;
+  SERIALIZE_WRITES;
   n_ = rhs.n_;
   directed_ = rhs.directed_;
   std::copy(rhs.vertices_.begin(), rhs.vertices_.end(), vertices_.begin());
@@ -26,7 +23,7 @@ Graph::operator=(Graph&& rhs) noexcept
 inline bool
 Graph::isEdge(int v1, int v2) const
 {
-  SERIALIZE;
+  SERIALIZE_READS;
   for(VertexIterator ei = vertices_[v1].begin(),
 	ee = vertices_[v1].end();
       ei != ee;
@@ -41,7 +38,7 @@ Graph::isEdge(int v1, int v2) const
 inline bool
 Graph::isEdge(int v1, int v2, int& w) const
 {
-  SERIALIZE;
+  SERIALIZE_READS;
   for(VertexIterator ei = vertices_[v1].begin(),
 	ee = vertices_[v1].end();
       ei != ee;
@@ -59,7 +56,7 @@ Graph::isEdge(int v1, int v2, int& w) const
 inline int
 Graph::edgeWeight(int v1, int v2) const
 {
-  SERIALIZE;
+  SERIALIZE_READS;
     for(VertexIterator ei = vertices_[v1].begin(),
 	ee = vertices_[v1].end();
       ei != ee;
@@ -79,10 +76,8 @@ Graph::load (std::string filename) {
   // sufficient space
   char buf[4096];
 
-  // read header as a whole line.
   char* i_ = fgets (buf, 4096, fp);
-  
-  // read n and e
+
   int nr = fscanf (fp, "%d %d %s\n", &nv, &ne, buf);
   if (nr != 3) {
     std::cout << "Invalid file format " << filename << "\n";
@@ -103,10 +98,7 @@ Graph::load (std::string filename) {
       vertices_.emplace_back(A<IPair, POOL_SIZE>(ar));
     }
   n_ = nv;
-  
-  // since graph is known to be directed or undirected, we only need
-  // to call addEdge once, since the implementation will do the right
-  // thing.
+
   while (ne-- > 0) {
     int src, tgt, weight;
 
@@ -124,7 +116,7 @@ Graph::load (std::string filename) {
 void
 Graph::addEdge(int v1, int v2, int w)
 {
-  SERIALIZE;
+  // No need to SERIALIZE as we are assuming this is only called on init_()
   vertices_[v1].emplace_front(v2, w);
   
   // undirected have both.
@@ -135,14 +127,14 @@ Graph::addEdge(int v1, int v2, int w)
 void
 Graph::addEdge(int v1, int v2)
 {
-  SERIALIZE;
+  // No need to SERIALLIZE as we are assuming this is only called on init_()
   addEdge(v1, v2, 1);
 }
 
 bool
 Graph::removeEdge(int v1, int v2)
 {
-  SERIALIZE;
+  // No need to SERIALIZE as we are assuming this is only called on init_()
   bool found = false;
   for( VertexIterator ei = vertices_[v1].begin(),
 	 ee = vertices_[v2].end();
@@ -175,7 +167,7 @@ Graph::removeEdge(int v1, int v2)
 bool
 Graph::updateEdgeWeight(int v1, int v2, int w)
 {
-  SERIALIZE;
+  SERIALIZE_WRITES;
   VertexIterator eb = vertices_[v1].before_begin();
   for( VertexIterator ei = vertices_[v1].begin(),
 	 ee = vertices_[v1].end();

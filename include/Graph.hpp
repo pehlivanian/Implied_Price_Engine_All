@@ -13,6 +13,9 @@
 #include <mutex>
 #include <condition_variable>
 
+#include <boost/thread/locks.hpp>
+#include <boost/thread/shared_mutex.hpp>
+
 #include "DataElement.hpp"
 #include "pool_allocator.hpp"
 
@@ -27,6 +30,13 @@ using VertexIterator = VertexList::const_iterator;
 
 enum vertexColor { White, Gray, Black };
 enum edgeType { Tree, Backward, Forward, Cross };
+
+using SERIALIZER_W = boost::lock_guard<boost::shared_mutex>;
+using SERIALIZER_R = boost::shared_lock<boost::shared_mutex>;
+
+#define SERIALIZE_WRITES SERIALIZER_R lg(mut_);
+#define SERIALIZE_READS SERIALIZER_R ls(mut_);
+
 
 class Graph : public DataElement
 {
@@ -51,7 +61,9 @@ public:
   Graph& operator=(const Graph&) = default;
   Graph(Graph&&) noexcept;
   Graph& operator=(Graph&&) noexcept;
-  
+
+  inline void accept(Visitor* v) override { SERIALIZE_READS; v->visit(this); };
+
   inline const size_t numVertices() const { return n_; }
   inline bool directed() const { return directed_; }
   inline bool isEdge(int, int) const;
@@ -63,14 +75,13 @@ public:
   bool removeEdge(int, int);
   bool updateEdgeWeight(int, int, int);
 
-  // Utils
   VertexIterator begin(int u) const { return vertices_[u].begin(); }
   VertexIterator end(int u) const { return vertices_[u].end(); }
 
   void load(std::string filename);			 
 
 protected:
-  mutable std::mutex mut_;
+  mutable boost::shared_mutex mut_;
   int n_;
   bool directed_;
   std::vector<VertexList> vertices_;

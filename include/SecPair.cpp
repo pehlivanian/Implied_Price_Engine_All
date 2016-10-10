@@ -14,7 +14,7 @@ SecPair::check()
 	  }
 	else
 	  {
-	    this->all_legs_[this->b_] = this->mult_ * 1; 
+	    this->all_legs_[this->b_] = this->mult_ * 1;
 	    this->all_legs_[this->f_] = this->mult_ * -1;
 	    int f_tmp = this->f_;
 	    this->f_ = this->b_;
@@ -45,8 +45,9 @@ SecPair::check()
 bool
 SecPair::operator==(const SecPair& rhs) const
 {
-  if ( (this->f_ == rhs.mult_ * rhs.f_) &&
-       (this->b_ == rhs.mult_ * rhs.b_) )
+
+  if ( (this->f_ * this->mult_== rhs.mult_ * rhs.f_) &&
+       (this->b_ * this->mult_== rhs.mult_ * rhs.b_) )
     {
       return true;
     }
@@ -126,6 +127,8 @@ SecPair::operator*(int m)
   SecPair_tmp *= m;
   return SecPair_tmp;
 }
+
+void operator*(int m, SecPair& rhs) { rhs*=m; }
 
 SecPair&
 SecPair::operator-=(const SecPair& rhs)

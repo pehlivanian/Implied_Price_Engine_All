@@ -35,7 +35,7 @@ struct impl<ImpliedEngine<N>>
   using pubVec =    std::vector<std::vector<QuotePublisher>>;
   using graphVec =  std::vector<MarketGraph*>;
 
-  impl() :      n_(N), 
+  impl() :      n_(N),
 	   m_( n_*(n_ - 1)/2),
 	   uPrice_(2),
 	   uSize_(2),
@@ -50,11 +50,11 @@ struct impl<ImpliedEngine<N>>
       uPrice_[i] = std::vector<int>(n_, (i == 0) ? std::numeric_limits<int>::min() : std::numeric_limits<int>::max());
     for(size_t i=0; i<2; ++i)
       uSize_[i] = std::vector<size_t>(n_,0);
-    
+
     for(size_t i=0; i<2; ++i)
       iPrice_[i] = std::vector<int>(n_, (i == 0) ? std::numeric_limits<int>::min() : std::numeric_limits<int>::max());
     for(size_t i=0; i<2; ++i)
-      iSize_[i] = std::vector<size_t>(n_,0); 
+      iSize_[i] = std::vector<size_t>(n_,0);
 
     for(size_t i=0; i<2; ++i)
       quote_publishers_[i] = std::vector<QuotePublisher>(m_ + n_);
@@ -68,7 +68,7 @@ struct impl<ImpliedEngine<N>>
 
   int n_;
   int m_;
-  
+
   std::vector<std::vector<int>>     uPrice_;
   std::vector<std::vector<size_t>> uSize_;
   std::vector<std::vector<int>>     iPrice_;
@@ -83,7 +83,7 @@ struct impl<ImpliedEngine<N>>
 };
 
 template<int N>
-void 
+void
 ImpliedEngine<N>::init_decomposition_()
 {
   const size_t nl = p_->n_;
@@ -113,7 +113,7 @@ ImpliedEngine<N>::init_decomposition_()
 }
 
 template<int N>
-void 
+void
 ImpliedEngine<N>::init_graphs_()
 {
   const size_t nl = p_->n_;  // Number of legs
@@ -121,7 +121,7 @@ ImpliedEngine<N>::init_graphs_()
   for(size_t i=0; i<nl; ++i)
     {
       (p_->G_)[i] = new MarketGraph(nl + 1);
-      
+
       for(size_t j=2; j<=nl; ++j)
 	{
 	  (p_->G_)[i]->addEdge(0,j,0);
@@ -137,7 +137,7 @@ ImpliedEngine<N>::init_graphs_()
 	      (p_->G_)[i]->addEdge(j, k, 0);
 	      (p_->G_)[i]->addEdge(k, j, 0);
 	    }
-	}  
+	}
     }
 }
 
@@ -150,12 +150,12 @@ ImpliedEngine<N>::init_markets_()
   for(int i=0; i<nl; ++i)
     {
       int node_num = 0;
-      
+
       // Add all vertex markets
       (p_->G_)[i]->addVertexProp(node_num++, SecPair(-1, -1, 1));
       (p_->G_)[i]->addVertexProp(node_num++, SecPair(i, -1, 1));
-      
-      auto ib = (p_->all_markets_).begin();  
+
+      auto ib = (p_->all_markets_).begin();
       auto ie = (p_->all_markets_).end();
       while(ib != ie)
 	{
@@ -204,7 +204,7 @@ ImpliedEngine<N>::init_subscribers_()
   const size_t nl = p_->n_;  // Number of legs
 
   // User quotes associated with legs; simple pass-through
-  // Note: these should be first in line when a user quote update 
+  // Note: these should be first in line when a user quote update
   // message arrives; first update user quotes, then compute implieds,
   // then merge the two in the book object.
   for(size_t i=0; i<nl; ++i)
@@ -243,12 +243,12 @@ ImpliedEngine<N>::init_subscribers_()
 	      IBSub IBaskSubscriber = std::make_shared<ImpliedBookSubscriber>(&(p_->iPrice_[1][i]));
 	      IQSubscriber->attach_bid(IBbidSubscriber);
 	      IQSubscriber->attach_ask(IBaskSubscriber);
-	      
+
 	      if (mkt.isPos())
-		(p_->quote_publishers_)[1][ind].attach_ask(IQSubscriber);		  
+		(p_->quote_publishers_)[1][ind].attach_ask(IQSubscriber);
 	      else
 		(p_->quote_publishers_)[0][ind].attach_bid(IQSubscriber);
-	      
+
 	      ++eb;
 	    }
 	}
@@ -260,7 +260,7 @@ void
 ImpliedEngine<N>::init_weights_()
 {
   const size_t nl = p_->n_;  // Number of legs
-  
+
   for(size_t i=0; i<nl; ++i)
     {
       for(size_t j=0; j<(p_->G_)[i]->numVertices(); ++j)
@@ -288,14 +288,14 @@ ImpliedEngine<N>::init_weights_()
 }
 
 template<int N>
-inline void 
+inline void
 ImpliedEngine<N>::publish_bid(const SecPair& mkt, const QuotePublishEvent& pe)
 {
   (p_->quote_publishers_)[0][(p_->Decomposer_)->node_from_market_decomp(mkt)].nudge_bid(pe);
 }
 
 template<int N>
-inline void 
+inline void
 ImpliedEngine<N>::publish_ask(const SecPair& mkt, const QuotePublishEvent& pe)
 {
   (p_->quote_publishers_)[1][(p_->Decomposer_)->node_from_market_decomp(mkt)].nudge_ask(pe);
@@ -314,7 +314,7 @@ ImpliedEngine<N>::write_user_curve()
 {
   std::cout << " : USER PRICES\n";
   std::cout << " : ===========\n";
-  write_curve_(p_->uPrice_);
+  write_curve_(p_->uPrice_, p_->uSize_);
 }
 
 template<int N>
@@ -323,37 +323,44 @@ ImpliedEngine<N>::write_implied_curve()
 {
   std::cout << " : IMPLIED PRICES\n";
   std::cout << " : ==============\n";
-  write_curve_(p_->iPrice_);
-}  
+  write_curve_(p_->iPrice_, p_->iSize_);
+}
 
 template<int N>
 void
-ImpliedEngine<N>::write_curve_(std::vector<std::vector<int>> price)
+ImpliedEngine<N>::write_curve_(std::vector<std::vector<int>> price, std::vector<std::vector<size_t>> size)
   {
     int l = 0;
     std::for_each((price[1]).begin(), (price[1]).end(),
 		  [&l](int a){
-		    std::string s("leg_"); 
+		    std::string s("leg_");
 		    s+=std::to_string(l++);
-		    std::cout << std::setw(8) << s << " "; });
+		    std::cout << std::setw(13) << s << " "; });
     std::cout << std::endl;
-    
+
     l = 0;
     std::for_each((price[1]).begin(), (price[1]).end(),
-		  [&l](int a){std::cout << std::setw(8) << "======== "; });
+		  [&l](int a){std::cout << std::setw(13) << "============= "; });
     std::cout << std::endl;
-    
-    std::for_each((price[1]).begin(), (price[1]).end(),
-		  [](int a){std::cout << std::setw(8) << a << " "; });
+
+      for(size_t i=0; i<price[1].size(); ++i)
+      {
+          std::cout << std::setw(8) << price[1][i] << " x (" << size[1][i] << ")";
+      }
     std::cout << std::endl;
-    std::for_each((price[0]).begin(), (price[0]).end(),
-		  [](int a){std::cout << std::setw(8) << a << " "; });
+      for(size_t i=0; i<price[0].size(); ++i)
+      {
+          std::cout << std::setw(8) << price[0][i] << " x (" << size[0][i] << ")";
+      }
+
     std::cout << std::endl;
-    
+      std::for_each((price[1]).begin(), (price[1]).end(),
+                    [&l](int a){std::cout << std::setw(13) << "============= "; });
+    std::cout << std::endl;
   }
 
 template<int N>
-void 
+void
 ImpliedEngine<N>::init_()
 {
   init_decomposition_();
@@ -388,7 +395,7 @@ ImpliedEngine<N>::init_()
   publish_bid(SecPair(0,2,1), QuotePublishEvent(-200));
   publish_bid(SecPair(2,3,1), QuotePublishEvent(-100));
   publish_bid(SecPair(3,-1,1), QuotePublishEvent(4805));
-  
+
   std::cout << "USER PRICES:\n";
   std::for_each((p_->uPrice_[1]).begin(), (p_->uPrice_[1]).end(),
 		[](int a){std::cout << a << " : "; });
@@ -405,7 +412,7 @@ ImpliedEngine<N>::init_()
 		[](int a){std::cout << a << " : "; });
   std::cout<< "\n";
   // Write out again
-  graph_utils::toDot((p_->G_)[0], std::string("./test_after.dot"), (p_->G_)[0]->get_distance(0), 
+  graph_utils::toDot((p_->G_)[0], std::string("./test_after.dot"), (p_->G_)[0]->get_distance(0),
 		     (p_->G_)[0]->get_predecessor(0));
 #endif
 }
