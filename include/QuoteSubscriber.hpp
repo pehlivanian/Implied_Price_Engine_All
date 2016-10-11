@@ -5,10 +5,11 @@
 
 using Price_Size_Pair = std::pair<int, size_t>;
 
-class QuoteSubscriber : public Subscriber<Price_Size_Pair>
+template<typename T>
+class QuoteSubscriber : public Subscriber<T>
 {
 public:
-  using QuotePublishEvent = Subscriber<Price_Size_Pair>::PublishEvent;
+  using QuotePublishEvent = typename Subscriber<T>::PublishEvent;
   virtual ~QuoteSubscriber() = default;
 
   virtual void update(const QuotePublishEvent&) = 0;

@@ -6,13 +6,13 @@
 #include "BookSubscriber.hpp"
 #include "BookPublisher.hpp"
 
-using BookPublishEvent = BookSubscriber::BookPublishEvent;
+using Price_Size_Pair = std::pair<int, size_t>;
+using BookPublishEvent = BookSubscriber<Price_Size_Pair>::BookPublishEvent ;
 
-template<typename T>
-class ImpliedBookSubscriber : public BookSubscriber
+class ImpliedBookSubscriber : public BookSubscriber<Price_Size_Pair>
 {
 public:
-  ImpliedBookSubscriber(T *k ) : knot_(k) {}
+  ImpliedBookSubscriber(Price_Size_Pair *k ) : knot_(k) {}
 
   void update(const BookPublishEvent& e) override
   {
@@ -21,19 +21,17 @@ public:
 
   void update_bid(const BookPublishEvent& e) override
   {
-    int p = (e.payload_).first;
-    if (p > *knot_)
-      *knot_ = p;
+    if ((e.payload_).first > (*knot_).first)
+      *knot_ = e.payload_;
   }
 
   void update_ask(const BookPublishEvent& e) override
   {
-    int p = (e.payload_).first;
-    if (p < *knot_)
-      *knot_ = p;
+    if ((e.payload_).first < (*knot_).first)
+      *knot_ = e.payload_;
   }
 private:
-  T* knot_;
+  Price_Size_Pair* knot_;
 };
 
 #endif

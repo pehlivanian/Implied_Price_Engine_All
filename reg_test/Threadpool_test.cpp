@@ -58,11 +58,11 @@ int main(int argc, char **argv)
     threadpool pool;
 
     for(size_t i=0; i<6; ++i)
-	bid_results[i] = pool.submit(bid_p(SecPair(i, -1, 1), QUOTE(4504 + i*100, 1), IE)).get();
+	    bid_results[i] = pool.submit(bid_p(SecPair(i, -1, 1), QUOTE(4504 + i*100, 2), IE)).get();
 
     
     for(size_t i=0; i<6; ++i)
-	ask_results[i] = pool.submit(ask_p(SecPair(i, -1, 1), QUOTE(4514 + i*100, 1), IE)).get();
+	    ask_results[i] = pool.submit(ask_p(SecPair(i, -1, 1), QUOTE(4514 + i*100, 3), IE)).get();
 
     int r1 = pool.submit(ask_p( SecPair(1, -1, 1), QUOTE(4610, 1), IE)).get();
     int r2  =pool.submit(ask_p( SecPair(0, 3,  1), QUOTE(-300, 1), IE)).get();

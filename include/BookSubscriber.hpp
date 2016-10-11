@@ -3,12 +3,11 @@
 
 #include "Subscriber.hpp"
 
-using Book_Size_Pair = std::pair<int, size_t>;
-
-class BookSubscriber : public Subscriber<Book_Size_Pair>
+template<typename T>
+class BookSubscriber : public Subscriber<T>
 {
 public:
-  using BookPublishEvent = Subscriber::PublishEvent;
+  using BookPublishEvent = typename Subscriber<T>::PublishEvent;
 
   virtual void update(const BookPublishEvent&) = 0;
 };

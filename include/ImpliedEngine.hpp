@@ -48,7 +48,7 @@ private:
   void init_graphs_();
   void init_subscribers_();
   void init_weights_();
-  void write_curve_(std::vector<std::vector<int>>, std::vector<std::vector<size_t>>);
+  void write_curve_(const std::vector<std::vector<std::pair<int, size_t>>>&);
 
   std::unique_ptr<impl<ImpliedEngine<N>>> p_;
 

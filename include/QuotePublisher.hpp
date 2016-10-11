@@ -14,7 +14,7 @@ class QuotePublisher : public Publisher<Price_Size_Pair>
 {
 public:
 
-  using QuotePublishEvent = QuoteSubscriber::QuotePublishEvent;
+  using QuotePublishEvent = QuoteSubscriber<Price_Size_Pair>::QuotePublishEvent;
 
   QuotePublisher() {}
 protected:
