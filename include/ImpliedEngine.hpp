@@ -39,8 +39,13 @@ public:
 
   void write_user_curve();
   void write_implied_curve();
+    void write_merged_curve();
   void write_dot(int, char*);
-  
+    void write_dot(int, char*, const std::vector<int>&, const std::vector<int>&);
+
+    std::vector<MarketGraph*> get_Graphs() { return p_->G_; }
+    MarketGraph* get_Graph(int i) { return p_->G[i];}
+
 private:
   void init_();
   void init_decomposition_();

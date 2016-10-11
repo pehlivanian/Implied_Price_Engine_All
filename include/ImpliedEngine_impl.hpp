@@ -302,20 +302,66 @@ ImpliedEngine<N>::write_dot(int leg_num, char* filename)
 
 template<int N>
 void
+ImpliedEngine<N>::write_dot(int leg_num, char* filename, const std::vector<int>& d, const std::vector<int>& p)
+{
+    graph_utils::toDot((p_->G_)[leg_num], std::string(filename), d, p);
+}
+
+template<int N>
+void
 ImpliedEngine<N>::write_user_curve()
 {
-  std::cout << " : USER PRICES\n";
-  std::cout << " : ===========\n";
-  write_curve_(p_->uQuote_);
+    std::cout << " : ===========\n";
+    std::cout << " : USER PRICES\n";
+    std::cout << " : ===========\n";
+    write_curve_(p_->uQuote_);
 }
 
 template<int N>
 void
 ImpliedEngine<N>::write_implied_curve()
 {
-  std::cout << " : IMPLIED PRICES\n";
-  std::cout << " : ==============\n";
-  write_curve_(p_->iQuote_);
+    std::cout << " : ==============\n";
+    std::cout << " : IMPLIED PRICES\n";
+    std::cout << " : ==============\n";
+    write_curve_(p_->iQuote_);
+}
+
+template<int N>
+void
+ImpliedEngine<N>::write_merged_curve()
+{
+    std::cout << " : =============\n";
+    std::cout << " : MERGED PRICES\n";
+    std::cout << " : =============\n";
+
+    std::vector<std::vector<std::pair<int, size_t>>> mQuote(2);
+    mQuote[0].resize((p_->iQuote_[0]).size());
+    mQuote[1].resize((p_->iQuote_[0]).size());
+    for(size_t i=0; i<mQuote[0].size(); ++i)
+    {
+        if ( ((p_->uQuote_)[0][i].first) == ((p_->iQuote_)[0][i].first))
+        {
+            auto node = std::make_pair((p_->uQuote_)[0][i].first, (p_->uQuote_)[0][i].second + (p_->iQuote_)[0][i].second);
+            mQuote[0][i] = node;
+        }
+        else if ( ((p_->uQuote_)[0][i].first) > ((p_->iQuote_)[0][i].first))
+            mQuote[0][i] = (p_->uQuote_)[0][i];
+        else
+            mQuote[0][i] = (p_->iQuote_)[0][i];
+
+        if ( ((p_->uQuote_)[1][i].first) == ((p_->iQuote_)[1][i].first))
+        {
+            auto node = std::make_pair((p_->uQuote_)[1][i].first, (p_->uQuote_)[1][i].second + (p_->iQuote_)[1][i].second);
+            mQuote[1][i] = node;
+        }
+        else if ( ((p_->uQuote_)[1][i].first) < ((p_->iQuote_)[1][i].first))
+            mQuote[1][i] = (p_->uQuote_)[1][i];
+        else
+            mQuote[1][i] = (p_->iQuote_)[1][i];
+    }
+
+    write_curve_(mQuote);
 }
 
 template<int N>
@@ -327,24 +373,30 @@ ImpliedEngine<N>::write_curve_(const std::vector<std::vector<std::pair<int, size
 		  [&l](auto a){
 		    std::string s("leg_");
 		    s+=std::to_string(l++);
-		    std::cout << std::setw(13) << s << " "; });
+		    std::cout << std::setw(16) << s << " "; });
     std::cout << std::endl;
 
     l = 0;
     std::for_each((quote[1]).begin(), (quote[1]).end(),
-		  [&l](auto a){std::cout << std::setw(13) << "============= "; });
+		  [&l](auto a){std::cout << std::setw(15) << "================ "; });
     std::cout << std::endl;
 
       std::for_each(quote[1].begin(), quote[1].end(),
-      [](auto a){std::cout << std::setw(8) << a.first << " x (" << a.second << ")";});
+      [](auto a) {
+          std::string s = std::to_string(a.first) + " x (" + std::to_string(a.second) + ")";
+          std::cout << std::setw(16) << s << " ";
+      });
       std::cout << std::endl;
 
       std::for_each(quote[0].begin(), quote[0].end(),
-      [](auto a){std::cout << std::setw(8) << a.first << " x (" << a.second << ")";});
+      [](auto a) {
+          std::string s = std::to_string(a.first) + " x (" + std::to_string(a.second) + ")";
+          std::cout << std::setw(16) << s << " ";
+      });
       std::cout << std::endl;
 
       std::for_each((quote[1]).begin(), (quote[1]).end(),
-                    [&l](auto a){std::cout << std::setw(13) << "============= "; });
+                    [&l](auto a){std::cout << std::setw(15) << "================ "; });
     std::cout << std::endl;
   }
 

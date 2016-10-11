@@ -11,6 +11,7 @@ cat1_visitor::generate(DataElement* d)
   const int n = g->numVertices();
   pred_.assign(n, -1);
   dist_.assign(n, std::numeric_limits<int>::max());
+    size_.assign(n, std::numeric_limits<int>::max());
   dist_[s_] = 0;
 
   // After n-1 times we ccan be guaranteed distances from s to all
@@ -33,10 +34,12 @@ cat1_visitor::generate(DataElement* d)
 	      int v = ci->first;
 	      long newLen = dist_[u];
 	      newLen += (ci->second).first;
+            int newSize = std::min(size_[u], (ci->second).second);
 	      if (newLen < dist_[v])
 		{
 		  if (failOnUpdate) { throw NegativeCycle; }
 		  dist_[v] = newLen;
+            size_[v] = newSize;
 		  pred_[v] = u;
 		  leaveEarly = false;
 		}

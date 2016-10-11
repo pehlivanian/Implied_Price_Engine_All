@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/charles/ClionProjects/Implied_Price_Engine_All/gtest
+CMAKE_SOURCE_DIR = /home/charles/ClionProjects/Implied_Price_Engine_All
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/charles/ClionProjects/Implied_Price_Engine_All/gtest
+CMAKE_BINARY_DIR = /home/charles/ClionProjects/Implied_Price_Engine_All
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,14 +80,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/charles/ClionProjects/Implied_Price_Engine_All/gtest/CMakeFiles /home/charles/ClionProjects/Implied_Price_Engine_All/gtest/CMakeFiles/progress.marks
-	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/charles/ClionProjects/Implied_Price_Engine_All/gtest/CMakeFiles 0
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(CMAKE_COMMAND) -E cmake_progress_start /home/charles/ClionProjects/Implied_Price_Engine_All/CMakeFiles /home/charles/ClionProjects/Implied_Price_Engine_All/gtest/CMakeFiles/progress.marks
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f CMakeFiles/Makefile2 gtest/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/charles/ClionProjects/Implied_Price_Engine_All/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) -f CMakeFiles/Makefile2 clean
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f CMakeFiles/Makefile2 gtest/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,30 +97,32 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f CMakeFiles/Makefile2 gtest/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f CMakeFiles/Makefile2 gtest/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named SecPair_gtest
+# Convenience name for target.
+gtest/CMakeFiles/SecPair_gtest.dir/rule:
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f CMakeFiles/Makefile2 gtest/CMakeFiles/SecPair_gtest.dir/rule
+.PHONY : gtest/CMakeFiles/SecPair_gtest.dir/rule
 
-# Build rule for target.
-SecPair_gtest: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 SecPair_gtest
+# Convenience name for target.
+SecPair_gtest: gtest/CMakeFiles/SecPair_gtest.dir/rule
+
 .PHONY : SecPair_gtest
 
 # fast build rule for target.
 SecPair_gtest/fast:
-	$(MAKE) -f CMakeFiles/SecPair_gtest.dir/build.make CMakeFiles/SecPair_gtest.dir/build
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f gtest/CMakeFiles/SecPair_gtest.dir/build.make gtest/CMakeFiles/SecPair_gtest.dir/build
 .PHONY : SecPair_gtest/fast
 
 SecPair_gtest.o: SecPair_gtest.cpp.o
@@ -129,7 +131,7 @@ SecPair_gtest.o: SecPair_gtest.cpp.o
 
 # target to build an object file
 SecPair_gtest.cpp.o:
-	$(MAKE) -f CMakeFiles/SecPair_gtest.dir/build.make CMakeFiles/SecPair_gtest.dir/SecPair_gtest.cpp.o
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f gtest/CMakeFiles/SecPair_gtest.dir/build.make gtest/CMakeFiles/SecPair_gtest.dir/SecPair_gtest.cpp.o
 .PHONY : SecPair_gtest.cpp.o
 
 SecPair_gtest.i: SecPair_gtest.cpp.i
@@ -138,7 +140,7 @@ SecPair_gtest.i: SecPair_gtest.cpp.i
 
 # target to preprocess a source file
 SecPair_gtest.cpp.i:
-	$(MAKE) -f CMakeFiles/SecPair_gtest.dir/build.make CMakeFiles/SecPair_gtest.dir/SecPair_gtest.cpp.i
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f gtest/CMakeFiles/SecPair_gtest.dir/build.make gtest/CMakeFiles/SecPair_gtest.dir/SecPair_gtest.cpp.i
 .PHONY : SecPair_gtest.cpp.i
 
 SecPair_gtest.s: SecPair_gtest.cpp.s
@@ -147,7 +149,7 @@ SecPair_gtest.s: SecPair_gtest.cpp.s
 
 # target to generate assembly for a file
 SecPair_gtest.cpp.s:
-	$(MAKE) -f CMakeFiles/SecPair_gtest.dir/build.make CMakeFiles/SecPair_gtest.dir/SecPair_gtest.cpp.s
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f gtest/CMakeFiles/SecPair_gtest.dir/build.make gtest/CMakeFiles/SecPair_gtest.dir/SecPair_gtest.cpp.s
 .PHONY : SecPair_gtest.cpp.s
 
 # Help Target
@@ -173,6 +175,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

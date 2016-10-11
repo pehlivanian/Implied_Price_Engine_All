@@ -1,5 +1,5 @@
-#ifndef __DIJKSTRATEST_H__
-#define __DIJKSTRATEST_H__
+#ifndef __CAT2_VISITOR_H__
+#define __CAT2_VISITOR_H__
 
 #include <stdio.h>
 #include <string.h>
@@ -16,6 +16,6 @@
 #include "Graph.hpp"
 #include "Graph_utils.hpp"
 #include "BinaryHeap.hpp"
-#include "dijkstra_visitor.hpp"
+#include "cat2_visitor.hpp"
 
 #endif

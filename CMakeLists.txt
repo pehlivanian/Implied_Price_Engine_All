@@ -11,5 +11,6 @@ set(warnings "-Wall -Wparenthesis -Wno-unused-variable -Wno-sign-compare ")
 
 
 add_subdirectory(include)
+add_subdirectory(Timed_examples)
 add_subdirectory(reg_test)
-# add_subdirectory(gtest)
+add_subdirectory(gtest)

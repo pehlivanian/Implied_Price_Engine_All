@@ -69,7 +69,7 @@ public:
     {
       int src, tgt, weight;
       int nr = fscanf(fp, "%d,%d,%d\n", &src, &tgt, &weight);
-      assert(nr == 1);
+      assert(nr > 0);
       edges[edge_count] = std::make_pair(src, tgt);
       weights[edge_count] = weight;
       edge_count++;
