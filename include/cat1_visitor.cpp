@@ -32,7 +32,7 @@ cat1_visitor::generate(DataElement* d)
 	    {
 	      int v = ci->first;
 	      long newLen = dist_[u];
-	      newLen += ci->second;
+	      newLen += (ci->second).first;
 	      if (newLen < dist_[v])
 		{
 		  if (failOnUpdate) { throw NegativeCycle; }

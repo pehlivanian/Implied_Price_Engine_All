@@ -3,7 +3,9 @@
 
 #include "Subscriber.hpp"
 
-class BookSubscriber : public Subscriber<int>
+using Book_Size_Pair = std::pair<int, size_t>;
+
+class BookSubscriber : public Subscriber<Book_Size_Pair>
 {
 public:
   using BookPublishEvent = Subscriber::PublishEvent;

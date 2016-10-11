@@ -8,7 +8,9 @@
 #include "QuoteSubscriber.hpp"
 #include "MarketGraph.hpp"
 
-class QuotePublisher : public Publisher<int>
+using Price_Size_Pair = std::pair<int, size_t>;
+
+class QuotePublisher : public Publisher<Price_Size_Pair>
 {
 public:
 

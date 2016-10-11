@@ -77,8 +77,8 @@ struct impl<ImpliedEngine<N>>
   std::vector<MarketGraph*> G_;
 
   std::vector<std::vector<QuotePublisher>>      quote_publishers_;
-  std::unique_ptr<Decomposer>      Decomposer_;
-  std::list<SecPair>               all_markets_;
+  std::unique_ptr<Decomposer>                   Decomposer_;
+  std::list<SecPair>                            all_markets_;
 
 };
 
@@ -124,18 +124,18 @@ ImpliedEngine<N>::init_graphs_()
 
       for(size_t j=2; j<=nl; ++j)
 	{
-	  (p_->G_)[i]->addEdge(0,j,0);
-	  (p_->G_)[i]->addEdge(j,0,0);
-	  (p_->G_)[i]->addEdge(j,1,0);
-	  (p_->G_)[i]->addEdge(1,j,0);
+	  (p_->G_)[i]->addEdge(0, j, 0, 0);
+	  (p_->G_)[i]->addEdge(j, 0, 0, 0);
+	  (p_->G_)[i]->addEdge(j, 1, 0, 0);
+	  (p_->G_)[i]->addEdge(1, j, 0, 0);
 	}
 
       for(size_t j=2; j<=nl; ++j)
 	{
 	  for(size_t k=j+1; k<=nl; ++k)
 	    {
-	      (p_->G_)[i]->addEdge(j, k, 0);
-	      (p_->G_)[i]->addEdge(k, j, 0);
+	      (p_->G_)[i]->addEdge(j, k, 0, 0);
+	      (p_->G_)[i]->addEdge(k, j, 0, 0);
 	    }
 	}
     }
@@ -275,11 +275,11 @@ ImpliedEngine<N>::init_weights_()
 	      SecPair mkt = eb->second;
 	      if (mkt.isPos())
 		{
-		  (p_->G_)[i]->updateEdgeWeight(v1, v2, large_int);
+		  (p_->G_)[i]->updateEdgeWeight(v1, v2, large_int, 0);
 		}
 	      else
 		{
-		  (p_->G_)[i]->updateEdgeWeight(v1, v2, small_int);
+		  (p_->G_)[i]->updateEdgeWeight(v1, v2, small_int, 0);
 		}
 	      ++eb;
 	    }

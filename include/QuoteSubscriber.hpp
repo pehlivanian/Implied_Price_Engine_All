@@ -3,10 +3,12 @@
 
 #include "Subscriber.hpp"
 
-class QuoteSubscriber : public Subscriber<int>
+using Price_Size_Pair = std::pair<int, size_t>;
+
+class QuoteSubscriber : public Subscriber<Price_Size_Pair>
 {
 public:
-  using QuotePublishEvent = Subscriber::PublishEvent;
+  using QuotePublishEvent = Subscriber<Price_Size_Pair>::PublishEvent;
   virtual ~QuoteSubscriber() = default;
 
   virtual void update(const QuotePublishEvent&) = 0;

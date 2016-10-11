@@ -20,14 +20,14 @@ public:
 
   void update_bid(const BookPublishEvent& e) override
   {
-    int p = e.payload_;
+    int p = (e.payload_).first;
     if (p > *knot_)
       *knot_ = p;
   }
 
   void update_ask(const BookPublishEvent& e) override
   {
-    int p = e.payload_;
+    int p = (e.payload_).first;
     if (p < *knot_)
       *knot_ = p;
   }
