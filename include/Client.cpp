@@ -31,7 +31,7 @@ Client::receive(uint32_t* num, int fd)
 int
 Client::fill_buf()
 {
-  fprintf(stderr, "Client::fill_buf()\n");
+  // fprintf(stderr, "Client::fill_buf()\n");
     int sockfd = 0, n = 0;
     struct sockaddr_in serv_addr; 
 
@@ -69,7 +69,7 @@ Client::fill_buf()
     {
       printf("\n Read error \n");
       return 2;
-    } 
+    }
 
     // fprintf(stderr, "BYTES READ: %d\n", bytes_read);
     // fprintf(stderr, "%s", recvBuff_);
@@ -79,12 +79,43 @@ Client::fill_buf()
 }
 
 int
-ParseDecorator::fill_buf()
+PublishDecorator::fill_buf()
+{
+    return comp_->fill_buf();
+}
+
+#if 0
+int
+PublishDecorator::fill_buf()
 {
   int result = comp_->fill_buf();
-  recvBuff_ = new char[sizeof(recvBuff_)];
-  strcpy(recvBuff_, comp_->get_buf());
+
+    recvBuff_ = comp_->get_buf();
+    // printf("PD::Input: %s\n", recvBuff_);
+
+    using namespace std;
+    using namespace rapidjson;
+
+    Document document;
+
+#define QUOTE(A, B) QuotePublishEvent(std::make_pair((A), (B)))
+    string tok;
+    stringstream ss(recvBuff_);
+    while(getline(ss, tok, '\n'))
+    {
+        if (document.Parse(tok.c_str()).HasParseError())
+        {
+            fprintf(stderr, "Parse error!\n");
+            return -1;
+        };
+        assert(document.HasMember("Inst"));
+        if (document.HasMember("bid"))
+            std::cout << "Inst = " << document["Inst"].GetString() << " BID\n";
+        if (document.HasMember("ask"))
+            std::cout << "Inst = " << document["Inst"].GetString() << " ASK\n";
+#undef QUOTE(A, B)
+    }
 
   return result;
 }
-
+#endif

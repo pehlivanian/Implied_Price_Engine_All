@@ -254,6 +254,19 @@ ImpliedEngine_test/fast:
 .PHONY : ImpliedEngine_test/fast
 
 #=============================================================================
+# Target rules for targets named Clienttest
+
+# Build rule for target.
+Clienttest: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Clienttest
+.PHONY : Clienttest
+
+# fast build rule for target.
+Clienttest/fast:
+	$(MAKE) -f reg_test/CMakeFiles/Clienttest.dir/build.make reg_test/CMakeFiles/Clienttest.dir/build
+.PHONY : Clienttest/fast
+
+#=============================================================================
 # Target rules for targets named SecPair_gtest
 
 # Build rule for target.
@@ -285,6 +298,7 @@ help:
 	@echo "... Threadpool_test"
 	@echo "... SecPair_test"
 	@echo "... ImpliedEngine_test"
+	@echo "... Clienttest"
 	@echo "... SecPair_gtest"
 .PHONY : help
 

@@ -56,17 +56,6 @@ CMAKE_BINARY_DIR = /home/charles/ClionProjects/Implied_Price_Engine_All
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -77,6 +66,17 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -154,6 +154,48 @@ ImpliedEngine_test: reg_test/CMakeFiles/ImpliedEngine_test.dir/rule
 ImpliedEngine_test/fast:
 	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f reg_test/CMakeFiles/ImpliedEngine_test.dir/build.make reg_test/CMakeFiles/ImpliedEngine_test.dir/build
 .PHONY : ImpliedEngine_test/fast
+
+# Convenience name for target.
+reg_test/CMakeFiles/Clienttest.dir/rule:
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f CMakeFiles/Makefile2 reg_test/CMakeFiles/Clienttest.dir/rule
+.PHONY : reg_test/CMakeFiles/Clienttest.dir/rule
+
+# Convenience name for target.
+Clienttest: reg_test/CMakeFiles/Clienttest.dir/rule
+
+.PHONY : Clienttest
+
+# fast build rule for target.
+Clienttest/fast:
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f reg_test/CMakeFiles/Clienttest.dir/build.make reg_test/CMakeFiles/Clienttest.dir/build
+.PHONY : Clienttest/fast
+
+Clienttest.o: Clienttest.cpp.o
+
+.PHONY : Clienttest.o
+
+# target to build an object file
+Clienttest.cpp.o:
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f reg_test/CMakeFiles/Clienttest.dir/build.make reg_test/CMakeFiles/Clienttest.dir/Clienttest.cpp.o
+.PHONY : Clienttest.cpp.o
+
+Clienttest.i: Clienttest.cpp.i
+
+.PHONY : Clienttest.i
+
+# target to preprocess a source file
+Clienttest.cpp.i:
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f reg_test/CMakeFiles/Clienttest.dir/build.make reg_test/CMakeFiles/Clienttest.dir/Clienttest.cpp.i
+.PHONY : Clienttest.cpp.i
+
+Clienttest.s: Clienttest.cpp.s
+
+.PHONY : Clienttest.s
+
+# target to generate assembly for a file
+Clienttest.cpp.s:
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f reg_test/CMakeFiles/Clienttest.dir/build.make reg_test/CMakeFiles/Clienttest.dir/Clienttest.cpp.s
+.PHONY : Clienttest.cpp.s
 
 ImpliedEngine_test.o: ImpliedEngine_test.cpp.o
 
@@ -242,11 +284,15 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... edit_cache"
-	@echo "... Threadpool_test"
 	@echo "... rebuild_cache"
+	@echo "... Threadpool_test"
 	@echo "... SecPair_test"
 	@echo "... ImpliedEngine_test"
+	@echo "... edit_cache"
+	@echo "... Clienttest"
+	@echo "... Clienttest.o"
+	@echo "... Clienttest.i"
+	@echo "... Clienttest.s"
 	@echo "... ImpliedEngine_test.o"
 	@echo "... ImpliedEngine_test.i"
 	@echo "... ImpliedEngine_test.s"

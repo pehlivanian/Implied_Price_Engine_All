@@ -21,9 +21,7 @@
 #include "Graph.hpp"
 #include "Graph_utils.hpp"
 #include "MarketGraph.hpp"
-
-template<class T>
-class impl;
+#include "impl.hpp"
 
 template<int N>
 class ImpliedEngine;

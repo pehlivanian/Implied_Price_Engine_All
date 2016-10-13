@@ -6,24 +6,6 @@
 const int large_int =   200000;
 const int small_int =  100000;
 
-template<typename T>
-struct impl
-{
-  T* backpointer;
-};
-
-template<typename S, template <typename> class T>
-struct impl_ST
-{
-  T<S>* backpointer;
-};
-
-template<typename S, typename U, template <typename, typename> class T>
-struct impl_STU
-{
-  T<S,U>* backpointer;
-};
-
 template<int N>
 class ImpliedEngine;
 
@@ -283,14 +265,14 @@ template<int N>
 inline void
 ImpliedEngine<N>::publish_bid(const SecPair& mkt, const QuotePublishEvent& pe)
 {
-  (p_->quote_publishers_)[0][(p_->Decomposer_)->node_from_market_decomp(mkt)].nudge_bid(pe);
+    (p_->quote_publishers_)[0][(p_->Decomposer_)->node_from_market_decomp(mkt)].nudge_bid(pe);
 }
 
 template<int N>
 inline void
 ImpliedEngine<N>::publish_ask(const SecPair& mkt, const QuotePublishEvent& pe)
 {
-  (p_->quote_publishers_)[1][(p_->Decomposer_)->node_from_market_decomp(mkt)].nudge_ask(pe);
+    (p_->quote_publishers_)[1][(p_->Decomposer_)->node_from_market_decomp(mkt)].nudge_ask(pe);
 }
 
 template<int N>
