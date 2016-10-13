@@ -34,7 +34,7 @@ enum edgeType { Tree, Backward, Forward, Cross };
 using SERIALIZER_W = boost::lock_guard<boost::shared_mutex>;
 using SERIALIZER_R = boost::shared_lock<boost::shared_mutex>;
 
-#define SERIALIZE_WRITES SERIALIZER_R lg(mut_);
+#define SERIALIZE_WRITES SERIALIZER_W lg(mut_);
 #define SERIALIZE_READS SERIALIZER_R ls(mut_);
 
 

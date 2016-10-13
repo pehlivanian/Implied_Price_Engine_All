@@ -7,11 +7,13 @@ class ImpliedServer;
 template<int N>
 struct impl<ImpliedServer<N>>
 {
-    impl() :
+    impl(bool process_feed) :
+            process_feed_(process_feed),
             IE_(std::make_unique<ImpliedEngine<N>>()),
             C_(std::make_unique<Client>(8008, (char*)"0.0.0.0")),
             pool_(std::make_unique<threadpool>()) {}
 
+    bool process_feed_;
     std::unique_ptr<ImpliedEngine<N>> IE_;
     std::unique_ptr<Client> C_;
     std::unique_ptr<threadpool> pool_;
@@ -22,7 +24,8 @@ template<int N>
 void
 ImpliedServer<N>::init_()
 {
-    (p_->C_)->fetch();
+    if (p_->process_feed_)
+        (p_->C_)->fetch();
 }
 
 template<int N>

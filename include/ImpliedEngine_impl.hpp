@@ -57,6 +57,36 @@ struct impl<ImpliedEngine<N>>
 };
 
 template<int N>
+Price_Size_Pair
+ImpliedEngine<N>::merge_quote_bid_(int leg)
+{
+    SERIALIZE_READS;
+    Price_Size_Pair uq = (p_->uQuote_)[0][leg];
+    Price_Size_Pair iq = (p_->iQuote_)[0][leg];
+    if (uq.first == iq.first)
+        return Price_Size_Pair(uq.first, uq.second + iq.second);
+    else if (uq.first > iq.first )
+        return uq;
+    else
+        return iq;
+}
+
+template<int N>
+Price_Size_Pair
+ImpliedEngine<N>::merge_quote_ask_(int leg)
+{
+    SERIALIZE_READS;
+    Price_Size_Pair uq = (p_->uQuote_)[1][leg];
+    Price_Size_Pair iq = (p_->iQuote_)[1][leg];
+    if (uq.first == iq.first)
+        return Price_Size_Pair(uq.first, uq.second + iq.second);
+    else if (uq.first < iq.first )
+        return uq;
+    else
+        return iq;
+}
+
+template<int N>
 void
 ImpliedEngine<N>::init_decomposition_()
 {

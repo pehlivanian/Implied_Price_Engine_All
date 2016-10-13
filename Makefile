@@ -124,6 +124,19 @@ IElib/fast:
 .PHONY : IElib/fast
 
 #=============================================================================
+# Target rules for targets named Create_QuoteStream
+
+# Build rule for target.
+Create_QuoteStream: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Create_QuoteStream
+.PHONY : Create_QuoteStream
+
+# fast build rule for target.
+Create_QuoteStream/fast:
+	$(MAKE) -f utils/CMakeFiles/Create_QuoteStream.dir/build.make utils/CMakeFiles/Create_QuoteStream.dir/build
+.PHONY : Create_QuoteStream/fast
+
+#=============================================================================
 # Target rules for targets named mempooltest
 
 # Build rule for target.
@@ -288,6 +301,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... IElib"
+	@echo "... Create_QuoteStream"
 	@echo "... mempooltest"
 	@echo "... grouptest"
 	@echo "... gentest"

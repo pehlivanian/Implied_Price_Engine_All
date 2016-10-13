@@ -159,17 +159,34 @@ SecPair::operator<(const SecPair& rhs) const
 }
 
 SecPair
-SecPair::abs()
+SecPair::abs() const
 {
   return SecPair(this->f_, this->b_, 1);
 }
 
 bool
-SecPair::isPos()
+SecPair::isPos() const
 {
   return (this->abs() == *this);
 }
 
+bool
+SecPair::isLeg() const
+{
+    return ((this->f_ >= 0) && (this->b_ < 0));
+}
+
+int
+SecPair::leg0() const
+{
+    return this->f_;
+}
+
+int
+SecPair::leg1() const
+{
+    return this->b_;
+}
 
 std::ostream& operator<<(std::ostream& out, const SecPair& p)
 {
