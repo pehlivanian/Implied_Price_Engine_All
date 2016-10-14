@@ -150,6 +150,7 @@ QuoteSimulator<N>::create_quotes_()
     std::uniform_int_distribution<std::mt19937::result_type> dist_bid_ask(0,1);
     std::uniform_int_distribution<std::mt19937::result_type> dist_inst_type(0,2);
     std::uniform_int_distribution<std::mt19937::result_type> dist_inc(-1,1);
+    std::uniform_int_distribution<std::mt19937::result_type> dist_size(1,25);
     std::uniform_int_distribution<std::mt19937::result_type> dist_price_move_type(0,2);
 
 #define QUOTE(A, B) QuotePublishEvent(std::make_pair((A), (B)))
@@ -159,6 +160,7 @@ QuoteSimulator<N>::create_quotes_()
         int bid_ask = dist_bid_ask(gen);
         int inst_type = dist_inst_type(gen);
         int price_move_type = dist_price_move_type(gen);
+        size_t sz = static_cast<size_t>(dist_size(gen));
         int inc = dist_inc(gen);
 
         int curr_price;
@@ -171,7 +173,7 @@ QuoteSimulator<N>::create_quotes_()
                 case quote::QUOTE_TYPE::Bid :
                     curr_price = move_bid_price(curr_bid0, curr_ask0, price_move_type, 0);
                     try {
-                        IS_.publish_bid(SecPair(leg_num, -1, 1), QUOTE(curr_price, 11));
+                        IS_.publish_bid(SecPair(leg_num, -1, 1), QUOTE(curr_price, sz));
                     }
                     catch(...)
                     {
@@ -182,7 +184,7 @@ QuoteSimulator<N>::create_quotes_()
                 case quote::QUOTE_TYPE::Ask :
                     curr_price = move_ask_price(curr_bid0, curr_ask0, price_move_type, 0);
                     try {
-                        IS_.publish_ask(SecPair(leg_num, -1, 1), QUOTE(curr_price, 11));
+                        IS_.publish_ask(SecPair(leg_num, -1, 1), QUOTE(curr_price, sz));
                     }
                     catch(...)
                     {
@@ -196,7 +198,7 @@ QuoteSimulator<N>::create_quotes_()
 //                      << curr_bid0 << " : " << curr_ask0 << " : "
 //                      << move_bid_price << " ::: " << curr_price << "\n";
             if (!mkts_locked)
-                quotes_[quote_count++] = quote(t, SecPair(leg_num, -1, 1), curr_price, 11);
+                quotes_[quote_count++] = quote(t, SecPair(leg_num, -1, 1), curr_price, sz);
         }
         else
         {
@@ -210,7 +212,7 @@ QuoteSimulator<N>::create_quotes_()
                 case quote::QUOTE_TYPE::Bid :
                     curr_price = move_bid_price(mid - leg_num - (leg1_num-leg_num-1), mid, price_move_type, inc);
                     try {
-                        IS_.publish_bid(SecPair(leg_num, leg1_num, 1), QUOTE(curr_price, 11));
+                        IS_.publish_bid(SecPair(leg_num, leg1_num, 1), QUOTE(curr_price, sz));
                     }
                     catch(...)
                     {
@@ -221,7 +223,7 @@ QuoteSimulator<N>::create_quotes_()
                 case quote::QUOTE_TYPE::Ask :
                     curr_price = move_ask_price(mid - leg_num - (leg1_num-leg_num-1), mid, price_move_type, inc);
                     try {
-                        IS_.publish_ask(SecPair(leg_num, leg1_num, 1), QUOTE(curr_price, 11));
+                        IS_.publish_ask(SecPair(leg_num, leg1_num, 1), QUOTE(curr_price, sz));
                     }
                     catch(...)
                     {
@@ -235,7 +237,7 @@ QuoteSimulator<N>::create_quotes_()
 //                      << curr_bid0-curr_ask1 << " : " << curr_ask0-curr_bid1 << " : "
 //                      << curr_price << "\n";
             if (!mkts_locked)
-                quotes_[quote_count++] = quote(t, SecPair(leg_num, leg1_num, 1), curr_price, 11);
+                quotes_[quote_count++] = quote(t, SecPair(leg_num, leg1_num, 1), curr_price, sz);
         }
     }
 #undef QUOTE
