@@ -78,6 +78,8 @@ ImpliedServer<N>::process()
                 pc = document["bid"].GetInt();
                 sz = static_cast<size_t>(document["size"].GetInt());
             }
+            // Timed multi-threaded version call
+            auto fn = [this,&sp,&pc,&sz]() mutable { (p_->IE_)->publish_bid(sp, QUOTE(pc,sz)); return 0; };
             // Multi-threaded version call
             auto fn = [this,&sp,&pc,&sz]() mutable { (p_->IE_)->publish_bid(sp, QUOTE(pc,sz)); return 0; };
             // Submit to pool

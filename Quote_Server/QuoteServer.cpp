@@ -41,14 +41,10 @@ int main(int argc, char **argv)
   char* filename = (char *)"serveme.txt";
   size_t ret_in;
 
-  size_t f_size = file_size(filename);
-  char sendBuff[f_size];
-
   time_t ticks;
 
   listenfd = socket(AF_INET, SOCK_STREAM, 0);
   memset(&serv_addr, '0', sizeof(serv_addr));
-  memset(sendBuff, '0', sizeof(sendBuff));
 
   serv_addr.sin_family = AF_INET;
   serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -61,6 +57,12 @@ int main(int argc, char **argv)
   while(true)
     {
       connfd = accept(listenfd, (struct sockaddr*)NULL, NULL);
+
+        // Do this everytime in a tight loop so that we
+        // can avoid shutdown when underlygin file changes
+      size_t f_size = file_size(filename);
+      char sendBuff[f_size];
+      memset(sendBuff, '0', sizeof(sendBuff));
 
       size_t input_fd = open(filename, O_RDONLY);
       if (input_fd == -1)
