@@ -62,7 +62,7 @@ int main(int argc, char **argv)
         // can avoid shutdown when underlygin file changes
       size_t f_size = file_size(filename);
       char sendBuff[f_size];
-      memset(sendBuff, '0', sizeof(sendBuff));
+      memset(sendBuff, '0', f_size);
 
       size_t input_fd = open(filename, O_RDONLY);
       if (input_fd == -1)

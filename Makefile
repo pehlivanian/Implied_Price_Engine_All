@@ -228,6 +228,32 @@ CLlegtest/fast:
 .PHONY : CLlegtest/fast
 
 #=============================================================================
+# Target rules for targets named QuoteClient
+
+# Build rule for target.
+QuoteClient: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 QuoteClient
+.PHONY : QuoteClient
+
+# fast build rule for target.
+QuoteClient/fast:
+	$(MAKE) -f Quote_Server/CMakeFiles/QuoteClient.dir/build.make Quote_Server/CMakeFiles/QuoteClient.dir/build
+.PHONY : QuoteClient/fast
+
+#=============================================================================
+# Target rules for targets named QuoteServer
+
+# Build rule for target.
+QuoteServer: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 QuoteServer
+.PHONY : QuoteServer
+
+# fast build rule for target.
+QuoteServer/fast:
+	$(MAKE) -f Quote_Server/CMakeFiles/QuoteServer.dir/build.make Quote_Server/CMakeFiles/QuoteServer.dir/build
+.PHONY : QuoteServer/fast
+
+#=============================================================================
 # Target rules for targets named Threadpool_test
 
 # Build rule for target.
@@ -309,6 +335,8 @@ help:
 	@echo "... cat2_visitortest"
 	@echo "... allocatortest"
 	@echo "... CLlegtest"
+	@echo "... QuoteClient"
+	@echo "... QuoteServer"
 	@echo "... Threadpool_test"
 	@echo "... SecPair_test"
 	@echo "... ImpliedEngine_test"

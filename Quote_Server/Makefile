@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/charles/ClionProjects/Implied_Price_Engine_All/Quote_Server
+CMAKE_SOURCE_DIR = /home/charles/ClionProjects/Implied_Price_Engine_All
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/charles/ClionProjects/Implied_Price_Engine_All/Quote_Server
+CMAKE_BINARY_DIR = /home/charles/ClionProjects/Implied_Price_Engine_All
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,14 +80,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/charles/ClionProjects/Implied_Price_Engine_All/Quote_Server/CMakeFiles /home/charles/ClionProjects/Implied_Price_Engine_All/Quote_Server/CMakeFiles/progress.marks
-	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/charles/ClionProjects/Implied_Price_Engine_All/Quote_Server/CMakeFiles 0
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(CMAKE_COMMAND) -E cmake_progress_start /home/charles/ClionProjects/Implied_Price_Engine_All/CMakeFiles /home/charles/ClionProjects/Implied_Price_Engine_All/Quote_Server/CMakeFiles/progress.marks
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f CMakeFiles/Makefile2 Quote_Server/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/charles/ClionProjects/Implied_Price_Engine_All/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) -f CMakeFiles/Makefile2 clean
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f CMakeFiles/Makefile2 Quote_Server/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,43 +97,47 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f CMakeFiles/Makefile2 Quote_Server/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f CMakeFiles/Makefile2 Quote_Server/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named QuoteClient
+# Convenience name for target.
+Quote_Server/CMakeFiles/QuoteClient.dir/rule:
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f CMakeFiles/Makefile2 Quote_Server/CMakeFiles/QuoteClient.dir/rule
+.PHONY : Quote_Server/CMakeFiles/QuoteClient.dir/rule
 
-# Build rule for target.
-QuoteClient: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 QuoteClient
+# Convenience name for target.
+QuoteClient: Quote_Server/CMakeFiles/QuoteClient.dir/rule
+
 .PHONY : QuoteClient
 
 # fast build rule for target.
 QuoteClient/fast:
-	$(MAKE) -f CMakeFiles/QuoteClient.dir/build.make CMakeFiles/QuoteClient.dir/build
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f Quote_Server/CMakeFiles/QuoteClient.dir/build.make Quote_Server/CMakeFiles/QuoteClient.dir/build
 .PHONY : QuoteClient/fast
 
-#=============================================================================
-# Target rules for targets named QuoteServer
+# Convenience name for target.
+Quote_Server/CMakeFiles/QuoteServer.dir/rule:
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f CMakeFiles/Makefile2 Quote_Server/CMakeFiles/QuoteServer.dir/rule
+.PHONY : Quote_Server/CMakeFiles/QuoteServer.dir/rule
 
-# Build rule for target.
-QuoteServer: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 QuoteServer
+# Convenience name for target.
+QuoteServer: Quote_Server/CMakeFiles/QuoteServer.dir/rule
+
 .PHONY : QuoteServer
 
 # fast build rule for target.
 QuoteServer/fast:
-	$(MAKE) -f CMakeFiles/QuoteServer.dir/build.make CMakeFiles/QuoteServer.dir/build
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f Quote_Server/CMakeFiles/QuoteServer.dir/build.make Quote_Server/CMakeFiles/QuoteServer.dir/build
 .PHONY : QuoteServer/fast
 
 QuoteClient.o: QuoteClient.cpp.o
@@ -142,7 +146,7 @@ QuoteClient.o: QuoteClient.cpp.o
 
 # target to build an object file
 QuoteClient.cpp.o:
-	$(MAKE) -f CMakeFiles/QuoteClient.dir/build.make CMakeFiles/QuoteClient.dir/QuoteClient.cpp.o
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f Quote_Server/CMakeFiles/QuoteClient.dir/build.make Quote_Server/CMakeFiles/QuoteClient.dir/QuoteClient.cpp.o
 .PHONY : QuoteClient.cpp.o
 
 QuoteClient.i: QuoteClient.cpp.i
@@ -151,7 +155,7 @@ QuoteClient.i: QuoteClient.cpp.i
 
 # target to preprocess a source file
 QuoteClient.cpp.i:
-	$(MAKE) -f CMakeFiles/QuoteClient.dir/build.make CMakeFiles/QuoteClient.dir/QuoteClient.cpp.i
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f Quote_Server/CMakeFiles/QuoteClient.dir/build.make Quote_Server/CMakeFiles/QuoteClient.dir/QuoteClient.cpp.i
 .PHONY : QuoteClient.cpp.i
 
 QuoteClient.s: QuoteClient.cpp.s
@@ -160,7 +164,7 @@ QuoteClient.s: QuoteClient.cpp.s
 
 # target to generate assembly for a file
 QuoteClient.cpp.s:
-	$(MAKE) -f CMakeFiles/QuoteClient.dir/build.make CMakeFiles/QuoteClient.dir/QuoteClient.cpp.s
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f Quote_Server/CMakeFiles/QuoteClient.dir/build.make Quote_Server/CMakeFiles/QuoteClient.dir/QuoteClient.cpp.s
 .PHONY : QuoteClient.cpp.s
 
 QuoteServer.o: QuoteServer.cpp.o
@@ -169,7 +173,7 @@ QuoteServer.o: QuoteServer.cpp.o
 
 # target to build an object file
 QuoteServer.cpp.o:
-	$(MAKE) -f CMakeFiles/QuoteServer.dir/build.make CMakeFiles/QuoteServer.dir/QuoteServer.cpp.o
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f Quote_Server/CMakeFiles/QuoteServer.dir/build.make Quote_Server/CMakeFiles/QuoteServer.dir/QuoteServer.cpp.o
 .PHONY : QuoteServer.cpp.o
 
 QuoteServer.i: QuoteServer.cpp.i
@@ -178,7 +182,7 @@ QuoteServer.i: QuoteServer.cpp.i
 
 # target to preprocess a source file
 QuoteServer.cpp.i:
-	$(MAKE) -f CMakeFiles/QuoteServer.dir/build.make CMakeFiles/QuoteServer.dir/QuoteServer.cpp.i
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f Quote_Server/CMakeFiles/QuoteServer.dir/build.make Quote_Server/CMakeFiles/QuoteServer.dir/QuoteServer.cpp.i
 .PHONY : QuoteServer.cpp.i
 
 QuoteServer.s: QuoteServer.cpp.s
@@ -187,7 +191,7 @@ QuoteServer.s: QuoteServer.cpp.s
 
 # target to generate assembly for a file
 QuoteServer.cpp.s:
-	$(MAKE) -f CMakeFiles/QuoteServer.dir/build.make CMakeFiles/QuoteServer.dir/QuoteServer.cpp.s
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(MAKE) -f Quote_Server/CMakeFiles/QuoteServer.dir/build.make Quote_Server/CMakeFiles/QuoteServer.dir/QuoteServer.cpp.s
 .PHONY : QuoteServer.cpp.s
 
 # Help Target
@@ -217,6 +221,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/charles/ClionProjects/Implied_Price_Engine_All && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

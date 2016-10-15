@@ -221,7 +221,7 @@ QuoteSimulator<N>::create_quotes_()
                     }
                     break;
                 case quote::QUOTE_TYPE::Ask :
-                    curr_price = move_ask_price(mid - leg_num - (leg1_num-leg_num-1), mid, price_move_type, inc);
+                    curr_price = move_ask_price(mid,  mid + leg_num + (leg1_num-leg_num-1), price_move_type, inc);
                     try {
                         IS_.publish_ask(SecPair(leg_num, leg1_num, 1), QUOTE(curr_price, sz));
                     }
