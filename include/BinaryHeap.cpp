@@ -59,7 +59,6 @@ void
 BinaryHeap::insert(int id, int priority)
 {
     int i;
-
     
     i = ++n_;
     while (i > 1) {

@@ -18,7 +18,7 @@ cat2_visitor::generate(DataElement* d)
   // is smallest. Recompute potential new paths to update all shotest paths.
   while(!pq.isEmpty())
     {
-      int u = pq.smallest();
+      int u = pq.smallest(); // this also pops
 
       Graph::Graph_iterator ci = g->begin(u);
       Graph::Graph_iterator last = g->end(u);

@@ -24,7 +24,7 @@ inline bool
 Graph::isEdge(int v1, int v2) const
 {
   SERIALIZE_READS;
-  for(VertexIterator ei = vertices_[v1].begin(),
+  for(CVertexIterator ei = vertices_[v1].begin(),
 	ee = vertices_[v1].end();
       ei != ee;
       ++ei)
@@ -39,7 +39,7 @@ inline bool
 Graph::isEdge(int v1, int v2, std::pair<int,size_t>& w) const
 {
   SERIALIZE_READS;
-  for(VertexIterator ei = vertices_[v1].begin(),
+  for(CVertexIterator ei = vertices_[v1].begin(),
 	ee = vertices_[v1].end();
       ei != ee;
       ++ei)
@@ -57,14 +57,15 @@ inline int
 Graph::edgeWeight(int v1, int v2) const
 {
   SERIALIZE_READS;
-    for(VertexIterator ei = vertices_[v1].begin(),
-	ee = vertices_[v1].end();
+    CVertexIterator ei = vertices_[v1].begin();
+    for(CVertexIterator ee = vertices_[v1].end();
       ei != ee;
       ++ei)
     {
       if (ei->first == v2)
-	return (ei->second).first;
+	    break;
     }
+    return (ei->second).first;
 
 }
 
@@ -119,7 +120,7 @@ Graph::addEdge(int v1, int v2, const std::pair<int, size_t>& p)
 {
     // No need to SERIALIZE as we are assuming this is only called on init_()
     vertices_[v1].emplace_front(v2, p);
-    // undirected have bot
+    // undirected have both
     if (!directed_)
         vertices_[v2].emplace_front(v1, p);
 }
@@ -173,22 +174,40 @@ Graph::removeEdge(int v1, int v2)
 
 // This function will assuredly be hot
 bool
-Graph::updateEdgeWeight(int v1, int v2, int w1, int w2)
+Graph::updateEdgeWeight(int v1, int v2, int w1, size_t w2)
 {
   SERIALIZE_WRITES;
-  VertexIterator eb = vertices_[v1].before_begin();
-  for( VertexIterator ei = vertices_[v1].begin(),
+  CVertexIterator eb = vertices_[v1].before_begin();
+  for( CVertexIterator ei = vertices_[v1].begin(),
 	 ee = vertices_[v1].end();
        ei != ee;
        ++ei)
     {
       if ((ei->first) == v2)
 	{
+#if 0
+        // XXX
+        // Deal with undirected graphs later
+        // TIE FOR SECOND
+          (ei->second) = std::make_pair(w1, w2);
+          // NEXT SLOWEST
+          // (ei->second).first = w1;
+          // (ei->second).second = w2;
+          // SLOWEST
+        // std::swap((ei->second).first,  w1);
+        // std::swap((ei->second).second, w2);
+        return true;
+#endif
+          // FASTEST, EVEN SO
+#if 1
 	  // Remove edge
+          // Although technically we don't need to if
+          // we always emplace_front
 	  ei = vertices_[v1].erase_after(eb);
 	  // Add new edge
 	  vertices_[v1].emplace_front(v2, std::make_pair(w1, w2));
 	  return true;
+#endif
 	}
       eb = ei;
     }
