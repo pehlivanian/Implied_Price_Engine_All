@@ -11,6 +11,8 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <vector>
+#include <algorithm>
 
 #include "report.hpp"
 
@@ -89,11 +91,27 @@ char *buildRow(long n, long **times, int T) {
   long sum = 0, min, max;
   int i, ct;
   double mean;
-  double calc;
+  double calc = 0.;
   int minIdx = 0;
   int maxIdx = 0;
 
+  // Can't help myself
 
+    int exclude = static_cast<int>(T*.025);
+    std::vector<long > v(&times[n][0], (&times[n][0]) + T);
+    std::sort(v.begin(), v.end());
+    std::vector<long> d(v.begin()+exclude, v.end()-exclude);
+
+    sum = std::accumulate(d.begin(), d.end(), 0);
+    ct =  d.size();
+
+    min = d[0];
+    max = d.back();
+
+    mean = (double)sum/(double)ct;
+    for( auto dd : d)
+        calc+= (dd - mean)*(dd- mean);
+#if 0
   min = max = sum = times[n][0];
   
   for (i = 1; i < T; i++) {
@@ -102,7 +120,7 @@ char *buildRow(long n, long **times, int T) {
     if (t > max) { max = t; maxIdx = i;}
     sum += t;
   }
-  
+
   /* throw away lowest and highest. */
   sum = sum - min - max;
   ct = T - 2;
@@ -114,14 +132,10 @@ char *buildRow(long n, long **times, int T) {
     if (i == minIdx || i == maxIdx) continue;
     calc += (times[n][i] - mean)*(times[n][i] - mean);
   }
-  /*sqrt((1/[n-1])*sum[(xi-mean)^2]) FORMULA FROM EXCEL SPREADSHEET */
-  calc /= (ct-1);
-  // XXX
-  // calc = sqrt(calc);
-  calc = calc;
+#endif
 
   sprintf(buf, "%ld\t%f\t%ld\t%ld\t%f\t%d",
-	  n, mean, min, max, calc, ct);
+	  n, mean, min, max, sqrt(calc/(ct-1)), ct);
   return buf;
 }
 

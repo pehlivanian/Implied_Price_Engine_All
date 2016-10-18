@@ -10,14 +10,14 @@ int main(int argc, char **argv)
 
   // quote_msg *qm = new quote_msg(file_buf);
 
-    using IS8 = ImpliedServer<8>;
-    IS8* IS = new IS8;
+    using IS_n = ImpliedServer<12>;
+    IS_n* IS = new IS_n;
 
     // std::cout << IS->get_buf() << "\n";
     IS->process();
 
-    IS->write_user_curve();
-    IS->write_implied_curve();
-    IS->write_merged_curve();
+    // IS->write_user_curve();
+    // IS->write_implied_curve();
+    // IS->write_merged_curve();
 
 }

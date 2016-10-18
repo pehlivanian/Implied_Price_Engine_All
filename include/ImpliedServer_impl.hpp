@@ -30,10 +30,25 @@ ImpliedServer<N>::init_()
 
 template<int N>
 void
-ImpliedServer<N>::profiled_process_tasks()
+ImpliedServer<N>::profiled_process_tasks_()
 {
-    const int R = 10;
+    const int R = 25;
     const int C = tasks_.size();
+
+    std::string WORK_DIR = "~/ClionProjects/Implied_Price_Engine_All/data/";
+
+    std::ofstream fsu("./data/user_quote.dat");
+    std::ofstream fsi("./data/implied_quote.dat");
+    auto q = (p_->IE_)->get_user_quote();
+    fsu << "Type";
+    fsi << "Type";
+    for(size_t i=0; i<q[0].size(); ++i)
+    {
+        fsu << ",Leg_" + std::to_string(i);
+        fsi << ",Leg_" + std::to_string(i);
+    }
+    fsu << "\n";
+    fsi << "\n";
 
     long* Micro_times[R];
 
@@ -48,12 +63,23 @@ ImpliedServer<N>::profiled_process_tasks()
             for(int c=0; c<C; ++c)
             {
                 gettimeofday(&beforeV, 0);
-                int res = (p_->pool_)->submit(tasks_[c]).get();
-                // int res = tasks_[c]();
+                // int res = (p_->pool_)->submit(tasks_[c]).get();
+                int res = tasks_[c]();
                 gettimeofday(&afterV, 0);
                 // std::cout << beforeV.tv_usec << " : " << afterV.tv_usec << "\n";
                 Micro_times[r][c] = diffTimer(&beforeV, &afterV);
+                if ((r == 0) && (c > 99) && ((c%10) == 0))
+                {
+
+                    (p_->IE_)->write_user_quote(c, fsu);
+                    (p_->IE_)->write_implied_quote(c, fsi);
+
+                }
+
             }
+
+    fsu.close();
+    fsi.close();
 
     printf("Table (micros) for Implied Quote Update Step\n");
     printf ("n\taverage\t\tmin\tmax\tstdev\t\t#\n");
@@ -63,7 +89,7 @@ ImpliedServer<N>::profiled_process_tasks()
 
 template<int N>
 void
-ImpliedServer<N>::process_tasks()
+ImpliedServer<N>::process_tasks_()
 {
     for(auto& task : tasks_)
         int r = (p_->pool_)->submit(task).get();
@@ -71,7 +97,7 @@ ImpliedServer<N>::process_tasks()
 
 template<int N>
 void
-ImpliedServer<N>::preload_tasks()
+ImpliedServer<N>::preload_tasks_()
 {
     using namespace std;
     using namespace rapidjson;
@@ -84,8 +110,8 @@ ImpliedServer<N>::preload_tasks()
 
     // XXX
     // At least make this static
-    regex leg_pat(R"((Leg)([\d]{1})([\d]?))");
-    regex spread_pat(R"((Spread)([\d]{1})([\d]?))");
+    regex leg_pat(R"((Leg_)([\d]+))");
+    regex spread_pat(R"((Spread_)([\d]+)[_]([\d]+))");
     smatch match;
     string Inst;
     SecPair sp;
