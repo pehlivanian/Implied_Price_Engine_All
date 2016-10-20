@@ -32,9 +32,10 @@ template<int N>
 void
 ImpliedServer<N>::profiled_process_tasks_()
 {
-    const int R = 25;
+    const int R = 10;
     const int C = tasks_.size();
 
+#if 0
     std::string WORK_DIR = "~/ClionProjects/Implied_Price_Engine_All/data/";
 
     std::ofstream fsu("./data/user_quote.dat");
@@ -49,6 +50,7 @@ ImpliedServer<N>::profiled_process_tasks_()
     }
     fsu << "\n";
     fsi << "\n";
+#endif
 
     long* Micro_times[R];
 
@@ -68,6 +70,7 @@ ImpliedServer<N>::profiled_process_tasks_()
                 gettimeofday(&afterV, 0);
                 // std::cout << beforeV.tv_usec << " : " << afterV.tv_usec << "\n";
                 Micro_times[r][c] = diffTimer(&beforeV, &afterV);
+#if 0
                 if ((r == 0) && (c > 99) && ((c%10) == 0))
                 {
 
@@ -75,11 +78,13 @@ ImpliedServer<N>::profiled_process_tasks_()
                     (p_->IE_)->write_implied_quote(c, fsi);
 
                 }
-
+#endif
             }
 
+#if 0
     fsu.close();
     fsi.close();
+#endif
 
     printf("Table (micros) for Implied Quote Update Step\n");
     printf ("n\taverage\t\tmin\tmax\tstdev\t\t#\n");

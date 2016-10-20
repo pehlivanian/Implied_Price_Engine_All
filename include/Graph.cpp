@@ -198,7 +198,7 @@ Graph::updateEdgeWeight(int v1, int v2, int w1, size_t w2)
         // std::swap((ei->second).second, w2);
         return true;
 #endif
-          // FASTEST, EVEN SO
+          // FASTEST - the explicit deletion helps manage size of underlying structure
 #if 1
 	  // Remove edge
           // Although technically we don't need to if
