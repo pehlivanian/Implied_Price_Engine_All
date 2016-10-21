@@ -34,8 +34,8 @@ QuotePublisher::notify(const QuotePublishEvent& e)
 {
   for (auto& s: subscribers_) {
     try {
-      // s->update(e);
-        int r = pool_.submit([&e,&s](){ s->update(e); return 0; }).get();
+        s->update(e);
+        // int r = pool_.submit([&e,&s](){ s->update(e); return 0; }).get();
     }
     catch (...) {
       throw;
@@ -46,10 +46,11 @@ QuotePublisher::notify(const QuotePublishEvent& e)
 inline void
 QuotePublisher::notify_bid(const QuotePublishEvent& e)
 {
+    // std::cout << "NUMBER OF BID SUBSCRIBERS: " << bid_subscribers_.size() << "\n";
   for(auto& s : bid_subscribers_) {
     try {
-      // s->update_bid(e);
-        int r = pool_.submit([&e,&s](){ s->update_bid(e); return 0; }).get();
+        s->update_bid(e);
+        // int r = pool_.submit([&e,&s](){ s->update_bid(e); return 0; }).get();
     }
     catch (...) {
       throw;
@@ -60,10 +61,11 @@ QuotePublisher::notify_bid(const QuotePublishEvent& e)
 inline void
 QuotePublisher::notify_ask(const QuotePublishEvent& e)
 {
+    // std::cout << "NUMBER OF ASK SUBSCRIBERS: " << ask_subscribers_.size() << "\n";
   for(auto& s : ask_subscribers_) {
       try {
-          // s->update_ask(e);
-          int r = pool_.submit([&e,&s](){ s->update_ask(e); return 0; }).get();
+          s->update_ask(e);
+          // int r = pool_.submit([&e,&s](){ s->update_ask(e); return 0; }).get();
       }
       catch (...) {
           throw;

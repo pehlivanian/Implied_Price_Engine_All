@@ -32,7 +32,7 @@ template<int N>
 void
 ImpliedServer<N>::profiled_process_tasks_()
 {
-    const int R = 10;
+    const int R = 5;
     const int C = tasks_.size();
 
 #if 0
@@ -65,10 +65,8 @@ ImpliedServer<N>::profiled_process_tasks_()
             for(int c=0; c<C; ++c)
             {
                 gettimeofday(&beforeV, 0);
-                // int res = (p_->pool_)->submit(tasks_[c]).get();
                 int res = tasks_[c]();
                 gettimeofday(&afterV, 0);
-                // std::cout << beforeV.tv_usec << " : " << afterV.tv_usec << "\n";
                 Micro_times[r][c] = diffTimer(&beforeV, &afterV);
 #if 0
                 if ((r == 0) && (c > 99) && ((c%10) == 0))
