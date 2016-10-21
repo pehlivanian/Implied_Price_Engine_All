@@ -3,6 +3,8 @@
 
 #include <list>
 #include <memory>
+#include <thread>
+#include <future> // async
 
 #include "Publisher.hpp"
 #include "QuoteSubscriber.hpp"
@@ -32,45 +34,89 @@ protected:
 inline void 
 QuotePublisher::notify(const QuotePublishEvent& e)
 {
-  for (auto& s: subscribers_) {
-    try {
-        s->update(e);
-        // int r = pool_.submit([&e,&s](){ s->update(e); return 0; }).get();
+#if 0
+    auto sb = subscribers_.begin();
+    auto se = subscribers_.end();
+
+    for(; sb!=se; ++sb)
+    {
+        std::thread t = std::thread([&e](auto s){ s->update(e); return 0; }, *sb);
+        t.join();
     }
-    catch (...) {
-      throw;
+#endif
+
+#if 1
+    auto sb = subscribers_.begin();
+    auto se = subscribers_.end();
+    auto fb = futures_.begin();
+    for(; sb!=se; ++sb,++fb)
+    {
+        // (*fb) = std::async([&e](auto s){ s->update(e); return 0; }, *sb);
+        (*fb) = pool_.submit([&e, sb](){ (*sb)->update(e); return 0; });
     }
-  }
+    for(auto& f : futures_)
+        f.get();
+#endif
+
+
 }
 
 inline void
 QuotePublisher::notify_bid(const QuotePublishEvent& e)
 {
-    // std::cout << "NUMBER OF BID SUBSCRIBERS: " << bid_subscribers_.size() << "\n";
-  for(auto& s : bid_subscribers_) {
-    try {
-        s->update_bid(e);
-        // int r = pool_.submit([&e,&s](){ s->update_bid(e); return 0; }).get();
+#if 0
+    auto sb = bid_subscribers_.begin();
+    auto se = bid_subscribers_.end();
+
+    for(; sb!=se; ++sb)
+    {
+        std::thread t = std::thread([&e](auto s){ s->update_bid(e); return 0; }, *sb);
+        t.join();
     }
-    catch (...) {
-      throw;
+#endif
+
+#if 1
+    auto sb = bid_subscribers_.begin();
+    auto se = bid_subscribers_.end();
+    auto fb = bid_futures_.begin();
+    for(; sb!=se; ++sb,++fb)
+    {
+        // (*fb) = std::async([&e](auto s){ s->update_bid(e); return 0; }, *sb);
+        (*fb) = pool_.submit([&e,sb](){ (*sb)->update_bid(e); return 0; });
     }
-  }
+    for(auto& f : bid_futures_)
+        f.get();
+#endif
+
 }
 
 inline void
 QuotePublisher::notify_ask(const QuotePublishEvent& e)
 {
-    // std::cout << "NUMBER OF ASK SUBSCRIBERS: " << ask_subscribers_.size() << "\n";
-  for(auto& s : ask_subscribers_) {
-      try {
-          s->update_ask(e);
-          // int r = pool_.submit([&e,&s](){ s->update_ask(e); return 0; }).get();
-      }
-      catch (...) {
-          throw;
-      }
-  }
+#if 0
+    auto sb = ask_subscribers_.begin();
+    auto se = ask_subscribers_.end();
+
+    for(; sb!=se; ++sb)
+    {
+        std::thread t = std::thread([&e](){ s->update_ask(e); return 0; }, *sb);
+        t.join();
+    }
+#endif
+
+#if 1
+    auto sb = ask_subscribers_.begin();
+    auto se = ask_subscribers_.end();
+    auto fb = ask_futures_.begin();
+    for(; sb!=se; ++sb,++fb)
+    {
+        // (*fb) = std::async([&e](auto s){ s->update_ask(e); return 0; }, *sb);
+        (*fb) = pool_.submit([&e,sb](){ (*sb)->update_ask(e); return 0; });
+    }
+    for(auto& f : ask_futures_)
+        f.get();
+#endif
+
 }
 
 #endif

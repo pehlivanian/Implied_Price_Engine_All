@@ -10,13 +10,12 @@ struct impl<ImpliedServer<N>>
     impl(bool process_feed) :
             process_feed_(process_feed),
             IE_(std::make_unique<ImpliedEngine<N>>()),
-            C_(std::make_unique<Client>(8008, (char*)"0.0.0.0")),
-            pool_(std::make_unique<threadpool>()) {}
+            C_(std::make_unique<Client>(8008, (char*)"0.0.0.0"))
+           {}
 
     bool process_feed_;
     std::unique_ptr<ImpliedEngine<N>> IE_;
     std::unique_ptr<Client> C_;
-    std::unique_ptr<threadpool> pool_;
 
 };
 
@@ -95,7 +94,8 @@ void
 ImpliedServer<N>::process_tasks_()
 {
     for(auto& task : tasks_)
-        int r = (p_->pool_)->submit(task).get();
+        int r = task();
+
 }
 
 template<int N>
