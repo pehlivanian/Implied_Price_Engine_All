@@ -61,7 +61,10 @@ public:
   Graph(Graph&&) noexcept;
   Graph& operator=(Graph&&) noexcept;
 
-  inline void accept(Visitor* v) override { SERIALIZE_READS; v->visit(this); };
+  inline void accept(Visitor* v) override {
+    // SERIALIZE_READS;
+    v->visit(this);
+  };
 
   inline const size_t numVertices() const { return n_; }
   inline bool directed() const { return directed_; }

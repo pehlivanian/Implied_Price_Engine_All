@@ -305,19 +305,6 @@ Clienttest/fast:
 	$(MAKE) -f reg_test/CMakeFiles/Clienttest.dir/build.make reg_test/CMakeFiles/Clienttest.dir/build
 .PHONY : Clienttest/fast
 
-#=============================================================================
-# Target rules for targets named SecPair_gtest
-
-# Build rule for target.
-SecPair_gtest: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 SecPair_gtest
-.PHONY : SecPair_gtest
-
-# fast build rule for target.
-SecPair_gtest/fast:
-	$(MAKE) -f gtest/CMakeFiles/SecPair_gtest.dir/build.make gtest/CMakeFiles/SecPair_gtest.dir/build
-.PHONY : SecPair_gtest/fast
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -341,7 +328,6 @@ help:
 	@echo "... SecPair_test"
 	@echo "... ImpliedEngine_test"
 	@echo "... Clienttest"
-	@echo "... SecPair_gtest"
 .PHONY : help
 
 

@@ -2,7 +2,7 @@
 
 Graph::Graph(const Graph& rhs)
 {
-  SERIALIZE_WRITES;
+  // SERIALIZE_WRITES;
   n_ = rhs.n_;
   directed_ = rhs.directed_;
   std::copy(rhs.vertices_.begin(), rhs.vertices_.end(), vertices_.begin());
@@ -23,7 +23,7 @@ Graph::operator=(Graph&& rhs) noexcept
 inline bool
 Graph::isEdge(int v1, int v2) const
 {
-  SERIALIZE_READS;
+  // SERIALIZE_READS;
   for(CVertexIterator ei = vertices_[v1].begin(),
 	ee = vertices_[v1].end();
       ei != ee;
@@ -38,7 +38,7 @@ Graph::isEdge(int v1, int v2) const
 inline bool
 Graph::isEdge(int v1, int v2, std::pair<int,size_t>& w) const
 {
-  SERIALIZE_READS;
+  // SERIALIZE_READS;
   for(CVertexIterator ei = vertices_[v1].begin(),
 	ee = vertices_[v1].end();
       ei != ee;
@@ -56,7 +56,7 @@ Graph::isEdge(int v1, int v2, std::pair<int,size_t>& w) const
 inline int
 Graph::edgeWeight(int v1, int v2) const
 {
-  SERIALIZE_READS;
+  // SERIALIZE_READS;
     CVertexIterator ei = vertices_[v1].begin();
     for(CVertexIterator ee = vertices_[v1].end();
       ei != ee;
@@ -118,7 +118,7 @@ Graph::load (std::string filename) {
 void
 Graph::addEdge(int v1, int v2, const std::pair<int, size_t>& p)
 {
-    // No need to SERIALIZE as we are assuming this is only called on init_()
+    // No need to // SERIALIZE as we are assuming this is only called on init_()
     vertices_[v1].emplace_front(v2, p);
     // undirected have both
     if (!directed_)
@@ -143,7 +143,7 @@ Graph::addEdge(int v1, int v2)
 bool
 Graph::removeEdge(int v1, int v2)
 {
-  // No need to SERIALIZE as we are assuming this is only called on init_()
+  // No need to // SERIALIZE as we are assuming this is only called on init_()
   bool found = false;
   for( VertexIterator ei = vertices_[v1].begin(),
 	 ee = vertices_[v2].end();
@@ -176,7 +176,7 @@ Graph::removeEdge(int v1, int v2)
 bool
 Graph::updateEdgeWeight(int v1, int v2, int w1, size_t w2)
 {
-  SERIALIZE_WRITES;
+  // SERIALIZE_WRITES;
   CVertexIterator eb = vertices_[v1].before_begin();
   for( CVertexIterator ei = vertices_[v1].begin(),
 	 ee = vertices_[v1].end();
