@@ -70,7 +70,7 @@ private:
 
     void init_();
     std::unique_ptr<impl<ImpliedServer>> p_;
-    std::vector<std::function<int()>> tasks_;   // Task queue used to preload for timing experiments
+    std::vector<std::function<void()>> tasks_;   // Task queue used to preload for timing experiments
 };
 
 #undef QUOTE

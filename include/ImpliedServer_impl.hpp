@@ -64,7 +64,7 @@ ImpliedServer<N>::profiled_process_tasks_()
             for(int c=0; c<C; ++c)
             {
                 gettimeofday(&beforeV, 0);
-                int res = tasks_[c]();
+                tasks_[c]();
                 gettimeofday(&afterV, 0);
                 Micro_times[r][c] = diffTimer(&beforeV, &afterV);
 #if 0
@@ -149,7 +149,7 @@ ImpliedServer<N>::preload_tasks_()
                 sz = static_cast<size_t>(document["size"].GetInt());
             }
             // Multi-threaded version call
-            std::function<int()> fn = [this,sp,pc,sz]() mutable { (p_->IE_)->publish_bid(sp, QUOTE(pc,sz)); return 0; };
+            std::function<void()> fn = [this,sp,pc,sz]() mutable { (p_->IE_)->publish_bid(sp, QUOTE(pc,sz)); };
             tasks_.push_back(fn);
         }
         else if (document.HasMember("ask"))
@@ -173,7 +173,7 @@ ImpliedServer<N>::preload_tasks_()
             }
 
             // Multi-threaded version call
-            std::function<int()> fn = [this,sp,pc,sz]() mutable { (p_->IE_)->publish_ask(sp, QUOTE(pc,sz)); return 0; };
+            std::function<void()> fn = [this,sp,pc,sz]() mutable { (p_->IE_)->publish_ask(sp, QUOTE(pc,sz)); };
             tasks_.push_back(fn);
         }
     }

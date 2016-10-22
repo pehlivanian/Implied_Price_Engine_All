@@ -177,38 +177,18 @@ bool
 Graph::updateEdgeWeight(int v1, int v2, int w1, size_t w2)
 {
   // SERIALIZE_WRITES;
-  CVertexIterator eb = vertices_[v1].before_begin();
-  for( CVertexIterator ei = vertices_[v1].begin(),
+  // VertexList vl = vertices_[v1];
+  VertexIterator eb = vertices_[v1].before_begin();
+  for( VertexIterator ei = vertices_[v1].begin(),
 	 ee = vertices_[v1].end();
        ei != ee;
        ++ei)
     {
       if ((ei->first) == v2)
-	{
-#if 0
-        // XXX
-        // Deal with undirected graphs later
-        // TIE FOR SECOND
-          (ei->second) = std::make_pair(w1, w2);
-          // NEXT SLOWEST
-          // (ei->second).first = w1;
-          // (ei->second).second = w2;
-          // SLOWEST
-        // std::swap((ei->second).first,  w1);
-        // std::swap((ei->second).second, w2);
+      {
+        (ei->second) = std::pair<int, size_t>(w1, w2);
         return true;
-#endif
-          // FASTEST - the explicit deletion helps manage size of underlying structure
-#if 1
-	  // Remove edge
-          // Although technically we don't need to if
-          // we always emplace_front
-	  ei = vertices_[v1].erase_after(eb);
-	  // Add new edge
-	  vertices_[v1].emplace_front(v2, std::make_pair(w1, w2));
-	  return true;
-#endif
-	}
+      }
       eb = ei;
     }
   return false;

@@ -8,14 +8,15 @@ cat2_visitor::generate(DataElement* d)
   const int n = g->numVertices();
   pred_.assign(n, -1);
   dist_.assign(n, std::numeric_limits<int>::max());
-  size_.assign(n, std::numeric_limits<int>::max());
+  size_.assign(n, std::numeric_limits<size_t>::max());
   dist_[s_] = 0;
   BinaryHeap pq(n);
 
     int v, u;
     long newLen;
     size_t newSize;
-    Graph::Graph_iterator ci, last;
+    CVertexIterator ci, last;
+    // std::sort(dist_.begin(), dist_.end());
     for(int u = 0; u < n; u++) { pq.insert(u, dist_[u]); }
 
   // Find vertex in ever shrinking set, V-S, whose dist_[] 
@@ -24,8 +25,8 @@ cat2_visitor::generate(DataElement* d)
     {
       u = pq.smallest(); // this also pops
 
-      ci = g->begin(u);
-      last = g->end(u);
+      ci = g->cbegin(u);
+      last = g->cend(u);
 
         for(;
 	    ci != last;
@@ -34,7 +35,9 @@ cat2_visitor::generate(DataElement* d)
 	        v = ci->first;
 	        newLen = dist_[u];
 	        newLen += (ci->second).first;
-	        newSize = std::min(size_[u], (ci->second).second);
+            newSize = (ci->second).second;
+            if (size_[u] < newSize)
+                newSize = size_[u];
 	        if (newLen < dist_[v])
             {
 	            pq.decreaseKey(v, newLen);

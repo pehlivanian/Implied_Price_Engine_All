@@ -9,7 +9,7 @@
 #include "Publisher.hpp"
 #include "QuoteSubscriber.hpp"
 #include "MarketGraph.hpp"
-#include "threadpool.hpp"
+// #include "threadpool.hpp"
 
 using Price_Size_Pair = std::pair<int, size_t>;
 
@@ -27,25 +27,21 @@ protected:
   inline void notify(const QuotePublishEvent&) override;
   inline void notify_bid(const QuotePublishEvent&) override;
   inline void notify_ask(const QuotePublishEvent&) override;
-    threadpool pool_;
+    // threadpool pool_;
 };
 
 
 inline void 
 QuotePublisher::notify(const QuotePublishEvent& e)
 {
-#if 0
-    auto sb = subscribers_.begin();
-    auto se = subscribers_.end();
+#if 1
 
-    for(; sb!=se; ++sb)
-    {
-        std::thread t = std::thread([&e](auto s){ s->update(e); return 0; }, *sb);
-        t.join();
-    }
+    for(auto& sb : subscribers_)
+        sb->update(e);
+
 #endif
 
-#if 1
+#if 0
     auto sb = subscribers_.begin();
     auto se = subscribers_.end();
     auto fb = futures_.begin();
@@ -64,18 +60,14 @@ QuotePublisher::notify(const QuotePublishEvent& e)
 inline void
 QuotePublisher::notify_bid(const QuotePublishEvent& e)
 {
-#if 0
-    auto sb = bid_subscribers_.begin();
-    auto se = bid_subscribers_.end();
+#if 1
 
-    for(; sb!=se; ++sb)
-    {
-        std::thread t = std::thread([&e](auto s){ s->update_bid(e); return 0; }, *sb);
-        t.join();
-    }
+    for(auto& sb : bid_subscribers_)
+        sb->update_bid(e);
+
 #endif
 
-#if 1
+#if 0
     auto sb = bid_subscribers_.begin();
     auto se = bid_subscribers_.end();
     auto fb = bid_futures_.begin();
@@ -93,18 +85,14 @@ QuotePublisher::notify_bid(const QuotePublishEvent& e)
 inline void
 QuotePublisher::notify_ask(const QuotePublishEvent& e)
 {
-#if 0
-    auto sb = ask_subscribers_.begin();
-    auto se = ask_subscribers_.end();
+#if 1
 
-    for(; sb!=se; ++sb)
-    {
-        std::thread t = std::thread([&e](){ s->update_ask(e); return 0; }, *sb);
-        t.join();
-    }
+    for(auto& sb : ask_subscribers_)
+        sb->update_ask(e);
+
 #endif
 
-#if 1
+#if 0
     auto sb = ask_subscribers_.begin();
     auto se = ask_subscribers_.end();
     auto fb = ask_futures_.begin();

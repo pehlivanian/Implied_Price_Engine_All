@@ -34,7 +34,7 @@ MarketGraph::vertexProp(int u) const
 void
 MarketGraph::addEdgeProp(int u, int v, const SecPair& p)
 {
-  edge_props_[u].push_front(std::make_pair(v, p));
+  edge_props_[u].emplace_front(v, p);
 }
 
 void
