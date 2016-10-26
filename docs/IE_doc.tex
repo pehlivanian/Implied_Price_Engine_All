@@ -24,34 +24,87 @@
 
 \begin{abstract}
 
-We present the results of an application of the Implied Engine logic to a hypothtical market closely resembling CME WTI Crude (CL) futures, ICE/IPE Brent futures (B), or any one of the crude product markets. The algorithm as implemented here produces implied quote prices and sizes using only user-enteredquote information in leg, calendar spread, and strategy (strips, packs, etc.) markets. The algorithm is modular, and each leg quote (size, price) can be computed on its own execution thread. We exploit this to test a distributed version of the code, using a typical consumer-producer queue with worker tasks consuming a user quote and generating multiple downstream implied quotes per input. 
+An algorithm is presented for the computation of implied quotes in a hypothetical market closely resembling CME WTI Crude (CL) futures, ICE/IPE Brent futures (B), or any one of the US crude product markets. The algorithm produces a full set of implied quote prices and sizes using only user-entered quote information. The algorithm is modular, and each leg quote (size, price) can be computed on its own execution thread. We exploit this structure to test a cpu-distributed version, using a consumer-producer queue with worker tasks consuming a user quote and generating multiple downstream implied quotes per input. 
 \end{abstract}
 
-\section*{Workflow}
-A high-level workflow is presented. The application subscribes to the user-only (`\"non-implied'\') quote feed for the respective exchange, and computes both top-of-book user-only and implied quotes for each leg. We present here a simple case in which 3 legs products are considered, and user quotes from the legs and 6 calendar spread products are consumed.
+\section*{Overview}
+The major futures exchanges (CMEGroup, ICE, LIFFE, EUREX) depend on an underlying implied quote calculation to give the appearance of increased liquidity and narrowed spreads in their markets. This is done by disseminating, in addition to the user-entered quotes in each market, an additional set of implied quotes. Each implied quote is linked to two to many underlying user-entered quotes, and executing against an implied quote will ''unravel'' the chain and produce trades in all the underlying markets.  All participants face the exchange, and will receive their respective fills as if the initiating order occured in their market.
 
+For example, at a a given point in time the user-entered bbo quotes in the SP EMini markets ESU6, ESZ6 may look like Table 1. The ESU6-ESZ6 roll market may also be active, and a purchase in this market results in a purchase of ESZ6, the December contract, and a sale of ESU6. In this case, the quotes given in Table 2. will appear in the roll market {\it regardless of whether there are any user-entered quotes there}. So there will at least be a bbo, if there are bbos in the respective outright markets. 
+
+
+It is important to note that in all cases {\it the purchase of the roll is price-improved to the best implied quote price}. Furthermore, in many exchange matching models, the best implied quote is not part of the market feed, or the additional implied-quote feed is served on a delayed channel, and this price-improvement is invisible to the trader until the trade report occurs. For this and the following reasons, a client-side calculation of the full set of implied prices is beneficial:
+
+\begin{itemize}
+\item Implied quote generation can be don client-side faster than the exchange feed;
+\item In some markets, implied prices are not published at all;
+\item One can use a larger set of inputs to generate a more accurate fair value for a security;
+\item One can base a faster signal generation framework on an efficient implied quote server.
+\end{itemize}
+
+We will present a high-level summary only of an algorithm for complete computation of implied quotes.
+
+\clearpage
+\begin{table}
+\centering
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+Market & BidSize & BidPrice & AskPrice & AskSize\\
+\hline
+ESU6 & 566 & 2177.25 & 2177.50 & 766 \\
+ESZ6 & 144 & 2176.50 & 2177.25 & 44 \\
+\hline
+\end{tabular}
+\caption{User-entered Quotes}
+\label{tab:template}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+Market & Impl. BidSize & Impl. BidPrice & Impl. AskPrice & Impl. AskSize\\
+\hline
+ESU6-ESZ6 & -144 & -1.00   & 0.00  & 44 \\
+\hline
+\end{tabular}
+\caption{Implied Roll Quotes}
+\label{tab:template}
+\end{table}
+
+
+\section*{Workflow}
+A high-level workflow is presented. The application subscribes to the user-only (non-implied) quote feed (often on a faster channel than full implied feeds from the exchange, if those are available)  for the respective exchange. In this case, a simple market consisting of two outrights $O_1$, $O_2$, and one calendar spread $S_12$ is considered. The market feed is demultiplexed to 3 channels, one for each instrument. The price, size are passed through to a user-quote object, and also to each implied outright computation (1 for each leg only). The results of those computations are fed to the respective implied quote objects, and the user may query the synchronous merged (best of user and implied quote) for each outright market. Of course the graph is significantly more complicated for the typical case of 12 or more outrights, with associated calendar spreads.
+
+\clearpage
+\begin{figure}
+\centering
 \includegraphics[scale=.44]{/home/charles/ClionProjects/Implied_Price_Engine_All/docs/workflow.pdf}
+\caption{High-level Workflow: 2 Outright Markets, 1 Calendar Spread}
+\end{figure}
 
 Notes
 \begin{enumerate}
-\item The initial multiplexor separates the flow of 3 leg and 6 spread products and forwards them to one of 9 quote publishers.
-\item The main algorithm and most of the work is performed in the oval nodes. Here multple leg, calendar spread quotes are consumed and an implied quote (price,size) is computed for the specified leg. There are 3 Impl{\_}Quote{\_}Sub nodes in this case. Care must be taken to ensure that these passes are threadsafe.
-\item Separate user and implied quote objects (uQuote, iQuote) are maintained, and best-of or merged quotes are computed in a threadsafe fashion.
+\item The initial demultiplexor separates the flow of 2 leg and 1 spread product and forwards them to one of 3 quote publishers.
+\item The main algorithm and most of the work is performed in the oval nodes. Here multple leg, calendar spread quotes are consumed and an implied quote (price,size) is computed for the specified leg. There are 2 Calc nodes in this case. Care must be taken to ensure that these passes are threadsafe, and that the downstream merging is synchronized.
+\item Separate user and implied quote objects (uQuote, iQuote) are maintained, and best-of or merged quotes are computed, and pushed to the client..
 \end{enumerate}
 
 \section*{Implementation}
-The main entry point is the ImpliedServer class template, consisting of 3 components: a Client object for reading of quote information via socket, an ImpliedEngine<N> object which is the computation engine, and a threadpool object for asynchronous calculations off of the main calc thread. Appropriate serialization and barriers are implemented within the ImpliedEngine<N> class to ensure thread safety. The interface can be found on \href{https://github.com/pehlivanian/Implied{\_}Price{\_}Engine}{\it https://github.com/pehlivanian/Implied{\_}Price{\_}Engine/}
+The main entry point is the ImpliedServer$<$N$>$ class template, consisting of 2 components: a Client object for reading of quote information via socket, an ImpliedEngine$<$N$>$ object which is the computation engine, and a threadpool object for asynchronous calculations off of the main calc thread. Appropriate serialization and barriers are implemented within the ImpliedEngine$<$N$>$ class to ensure thread safety. The interface can be found on \href{https://github.com/pehlivanian/Implied_Price_Engine}{\it https://github.com/pehlivanian/Implied{\_}Price{\_}Engine/}
 
 \begin{verbatim}
+
 template<int N>
 class ImpliedServer
 {
 public:
-    ImpliedServer(bool process_feed=true) :
-      p_(std::make_unique<impl<ImpliedServer<N>>>()) { init_(); }
+    ImpliedServer(bool sim_mode=true) :
+            p_(std::make_unique<impl<ImpliedServer<N>>>(sim_mode)) { init_(); }
     void process() { preload_tasks_(); profiled_process_tasks_(); };
- 
-    //...
+
+    // ...
+
 private:
     void preload_tasks_();
     void process_tasks_();
@@ -63,25 +116,28 @@ private:
 template<int N>
 struct impl<ImpliedServer<N>>
 {
-    impl() :
+    impl(bool sim_mode) :
+            sim_mode_(sim_mode),
             IE_(std::make_unique<ImpliedEngine<N>>()),
-            C_(std::make_unique<Client>(8008, (char*)"0.0.0.0")),
-            pool_(std::make_unique<threadpool>()) 
-   {}
+            C_(std::make_unique<Client>(8008, (char*)"0.0.0.0"))
+           {}
 
+    bool sim_mode_;
     std::unique_ptr<ImpliedEngine<N>> IE_;
     std::unique_ptr<Client> C_;
-    std::unique_ptr<threadpool> pool_;
 
 };
 
 \end{verbatim}
 
-We use the Eigen library for our linear algebra engine, and custom data structures, custom allocators, fast forward{\_}list, fast binary heap, fast, customized  graph search/traversal algorithms for efficiency.
+We use the Eigen library for our linear algebra engine, and custom data structures, custom allocators, fast forward{\_}list, fast binary heap, fast customized  graph search/traversal algorithms for efficiency.
 
-Within the ImpliedEngine<N> class, the main calculation algorithm makes use of some notions from linear algebra and graph theory. A typical graph for a 12-leg problem is shown, without explanation.
+Within the ImpliedEngine<N> class, the main calculation algorithm makes use of some notions from linear algebra and graph theory. A typical graph for a 12-leg problem is shown in Figure 2., without expanation.
 
+\begin{figure}
 \includegraphics[scale=1.25]{/home/charles/ClionProjects/Implied_Price_Engine_All/docs/test_case.pdf}
+\caption{Setup for 12-leg Problem}
+\end{figure}
 \section*{Benchmarks}
 
 The theoretical complexity of the algorithm is $O(n^2 log(n))$, where $n$ is the number of legs to calculate. I don't believe we can do any better than this, for theoretical reasons, unless we constrain the problem based on ad-hoc market structure considerations (no liquidity in certain markets, so we eliminate them from the calculation, etc.). In any case, the algorithm is highly configurable and will allow for most such constraints.
@@ -89,7 +145,7 @@ The theoretical complexity of the algorithm is $O(n^2 log(n))$, where $n$ is the
 We first empirically verify the algorithmic complexity by plotting empirical (single-core, single-threaded) CPU times with a theoretical fit. The times given are for a single update step consisting of 
 
 \begin{enumerate}
-\item pubishing parsed quote update to ImpliedEngine<N> class;
+\item receiving published parsed quote update to ImpliedEngine<N> class;
 \item updating user quote object for this market;
 \item calculating {\it all} implied leg quotes affected by this update (usually $N$ legs);
 \item merging user, implied quotes into single quote object.
@@ -97,10 +153,17 @@ We first empirically verify the algorithmic complexity by plotting empirical (si
 
 The qualitative fit is good, with constant $C=.1223$. The fit was performed using the scipy orthogonal directions regression library.
 
-\includegraphics[scale=.75]{/home/charles/ClionProjects/Implied_Price_Engine_All/docs/algo_complexity.pdf}
+\clearpage
+\begin{figure}
+\includegraphics[scale=.55]{/home/charles/ClionProjects/Implied_Price_Engine_All/docs/algo_complexity.pdf}
+\caption{Algorighm running time with theoretical fit}
+\end{figure}
+
+We also can calculate the update time (time start: immediately after incoming quote is parsed, time end: full update of quote objects and task returns success; exactly the 4 steps above).  The following tables show times for a single update step on a single EC2 RedHat m2.large node:
 
 
-We also can calculate the update time (time start: immediately after incoming quote is parsed, time end: full update of quote objects and task returns success).  The following tables show times for a single update step (defined above) on a 4-core CentOS linux commodity machine. Times are in microseconds. Note that this time includes an update of the user quote object with the incoming quote, a step that would have to be performed in any case whether we were computing implied prices or not.
+
+a 4-core CentOS linux commodity machine. Times are in microseconds. Note that this time includes an update of the user quote object with the incoming quote, a step that would have to be performed in any case whether we were computing implied prices or not.
 
 Benchmark tests were run on a 2.3GHz Intel Xeon E5-2686 v4 Broadwell, 4-core machine with 16Gb RAM.
  

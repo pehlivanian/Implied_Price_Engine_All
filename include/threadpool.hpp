@@ -109,7 +109,6 @@ class threadpool
 	     function_wrapper task;
 	     if (work_queue.try_pop(task))
 	       {
-               // std::cout << "THREAD_ID: " << std::this_thread::get_id() << "\n";
 		  task();
 	       }
 	     else
@@ -131,7 +130,6 @@ class threadpool
 	       {
 		 threads.push_back(std::thread(
 					       &threadpool::worker_thread,this));
-			   // std::cout << "NUM_THREADS: " << threads.size() << "\n";
 	       }
 	   }
 	 catch(...)

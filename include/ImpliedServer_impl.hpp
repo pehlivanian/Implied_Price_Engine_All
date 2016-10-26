@@ -7,13 +7,13 @@ class ImpliedServer;
 template<int N>
 struct impl<ImpliedServer<N>>
 {
-    impl(bool process_feed) :
-            process_feed_(process_feed),
+    impl(bool sim_mode) :
+            sim_mode_(sim_mode),
             IE_(std::make_unique<ImpliedEngine<N>>()),
             C_(std::make_unique<Client>(8008, (char*)"0.0.0.0"))
            {}
 
-    bool process_feed_;
+    bool sim_mode_;
     std::unique_ptr<ImpliedEngine<N>> IE_;
     std::unique_ptr<Client> C_;
 
@@ -23,7 +23,7 @@ template<int N>
 void
 ImpliedServer<N>::init_()
 {
-    if (p_->process_feed_)
+    if (p_->sim_mode_)
         (p_->C_)->fetch();
 }
 

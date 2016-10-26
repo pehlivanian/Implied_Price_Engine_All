@@ -305,6 +305,32 @@ Clienttest/fast:
 	$(MAKE) -f reg_test/CMakeFiles/Clienttest.dir/build.make reg_test/CMakeFiles/Clienttest.dir/build
 .PHONY : Clienttest/fast
 
+#=============================================================================
+# Target rules for targets named IE_test
+
+# Build rule for target.
+IE_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 IE_test
+.PHONY : IE_test
+
+# fast build rule for target.
+IE_test/fast:
+	$(MAKE) -f LTTNG-traces/CMakeFiles/IE_test.dir/build.make LTTNG-traces/CMakeFiles/IE_test.dir/build
+.PHONY : IE_test/fast
+
+#=============================================================================
+# Target rules for targets named IE-lttng
+
+# Build rule for target.
+IE-lttng: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 IE-lttng
+.PHONY : IE-lttng
+
+# fast build rule for target.
+IE-lttng/fast:
+	$(MAKE) -f LTTNG-traces/CMakeFiles/IE-lttng.dir/build.make LTTNG-traces/CMakeFiles/IE-lttng.dir/build
+.PHONY : IE-lttng/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -328,6 +354,8 @@ help:
 	@echo "... SecPair_test"
 	@echo "... ImpliedEngine_test"
 	@echo "... Clienttest"
+	@echo "... IE_test"
+	@echo "... IE-lttng"
 .PHONY : help
 
 

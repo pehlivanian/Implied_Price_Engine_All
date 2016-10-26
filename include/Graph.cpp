@@ -118,7 +118,7 @@ Graph::load (std::string filename) {
 void
 Graph::addEdge(int v1, int v2, const std::pair<int, size_t>& p)
 {
-    // No need to // SERIALIZE as we are assuming this is only called on init_()
+    // No need to SERIALIZE as we are assuming this is only called on init_()
     vertices_[v1].emplace_front(v2, p);
     // undirected have both
     if (!directed_)
@@ -143,7 +143,7 @@ Graph::addEdge(int v1, int v2)
 bool
 Graph::removeEdge(int v1, int v2)
 {
-  // No need to // SERIALIZE as we are assuming this is only called on init_()
+  // No need to SERIALIZE as we are assuming this is only called on init_()
   bool found = false;
   for( VertexIterator ei = vertices_[v1].begin(),
 	 ee = vertices_[v2].end();
