@@ -47,7 +47,9 @@ int main(int argc, char **argv)
   memset(&serv_addr, '0', sizeof(serv_addr));
 
   serv_addr.sin_family = AF_INET;
-  serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+  // serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+  serv_addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+  
   serv_addr.sin_port = htons(port); 
 
   bind(listenfd, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
@@ -58,8 +60,8 @@ int main(int argc, char **argv)
     {
       connfd = accept(listenfd, (struct sockaddr*)NULL, NULL);
 
-        // Do this everytime in a tight loop so that we
-        // can avoid shutdown when underlygin file changes
+      // Do this everytime in a tight loop so that we
+      // can avoid shutdown when underlygin file changes
       size_t f_size = file_size(filename);
       char sendBuff[f_size];
       memset(sendBuff, '0', f_size);
@@ -75,14 +77,15 @@ int main(int argc, char **argv)
      
       struct stat file_stat;
       fstat(input_fd, &file_stat);
-      send(file_stat.st_size, connfd);
+      send(f_size, connfd);
+      // send(file_stat.st_size, connfd);
       
       while((ret_in = read(input_fd, &sendBuff, file_stat.st_size)) >0)
 	{
 	  write(connfd, sendBuff, file_stat.st_size);
 	}
 
-      // snprintf(sendBuff, sizeof(sendBuff), "%.24s\r\n", ctime(&ticks));
+      snprintf(sendBuff, sizeof(sendBuff), "%.24s\r\n", ctime(&ticks));
       // write(connfd, sendBuff, strlen(sendBuff));
 
       close(connfd);

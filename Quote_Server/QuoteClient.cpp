@@ -32,6 +32,7 @@ int receive(uint32_t* num, int fd)
   int return_status = read(fd, &received_int, sizeof(received_int));
   if (return_status > 0) {
     *num = ntohl(received_int);
+    return 0;
   }
   else {
     return -1;
@@ -72,11 +73,10 @@ int main(int argc, char *argv[])
     {
        printf("\n Error : Connect Failed \n");
        return 1;
-    } 
+    }
 
     uint32_t filesize = 0;
-    receive(&filesize,sockfd);
-    fprintf(stdout, "SIZE: %d\n", filesize);
+    int return_status = receive(&filesize,sockfd);
 
     char recvBuff[filesize];
     memset(recvBuff, '0',sizeof(recvBuff));
@@ -88,7 +88,6 @@ int main(int argc, char *argv[])
       return 2;
     } 
 
-    fprintf(stdout, "BYTES READ: %d\n", bytes_read);
     fprintf(stdout, "%s", recvBuff);
 
     return 0;

@@ -14,7 +14,7 @@
  * @date 6/15/08
  */
 
-#ifndef __PBOBLEM_HPP__
+#ifndef __PROBLEM_HPP__
 #define __PROBLEM_HPP__
 
 

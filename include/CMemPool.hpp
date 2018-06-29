@@ -1,5 +1,5 @@
 #ifndef __CMEMPOOL_HPP__
-#define __CMEMPOOl_HPP__
+#define __CMEMPOOL_HPP__
 
 #include <stdlib.h>
 #include <iostream>

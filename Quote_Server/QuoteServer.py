@@ -10,7 +10,7 @@ BLOCK_SIZE= 1024
 DEFAULT_MODE = 'server'
 DEFAULT_HOST = 'localhost'
 DEFAULT_PORT = 50001
-DEFAULT_FILENAME=''
+DEFAULT_FILENAME='serveme.txt'
 
 helptext = """
 Usage...
