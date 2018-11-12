@@ -17,8 +17,8 @@ namespace std
   {
     std::size_t operator()(const SecPair& k) const
     {   
-      return ( (std::hash<int>()(k.f_)
-		^ (std::hash<int>()(k.b_) << 1)) >> 1);
+      return ( (std::hash<int>()(k.leg0())
+		^ (std::hash<int>()(k.leg1()) << 1)) >> 1);
     }
   };
 }

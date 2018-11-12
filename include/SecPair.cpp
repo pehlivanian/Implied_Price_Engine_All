@@ -1,53 +1,52 @@
 #include "SecPair.hpp"
 
 void
-SecPair::check()
-{
-  this->all_legs_ = std::vector<int>(48,0);
+SecPair::normalize() {
 
-  if ( (this->f_ >= 0) && (this->b_ >= 0))
-      {
-	if (this->f_ < this->b_ )
-	  {
-	    this->all_legs_[this->f_] = this->mult_ * 1;
-	    this->all_legs_[this->b_] = this->mult_ * -1;
-	  }
-	else
-	  {
-	    this->all_legs_[this->b_] = this->mult_ * 1;
-	    this->all_legs_[this->f_] = this->mult_ * -1;
-	    int f_tmp = this->f_;
-	    this->f_ = this->b_;
-	    this->b_ = f_tmp;
-	    this->mult_ *= -1;
-	  }
-      }
-  else if (this->f_ >= 0)
-    {
-      this->all_legs_[this->f_] = this->mult_ * 1; 
-      this->b_ = -1;
+  // Degenerate case
+  if ((f_ < 0) and (b_ < 0)) {
+    f_ = -1;
+    b_ = -1;
+    mult_ = -1;
+    return;
+  }
+
+  // Degenerate case
+  if (mult_ == 0) {
+    f_ = -1;
+    b_ = -1;
+    mult_ = -1;
+    return;
+  }
+
+  if (f_ < 0) {
+    f_ = b_;
+    b_ = -1;
+    mult_ *= -1;
+  }
+  else if (b_ < 0) {
+    b_ = -1;
+  }
+  else {
+    if (f_ == b_) {
+      f_ = -1;
+      b_ = -1;
+      mult_ = -1;
     }
-  else if (this->b_ >= 0)
-    {
-      this->all_legs_[this->b_] = this->mult_ * 1;
-      this->f_ = this->b_;
-      this->b_ = -1;
-      this->mult_ *= -1;
+    else if (f_ > b_) {
+      std::swap(f_,b_);
+      mult_ *= -1;
     }
-  else
-    {
-      this->f_ = -1;
-      this->b_ = -1;
-      this->mult_ = 1;
-    }
+    else { return; }
+  }
 }
 
 bool
 SecPair::operator==(const SecPair& rhs) const
 {
 
-  if ( (this->f_ * this->mult_== rhs.mult_ * rhs.f_) &&
-       (this->b_ * this->mult_== rhs.mult_ * rhs.b_) )
+  if ( (f_ * mult_== rhs.mult() * rhs.leg0()) &&
+       (b_ * mult_== rhs.mult() * rhs.leg1()) )
     {
       return true;
     }
@@ -67,41 +66,56 @@ SecPair&
 SecPair::operator=(const SecPair& rhs)
 {
 
-  this->f_ = rhs.f_;
-  this->b_ = rhs.b_;
-  this->mult_ = rhs.mult_;
-  check();
+  f_ = rhs.leg0();
+  b_ = rhs.leg1();
+  mult_ = rhs.mult();
+  normalize();
 
   return *this;    
 }
 
 SecPair&
-SecPair::operator+=(const SecPair& rhs)
-{
+SecPair::operator+=(const SecPair& rhs) {
 
-  if (rhs.f_ >= 0)
-    this->all_legs_[rhs.f_] += rhs.mult_ * 1;
-  if (rhs.b_ >= 0)
-    this->all_legs_[rhs.b_] += rhs.mult_ * -1;
+  if (rhs.isTrivialSpread()) {
+    return *this;
+  }
 
-  auto ie = this->all_legs_.end();
-  
-  auto itf = std::find(this->all_legs_.begin(), ie, 1);
-  auto itb = std::find(this->all_legs_.begin(), ie, -1);
-  if (itf != ie)
-      this->f_ = std::distance(this->all_legs_.begin(), itf);
-  else
-      this->f_ = -1;
-  if (itb != ie)
-      this->b_ = std::distance(this->all_legs_.begin(), itb);
-  else
-      this->b_ = -1;
+  if ((f_ == rhs.leg0()) && (b_ == rhs.leg1())) {
+    mult_ += rhs.mult();
+    normalize();
+    return *this;
+  }
+  else if ( mult_ * rhs.mult() > 0) {
+    if ((f_ * mult_) == (rhs.mult() * rhs.leg1())) {
+      f_ = rhs.leg0();
+      normalize();
+      return *this;
+    }
+    else if ((mult_ * b_) == (rhs.mult() * rhs.leg0())) {
+      b_ = rhs.leg1();
+      normalize();
+      return *this;
+    }
+  }
+  else if ( mult_ * rhs.mult() < 0)  {
+    if (( mult_ * f_) == (-1 * rhs.mult() * rhs.leg0())) {
+      f_ = std::min( b_, rhs.leg1());
+      b_ = std::max( b_, rhs.leg1());
+      mult_ = (f_ == rhs.leg1()) ? -1 * rhs.mult() : -1 * mult_;
+      return *this;
+    }
+    else if ((mult_ * b_) == (-1 * rhs.mult() * rhs.leg1())) {
+      f_ = std::min( f_, rhs.leg0());
+      b_ = std::max( f_, rhs.leg0());
+      mult_ = (f_ == rhs.leg0()) ? rhs.mult() : mult_;
+      return *this;
+    }
+  }
+  else {
+    throw SecPairException();
+  }
 
-  this->mult_ = 1;
-
-  check();
-  
-  return *this;
 }
 
 SecPair
@@ -115,8 +129,10 @@ SecPair::operator+(const SecPair& rhs) const
 SecPair&
 SecPair::operator*=(int m)
 {
-  this->mult_ *= m;
-  check();
+  if (isTrivialSpread()) { return *this; }
+
+  mult_ *= m;
+  normalize();
   return *this;
 }
 
@@ -137,7 +153,7 @@ SecPair::operator-=(const SecPair& rhs)
   rhs_tmp *= -1;
   *this = *this + rhs_tmp;
 
-  check();
+  normalize();
 
   return *this;
   
@@ -147,7 +163,7 @@ SecPair
 SecPair::operator-(const SecPair& rhs) const
 {
   SecPair SecPair_tmp(*this);
-  SecPair_tmp -= rhs; 
+  SecPair_tmp -= rhs;
   return SecPair_tmp;
 }
 
@@ -155,60 +171,81 @@ bool
 SecPair::operator<(const SecPair& rhs) const
 {
   // Arbitrary
-  return ((this->mult_ * this->f_) < (rhs.mult_ * rhs.f_));
+  return ((mult_ * f_) < (rhs.mult() * rhs.leg0()));
 }
 
 SecPair
 SecPair::abs() const
 {
-  return SecPair(this->f_, this->b_, 1);
+  return SecPair(f_, b_, 1);
 }
 
 bool
 SecPair::isPos() const
 {
-  return (this->abs() == *this);
+  return (abs() == *this);
 }
 
 bool
 SecPair::isLeg() const
 {
-    return ((this->f_ >= 0) && (this->b_ < 0));
+    return ((f_ >= 0) && (b_ < 0));
 }
 
+bool
+SecPair::isTrivialSpread() const
+{
+  return ((f_ < 0) && (b_ < 0)) || mult_ == 0;
+}
 int
 SecPair::leg0() const
 {
-    return this->f_;
+    return f_;
 }
 
 int
 SecPair::leg1() const
 {
-    return this->b_;
+    return b_;
+}
+
+int
+SecPair::mult() const
+{
+    return mult_;
+}
+
+bool
+SecPair::isSpread() const {
+  return (f_ >= 0) && (b_ >= 0);
+}
+
+bool
+SecPair::isOutright() const {
+  return (f_ < 0) || (b_ < 0);
 }
 
 std::ostream& operator<<(std::ostream& out, const SecPair& p)
 {
-  if ((p.f_ < 0) && (p.b_ < 0))
+  if ((p.leg0() < 0) && (p.leg1() < 0))
     {
       out << "0";
       return out;
     }
-  else if ((p.f_ >= 0) && (p.b_ < 0))
+  else if ((p.leg0() >= 0) && (p.leg1() < 0))
     {
       std::string parity = "l";
-      if (p.mult_ == -1)
+      if (p.mult() == -1)
 	parity = "neg_l";
-      out << parity << p.f_;
+      out << parity << p.leg0();
       return out;
     }
   else
     {
       std::string parity = "s";
-      if (p.mult_ == -1)
+      if (p.mult()== -1)
 	parity = "neg_s";
-      out << parity << p.f_ << "_" << p.b_;
+      out << parity << p.leg0() << "_" << p.leg1();
       return out;
     }
 }

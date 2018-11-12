@@ -166,13 +166,13 @@ ImpliedEngine<N>::init_markets_()
       auto ie = (p_->all_markets_).end();
       while(ib != ie)
 	{
-	  if ((ib->f_ == i) && (ib->b_ >= 0))
+	  if ((ib->leg0() == i) && (ib->leg1() >= 0))
 	    {
 	      (p_->G_)[i]->addVertexProp(node_num++, *ib);
 	    }
-	  if ((ib->b_ == i) && (ib->f_ >= 0))
+	  if ((ib->leg1() == i) && (ib->leg0() >= 0))
 	    {
-	      SecPair p(ib->f_, ib->b_, -1 * ib->mult_);
+	      SecPair p(ib->leg0(), ib->leg1(), -1 * ib->mult());
 	      (p_->G_)[i]->addVertexProp(node_num++, p);
 	    }
 	  ++ib;

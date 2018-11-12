@@ -5,47 +5,61 @@
 #include <vector>
 #include <algorithm>
 #include <functional>
+#include <exception>
 
-const unsigned MAX_SIZE = 48;
+const unsigned MAX_LEGS = 48;
 
-class SecPair
-{
-  public:
-    SecPair() : f_(-1), b_(-1), mult_(1)
-    { check(); }
-    SecPair(int f, int b, int mult) : f_(f), b_(b), mult_(mult)
-    { check(); }
-    SecPair(const SecPair& rhs) : f_(rhs.f_), b_(rhs.b_), mult_(rhs.mult_) { check(); }
+struct SecPairException : public std::exception {
+    const char *what() const noexcept override {
+        return "Invalid SecPair";
+    }
+};
+
+class SecPair;
+std::ostream& operator<<(std::ostream&, const SecPair&);
+void operator*(int, SecPair&);
+
+class SecPair {
+public:
+    friend void _swap( SecPair& lhs, SecPair& rhs) {
+        std::swap(lhs.f_, rhs.f_);
+        std::swap(lhs.b_, rhs.b_);
+        std::swap(lhs.mult_, rhs.mult_);
+    }
+
+    SecPair() : f_(-1), b_(-1), mult_(-1) {}
+    SecPair(int f, int b, int mult) : f_(f), b_(b), mult_(mult) { normalize(); }
+    SecPair(const SecPair& rhs) : f_(rhs.leg0()), b_(rhs.leg1()), mult_(rhs.mult()) { normalize(); }
     SecPair(SecPair&& rhs) = default;
-    SecPair& operator=(SecPair&&) = default;
 
-    SecPair abs() const;
-    bool isPos() const;
-    bool isLeg() const;
+    SecPair abs()  const;
+    bool isPos()   const;
+    bool isLeg()   const;
 
     int leg0() const;
     int leg1() const;
+    int mult() const;
 
-    SecPair& operator*=(int m);
-    SecPair operator*(int m);
-    bool operator==(const SecPair& rhs) const;
-    bool operator!=(const SecPair& rhs) const;
-    SecPair& operator=(const SecPair& rhs);
-    SecPair& operator+=(const SecPair& rhs);
-    SecPair operator+(const SecPair& rhs) const;
-    SecPair& operator-=(const SecPair& rhs);
-    SecPair operator-(const SecPair& rhs) const;
-    bool operator<(const SecPair& rhs) const;
-  
-  public:
-    int f_;
-    int b_;
-    int mult_;
-    std::vector<int> all_legs_ = std::vector<int>(48,0);
-  private:
-    void check();
+    SecPair& operator*=(int);
+    SecPair operator*(int);
+    bool operator==(const SecPair&) const;
+    bool operator!=(const SecPair&) const;
+    SecPair& operator=(const SecPair&);
+    SecPair& operator+=(const SecPair&);
+    SecPair operator+(const SecPair&) const;
+    SecPair& operator-=(const SecPair&);
+    SecPair operator-(const SecPair&) const;
+    bool operator<(const SecPair&) const;
+
+    void normalize();
+    bool isSpread()   const;
+    bool isOutright() const;
+    bool isTrivialSpread() const;
+
+private:
+    mutable bool valid_;
+    int f_, b_, mult_;
 };
 
-std::ostream& operator<<(std::ostream& out, const SecPair& p);
-void operator*(int m, SecPair& rhs);
+
 #endif
