@@ -19,5 +19,5 @@ add_library(IElib STATIC    Trace
                             cat1_visitor
                             cat2_visitor
                             ImpliedEngine
-                            ImpliedServer)
+                            ImpliedServer QuoteServer.cpp QuoteServer.hpp)
 target_include_directories(IElib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

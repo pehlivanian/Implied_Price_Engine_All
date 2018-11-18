@@ -1,0 +1,11 @@
+//
+// Created by charles on 11/17/18.
+//
+
+#ifndef IMPLIED_PRICE_ENGINE_QUOTESERVERNEW_H
+#define IMPLIED_PRICE_ENGINE_QUOTESERVERNEW_H
+
+#include "QuoteServer.hpp"
+
+
+#endif //IMPLIED_PRICE_ENGINE_QUOTESERVERNEW_H

@@ -1,10 +1,6 @@
 #include "Client.hpp"
 
-ClientComponent::~ClientComponent()
-{
-  // delete IP_addr_;
-  // delete recvBuff_;
-}
+ClientComponent::~ClientComponent() = default;
 
 Client::Client(const Client& rhs)
 {
@@ -43,7 +39,7 @@ Client::fill_buf()
 
     memset(&serv_addr, '0', sizeof(serv_addr)); 
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_port = htons(port_); 
+    serv_addr.sin_port = htons(port_);
 
     if(inet_pton(AF_INET, IP_addr_, &serv_addr.sin_addr)<=0)
     {
@@ -64,8 +60,8 @@ Client::fill_buf()
     recvBuff_ = new char[filesize];
     memset(recvBuff_, '0', filesize);
 
-    int bytes_read = read(sockfd, recvBuff_, filesize);
-    if(bytes_read < 0)
+    bytes_read_ = read(sockfd, recvBuff_, filesize);
+    if(bytes_read_ < 0)
     {
       printf("\n Read error \n");
       return 2;

@@ -10,7 +10,12 @@ find_package(GTest REQUIRED)
 # include_directories(${Boost_INCLUDE_DIRS} ${GTEST_INCLUDE_DIRS} "../include")
 
 #Link runTests with what we want to test and GTest and pthread libraries
+
+# SecPair test
 add_executable(SecPair_gtest SecPair_gtest.cpp)
 target_link_libraries(SecPair_gtest LINK_PUBLIC IElib ${GTEST_LIBRARIES} pthread)
-# add_executable(ImpliedEngine_gtest ImpliedEngine_gtest.cpp)
-# target_link_libraries(ImpliedEngine_gtest LINK_PUBLIC IElib ${GTEST_LIBRARIES} pthread)
+
+# QuoteEngine test
+add_executable(QuoteEngine_gtest QuoteEngine_gtest.cpp)
+target_link_libraries(QuoteEngine_gtest LINK_PUBLIC IElib ${GTEST_LIBRARIES} pthread)
+configure_file( serveme.dat serveme.dat COPYONLY)

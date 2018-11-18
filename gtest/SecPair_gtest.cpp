@@ -32,12 +32,13 @@ TEST(SecPairTest, Normalization) {
 }
 
  TEST(SecPairTest, DiffofTwo) {
-    ASSERT_EQ(SecPair(8,9,1),    SecPair(8,9,1) - SecPair(-1,-1,-1));
-    ASSERT_EQ(SecPair(-1,-1,1),  SecPair(8,9,1) - SecPair(9,8,-1));
-    ASSERT_EQ(SecPair(10,12, 1), SecPair(10,12,1) - SecPair(-1,-1,1));
-    ASSERT_EQ(SecPair(12,13,-1), SecPair(11,12,1) - SecPair(11,13,1));
+    ASSERT_EQ(SecPair(8,9,1),      SecPair(8,9,1) - SecPair(-1,-1,-1));
+    ASSERT_EQ(SecPair(10, 12, -1), SecPair(5, 10, 1) - SecPair(5, 12, 1));
+    ASSERT_EQ(SecPair(-1,-1,1),    SecPair(8,9,1) - SecPair(9,8,-1));
+    ASSERT_EQ(SecPair(10,12, 1),   SecPair(10,12,1) - SecPair(-1,-1,1));
+    ASSERT_EQ(SecPair(12,13,-1),   SecPair(11,12,1) - SecPair(11,13,1));
     ASSERT_EQ(SecPair(16, 18, -1), SecPair(14, 16, 1) - SecPair(14, 18, 1));
-    ASSERT_EQ(SecPair( 5, 7, 0), SecPair( 7, 10, 2) - SecPair( 7, 10, 2));
+    ASSERT_EQ(SecPair( 5, 7, 0),   SecPair( 7, 10, 2) - SecPair( 7, 10, 2));
 }
 
 TEST(SecPairTest, Negation) {
@@ -53,7 +54,16 @@ TEST(SecPairTest, Mult) {
     ASSERT_EQ(SecPair(-1,-1,1), SecPair(-1,-1,1) * -1);
 }
 
+TEST(SecPairTest, SimpleSum) {
+    SecPair p1(1,2,1);
+    SecPair p2(2,5,1);
+    SecPair p12(1,5,1);
+    SecPair sum12 = p1 + p2;
+
+    ASSERT_EQ( sum12, p12);
+}
 int main(int argc, char **argv) {
    testing::InitGoogleTest(&argc, argv);
    return RUN_ALL_TESTS();
 }
+
