@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 
-set(SOURCES Threadpool_test SecPair_test ImpliedEngine_test Clienttest)
+set(SOURCES ImpliedEngine_test)
 
 include_directories("../include")
 

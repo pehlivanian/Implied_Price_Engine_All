@@ -76,10 +76,10 @@ private:
   void init_graphs_();
   void init_subscribers_();
   void init_weights_();
-    Price_Size_Pair merge_quote_bid_(int leg);
-    Price_Size_Pair merge_quote_ask_(int leg);
+  Price_Size_Pair merge_quote_bid_(int leg) const;
+  Price_Size_Pair merge_quote_ask_(int leg) const;
   void write_curve_(const std::vector<std::vector<std::pair<int, size_t>>>&) const;
-    void write_quote_(const std::vector<std::vector<std::pair<int, size_t>>>&, int, std::ostream&) const;
+  void write_quote_(const std::vector<std::vector<std::pair<int, size_t>>>&, int, std::ostream&) const;
 
    mutable boost::shared_mutex mut_;
   std::unique_ptr<impl<ImpliedEngine<N>>> p_;

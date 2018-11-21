@@ -3,7 +3,7 @@
 
 // XXX
 // Temporary; used for display purposes only in .dot output
-const int large_int =   200000;
+const int large_int =  200000;
 const int small_int =  100000;
 
 template<int N>
@@ -61,7 +61,7 @@ struct impl<ImpliedEngine<N>>
 
 template<int N>
 Price_Size_Pair
-ImpliedEngine<N>::merge_quote_bid_(int leg)
+ImpliedEngine<N>::merge_quote_bid_(int leg) const
 {
     // SERIALIZE_READS;
     Price_Size_Pair uq = (p_->uQuote_)[0][leg];
@@ -76,7 +76,7 @@ ImpliedEngine<N>::merge_quote_bid_(int leg)
 
 template<int N>
 Price_Size_Pair
-ImpliedEngine<N>::merge_quote_ask_(int leg)
+ImpliedEngine<N>::merge_quote_ask_(int leg) const
 {
     // SERIALIZE_READS;
     Price_Size_Pair uq = (p_->uQuote_)[1][leg];
@@ -243,11 +243,6 @@ ImpliedEngine<N>::init_subscribers_()
 	    {
 	      int v1 = j, v2 = eb->first;
 	      SecPair mkt = eb->second;
-
-	      std::cout << i << " : " << j << " : " << mkt.leg0() << " : " << mkt.leg1() << " : " << mkt << std::endl;
-	      if ((i == 2) && (j == 2)) {
-	          printf("BOMB\n");
-	      }
 
 	      int ind = (p_->Decomposer_)->node_from_market_decomp(mkt.abs());
 
