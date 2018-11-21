@@ -46,7 +46,7 @@ struct impl<ImpliedEngine<N>>
   int m_;
 
     using atomic_price = std::atomic<int>;
-    using atomic_size = std::atomic<size_t>;
+    using atomic_size  = std::atomic<size_t>;
 
   std::vector<std::vector<std::pair<int, size_t>>>     uQuote_;
   std::vector<std::vector<std::pair<int, size_t>>>     iQuote_;
@@ -165,17 +165,17 @@ ImpliedEngine<N>::init_markets_()
       auto ib = (p_->all_markets_).begin();
       auto ie = (p_->all_markets_).end();
       while(ib != ie)
-	{
-	  if ((ib->leg0() == i) && (ib->leg1() >= 0))
-	    {
-	      (p_->G_)[i]->addVertexProp(node_num++, *ib);
-	    }
-	  if ((ib->leg1() == i) && (ib->leg0() >= 0))
-	    {
-	      SecPair p(ib->leg0(), ib->leg1(), -1 * ib->mult());
-	      (p_->G_)[i]->addVertexProp(node_num++, p);
-	    }
-	  ++ib;
+	  {
+          if ((ib->leg0() == i) && (ib->leg1() >= 0))
+            {
+              (p_->G_)[i]->addVertexProp(node_num++, *ib);
+            }
+          if ((ib->leg1() == i) && (ib->leg0() >= 0))
+            {
+              SecPair p(ib->leg0(), ib->leg1(), -1 * ib->mult());
+              (p_->G_)[i]->addVertexProp(node_num++, p);
+            }
+          ++ib;
 	}
 
       // Add all edge markets
@@ -243,6 +243,12 @@ ImpliedEngine<N>::init_subscribers_()
 	    {
 	      int v1 = j, v2 = eb->first;
 	      SecPair mkt = eb->second;
+
+	      std::cout << i << " : " << j << " : " << mkt.leg0() << " : " << mkt.leg1() << " : " << mkt << std::endl;
+	      if ((i == 2) && (j == 2)) {
+	          printf("BOMB\n");
+	      }
+
 	      int ind = (p_->Decomposer_)->node_from_market_decomp(mkt.abs());
 
 	      IQSub IQSubscriber     = std::make_shared<ImpliedQuoteSubscriber>(v1, v2, (p_->G_)[i], i);

@@ -13,7 +13,7 @@ class MarketGraph : public Graph
 {
 public:
 
-  using PropPair            = std::pair<int, SecPair>; 
+  using PropPair         = std::pair<int, SecPair>;
   using VertexPropList   = std::vector<SecPair>;
   using EdgePropList     = std::list<PropPair>;
 

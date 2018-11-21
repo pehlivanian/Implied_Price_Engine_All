@@ -41,7 +41,7 @@ public:
     int mult() const;
 
     SecPair& operator*=(int);
-    SecPair operator*(int);
+    SecPair operator*(int) const;
     bool operator==(const SecPair&) const;
     bool operator!=(const SecPair&) const;
     SecPair& operator=(const SecPair&);

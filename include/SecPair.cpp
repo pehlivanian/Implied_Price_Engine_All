@@ -81,34 +81,47 @@ SecPair::operator+=(const SecPair& rhs) {
     return *this;
   }
 
-  if ((f_ == rhs.leg0()) && (b_ == rhs.leg1())) {
-    mult_ += rhs.mult();
+  if (this->isTrivialSpread()) {
+    f_ = rhs.leg0();
+    b_ = rhs.leg1();
+    mult_ = rhs.mult();
+    normalize();
+    return *this;
+   }
+
+  auto f_r = rhs.leg0();
+  auto b_r = rhs.leg1();
+  auto m_r = rhs.mult();
+
+  if ((f_ == f_r) && (b_ == b_r)) {
+    mult_ += m_r;
     normalize();
     return *this;
   }
-  else if ( mult_ * rhs.mult() > 0) {
-    if ((f_ * mult_) == (rhs.mult() * rhs.leg1())) {
-      f_ = rhs.leg0();
+  else if ( mult_ * m_r > 0) {
+    if ((f_ * mult_) == (m_r * b_r)) {
+      f_ = f_r;
       normalize();
       return *this;
     }
-    else if ((mult_ * b_) == (rhs.mult() * rhs.leg0())) {
-      b_ = rhs.leg1();
+    else if ((mult_ * b_) == (m_r * f_r)) {
+      b_ = b_r;
       normalize();
       return *this;
     }
   }
-  else if ( mult_ * rhs.mult() < 0)  {
-    if (( mult_ * f_) == (-1 * rhs.mult() * rhs.leg0())) {
-      f_ = std::min( b_, rhs.leg1());
-      b_ = std::max( b_, rhs.leg1());
-      mult_ = (f_ == rhs.leg1()) ? -1 * rhs.mult() : -1 * mult_;
+  else if ( mult_ * m_r < 0)  {
+    if (( mult_ * f_) == (-1 * m_r * f_r)) {
+      f_ = std::min( b_, b_r);
+      b_ = std::max( b_, b_r);
+      mult_ = (f_ == b_r) ? -1 * m_r : -1 * mult_;
       return *this;
     }
-    else if ((mult_ * b_) == (-1 * rhs.mult() * rhs.leg1())) {
-      f_ = std::min( f_, rhs.leg0());
-      b_ = std::max( f_, rhs.leg0());
-      mult_ = (f_ == rhs.leg0()) ? rhs.mult() : mult_;
+    else if ((mult_ * b_) == (-1 * m_r * b_r)) {
+      auto f_tmp = std::min( f_, f_r);
+      b_ = std::max( f_, f_r);
+      f_ = f_tmp;
+      mult_ = (f_ == f_r) ? m_r : mult_;
       return *this;
     }
   }
@@ -137,7 +150,7 @@ SecPair::operator*=(int m)
 }
 
 SecPair
-SecPair::operator*(int m)
+SecPair::operator*(int m) const
 {
   SecPair SecPair_tmp(*this);
   SecPair_tmp *= m;

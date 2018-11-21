@@ -58,5 +58,5 @@ if __name__ == "__main__":
     wt = int(sys.argv[2])
     NEG_ALLOWED = False
     if (len(sys.argv) > 3):
-        NEG_ALLOWED = (sys.argv[4] == "True")
+        NEG_ALLOWED = (sys.argv[3] == "True")
     create(n, wt, NEG_ALLOWED)
