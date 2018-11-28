@@ -2,7 +2,6 @@
 
 #include "SecPair.hpp"
 
-/*
 TEST(SecPairTest, SumofTwo) {
     ASSERT_EQ(SecPair(1, 3, 1), SecPair(1, 2, 1) + SecPair(2, 3, 1));
     ASSERT_EQ(SecPair(1, 5, 1), SecPair(1, 3, 1) + SecPair(3, 5, 1));
@@ -32,8 +31,8 @@ TEST(SecPairTest, Normalization) {
     ASSERT_EQ( SecPair( 0, 1, 1), SecPair( 1, 0, -1));
     ASSERT_EQ( SecPair(-1, -1, -1), SecPair(4,4,1));
 }
-*/
- TEST(SecPairTest, DiffofTwo) {
+
+TEST(SecPairTest, DiffofTwo) {
     ASSERT_EQ(SecPair(8,9,1),      SecPair(8,9,1) - SecPair(-1,-1,-1));
     ASSERT_EQ(SecPair(10, 12, -1), SecPair(5, 10, 1) - SecPair(5, 12, 1));
     ASSERT_EQ(SecPair(-1,-1,1),    SecPair(8,9,1) - SecPair(9,8,-1));

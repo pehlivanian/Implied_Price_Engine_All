@@ -7,10 +7,10 @@ class ImpliedServer;
 template<int N>
 struct impl<ImpliedServer<N>>
 {
-    impl(bool sim_mode) :
+    impl(bool sim_mode, int port) :
             sim_mode_(sim_mode),
             IE_(std::make_unique<ImpliedEngine<N>>()),
-            C_(std::make_unique<Client>(8008, (char*)"0.0.0.0"))
+            C_(std::make_unique<Client>(port, (char*)"0.0.0.0"))
            {}
 
     bool sim_mode_;

@@ -34,8 +34,8 @@ template<int N>
 class ImpliedServer
 {
 public:
-    ImpliedServer(bool sim_mode=true) :
-            p_(std::make_unique<impl<ImpliedServer<N>>>(sim_mode)) { init_(); }
+    ImpliedServer(bool sim_mode=true, int port=8008) :
+            p_(std::make_unique<impl<ImpliedServer<N>>>(sim_mode, port)) { init_(); }
     void process() { preload_tasks_(); profiled_process_tasks_(); };
 
     // Here come the delegators
@@ -61,7 +61,7 @@ public:
     Price_Size_Pair get_implied_bid(int leg) const { return (p_->IE_)->get_implied_bid(leg); }
     Price_Size_Pair get_ask(int leg) const         { return (p_->IE_)->get_ask(leg); }
     Price_Size_Pair get_user_ask(int leg) const    { return (p_->IE_)->get_user_ask(leg); }
-    Price_Size_Pair get_impied_ask(int leg) const  { return (p_->IE_)->get_implied_ask(leg); }
+    Price_Size_Pair get_implied_ask(int leg) const  { return (p_->IE_)->get_implied_ask(leg); }
 
 private:
     void preload_tasks_();
@@ -69,7 +69,7 @@ private:
     void profiled_process_tasks_();
 
     void init_();
-    std::unique_ptr<impl<ImpliedServer>> p_;
+    std::unique_ptr<impl<ImpliedServer<N>>> p_;
     std::vector<std::function<void()>> tasks_;   // Task queue used to preload for timing experiments
 };
 

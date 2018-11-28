@@ -62,7 +62,9 @@ QuoteServer::poll(short max_served) {
       // Do this everytime in a tight loop so that we
       // can avoid shutdown when underlying file changes
       size_t f_size = file_size(filename_to_serve_);
-      char sendBuff[f_size];
+      char *sendBuff;
+      sendBuff = (char *)malloc(f_size * (size_t)sizeof(char));
+      // char sendBuff[f_size];
       memset(sendBuff, '0', f_size);
 
       size_t input_fd = open(filename_to_serve_, O_RDONLY);

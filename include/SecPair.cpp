@@ -74,6 +74,8 @@ SecPair::operator=(const SecPair& rhs)
   return *this;    
 }
 
+inline void error(const std::string& s) { throw std::runtime_error(s); }
+
 SecPair&
 SecPair::operator+=(const SecPair& rhs) {
 
@@ -128,6 +130,8 @@ SecPair::operator+=(const SecPair& rhs) {
   else {
     throw SecPairException();
   }
+
+  throw SecPairException();
 
 }
 
