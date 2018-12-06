@@ -6,7 +6,13 @@
 
 int main(int argc, char **argv) {
 
-    QuoteServer* QS = new QuoteServer(argv[1], atoi(argv[2]));
+    if(argc != 2)
+    {
+        printf("\n Usage: %s <port of server> \n",argv[0]);
+        return 1;
+    }
+
+    QuoteServer* QS = new QuoteServer(atoi(argv[1]));
 
     QS->poll();
 }

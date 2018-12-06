@@ -51,23 +51,23 @@ public:
 
   void write_user_curve() const;
   void write_implied_curve() const;
-    void write_merged_curve() const;
-    void write_user_quote(int c, std::ostream& fsu) const;
-    void write_implied_quote(int c, std::ostream&) const;
+  void write_merged_curve() const;
+  void write_user_quote(int c, std::ostream& fsu) const;
+  void write_implied_quote(int c, std::ostream&) const;
   void write_dot(int, char*) const;
-    void write_dot(int, char*, const std::vector<int>&, const std::vector<int>&) const;
+  void write_dot(int, char*, const std::vector<int>&, const std::vector<int>&) const;
 
-    int get_num_legs() const                        { return  p_->n_; }
-    Price_Size_Pair get_bid(int leg) const          { return merge_quote_bid_(leg); }
-    Price_Size_Pair get_user_bid(int leg) const     { return (p_->uQuote_)[0][leg]; }
-    Price_Size_Pair get_implied_bid(int leg) const  { return (p_->iQuote_)[0][leg]; }
-    Price_Size_Pair get_ask(int leg) const          { return merge_quote_ask_(leg); }
-    Price_Size_Pair get_user_ask(int leg) const     { return (p_->uQuote_)[1][leg]; }
-    Price_Size_Pair get_implied_ask(int leg) const  { return (p_->iQuote_)[1][leg]; }
-    std::vector<std::vector<std::pair<int, size_t>>> get_user_quote() const   { return p_->uQuote_; };
-    std::vector<std::vector<std::pair<int, size_t>>> get_implied_quote() const { return p_->iQuote_; };
-    std::vector<MarketGraph*> get_Graphs() { return p_->G_; }
-    MarketGraph* get_Graph(int i) { return p_->G[i];}
+  int get_num_legs() const                        { return  p_->n_; }
+  Price_Size_Pair get_bid(int leg) const          { return merge_quote_bid_(leg); }
+  Price_Size_Pair get_user_bid(int leg) const     { return (p_->uQuote_)[0][leg]; }
+  Price_Size_Pair get_implied_bid(int leg) const  { return (p_->iQuote_)[0][leg]; }
+  Price_Size_Pair get_ask(int leg) const          { return merge_quote_ask_(leg); }
+  Price_Size_Pair get_user_ask(int leg) const     { return (p_->uQuote_)[1][leg]; }
+  Price_Size_Pair get_implied_ask(int leg) const  { return (p_->iQuote_)[1][leg]; }
+  std::vector<std::vector<std::pair<int, size_t>>> get_user_quote()    const { return p_->uQuote_; };
+  std::vector<std::vector<std::pair<int, size_t>>> get_implied_quote() const { return p_->iQuote_; };
+  std::vector<MarketGraph*> get_Graphs()          { return p_->G_; }
+  MarketGraph* get_Graph(int i)                   { return p_->G[i];}
 
 private:
   void init_();
@@ -81,7 +81,7 @@ private:
   void write_curve_(const std::vector<std::vector<std::pair<int, size_t>>>&) const;
   void write_quote_(const std::vector<std::vector<std::pair<int, size_t>>>&, int, std::ostream&) const;
 
-   mutable boost::shared_mutex mut_;
+  mutable boost::shared_mutex mut_;
   std::unique_ptr<impl<ImpliedEngine<N>>> p_;
 
 };

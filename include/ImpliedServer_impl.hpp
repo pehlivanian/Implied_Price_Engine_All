@@ -1,8 +1,10 @@
 #ifndef __IMPLIEDSERVER_IMPL_HPP__
 #define __IMPLIEDSERVER_IMPL_HPP__
 
-#define QUOTE QuotePublishEvent(std::pair<int, size_t>)
-#define MAKE_QUOTE(A, B) QuotePublishEvent(std::make_pair((A), (B)))
+#define QUOTE QuotePublishEvent
+#define MAKE_QUOTE(A, B) QUOTE(std::make_pair((A), (B)))
+#define SPREAD_QUOTE_PAIR std::pair< SecPair, QUOTE>
+#define MAKE_SPREAD_QUOTE_PAIR(A, B, C) std::make_pair((A), MAKE_QUOTE((B), (C)))
 
 static std::regex leg_pat(R"((Leg_)([\d]+))");
 static std::regex spread_pat(R"((Spread_)([\d]+)[_]([\d]+))");
@@ -104,23 +106,70 @@ ImpliedServer<N>::process_tasks_()
 
 }
 
+
+SPREAD_QUOTE_PAIR
+handler_(const rapidjson::Document &document, std::string typ) {
+
+    using namespace std;
+    using namespace rapidjson;
+
+    string Inst = document["Inst"].GetString();
+    smatch match;
+    SecPair sp;
+    int leg, spd0, spd1, pc;
+    size_t sz;
+
+    if (regex_match(Inst, match, leg_pat)) {
+        istringstream ss(match[2]);
+        ss >> leg;
+        sp = SecPair(leg, -1, 1);
+        pc = document[typ.c_str()].GetInt();
+        sz = static_cast<size_t>(document["size"].GetInt());
+    }
+    else if (regex_match(Inst, match, spread_pat)) {
+        istringstream ss0(match[2]), ss1(match[3]);
+        ss0 >> spd0; ss1 >> spd1;
+        sp = SecPair(spd0, spd1, 1);
+        pc = document[typ.c_str()].GetInt();
+        sz = static_cast<size_t>(document["size"].GetInt());
+    }
+    else {
+        throw ImpliedServerException();
+    }
+
+    return MAKE_SPREAD_QUOTE_PAIR( sp, pc, sz);
+
+
+}
+
+template<int N>
+void
+ImpliedServer<N>::quote_handler_(const rapidjson::Document &document) {
+
+    std::function<void()> publisher;
+
+    if (document.HasMember("bid")) {
+        auto q = handler_(document, std::string("bid"));
+        publisher = [this,q]() { return (p_->IE_)->publish_bid(q.first, q.second); };
+    }
+    else if (document.HasMember("ask")) {
+        auto q = handler_(document, std::string("ask"));
+        publisher = [this,q]() { return (p_->IE_)->publish_ask(q.first, q.second); };
+    }
+
+    tasks_.push_back(publisher);
+
+}
+
 template<int N>
 void
 ImpliedServer<N>::preload_tasks_()
 {
-    using namespace std;
-    using namespace rapidjson;
+    rapidjson::Document document;
 
-    Document document;
+    std::string tok;
 
-    string tok;
-    stringstream ss((p_->C_)->get_buf());
-
-    smatch match;
-    string Inst;
-    SecPair sp;
-    int leg, spd0, spd1, pc;
-    size_t sz;
+    std::stringstream ss((p_->C_)->get_buf());
 
     while(getline(ss, tok, '\n'))
     {
@@ -129,59 +178,17 @@ ImpliedServer<N>::preload_tasks_()
             fprintf(stderr, "Parse error!\n");
             return;
         };
-        assert(document.HasMember("Inst"));
-        if (document.HasMember("bid"))
-        {
-            Inst = document["Inst"].GetString();
-            if (regex_match(Inst, match, leg_pat))
-            {
-                istringstream ss(match[2]);
-                ss >> leg;
-                sp = SecPair(leg, -1, 1);
-                pc = document["bid"].GetInt();
-                sz = static_cast<size_t>(document["size"].GetInt());
-            }
-            if (regex_match(Inst, match, spread_pat))
-            {
-                istringstream ss0(match[2]), ss1(match[3]);
-                ss0 >> spd0; ss1 >> spd1;
-                sp = SecPair(spd0, spd1, 1);
-                pc = document["bid"].GetInt();
-                sz = static_cast<size_t>(document["size"].GetInt());
-            }
-            // Multi-threaded version call
-            std::function<void()> fn = [this,sp,pc,sz]() mutable { (p_->IE_)->publish_bid(sp, MAKE_QUOTE(pc,sz)); };
-            tasks_.push_back(fn);
-        }
-        else if (document.HasMember("ask"))
-        {
-            Inst = document["Inst"].GetString();
-            if (regex_match(Inst, match, leg_pat))
-            {
-                istringstream ss(match[2]);
-                ss >> leg;
-                sp = SecPair(leg, -1, 1);
-                pc = document["ask"].GetInt();
-                sz = static_cast<size_t>(document["size"].GetInt());
-            }
-            if (regex_match(Inst, match, spread_pat))
-            {
-                istringstream ss0(match[2]), ss1(match[3]);
-                ss0 >> spd0; ss1 >> spd1;
-                sp = SecPair(spd0, spd1, 1);
-                pc = document["ask"].GetInt();
-                sz = static_cast<size_t>(document["size"].GetInt());
-            }
 
-            // Multi-threaded version call
-            std::function<void()> fn = [this,sp,pc,sz]() mutable { (p_->IE_)->publish_ask(sp, MAKE_QUOTE(pc,sz)); };
-            tasks_.push_back(fn);
-        }
+        assert(document.HasMember("Inst"));
+
+        quote_handler_(document);
+
     }
 
-#undef QUOTE
+#undef MAKE_SPREAD_QUOTE_PAIR
+#undef SPREAD_QUOTE_PAIR
 #undef MAKE_QUOTE
-
+#undef QUOTE
 }
 
 #endif

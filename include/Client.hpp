@@ -41,9 +41,11 @@ public:
                                              bytes_read_(0)
   {}
   ClientComponent() = default;
+
   int fetch() { status_ = fill_buf(); return status_; }
   char* get_buf() const { return recvBuff_; }
   int get_bytes_read() const { return bytes_read_; }
+
   virtual ~ClientComponent();
 protected:
   virtual int fill_buf() = 0;
@@ -61,6 +63,11 @@ public:
   Client() = default;
   Client(const Client& rhs);
   int fill_buf() override;
+
+  int get_port() const { return port_; }
+  int get_status() const { return status_; }
+  char* get_buf() const { return recvBuff_; }
+
 private:
   void receive(uint32_t*, int);
 };

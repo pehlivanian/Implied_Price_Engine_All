@@ -11,6 +11,7 @@
 #include <regex>
 #include <sstream>
 #include <functional>
+#include <exception>
 
 #include "rapidjson/document.h"
 #include "rapidjson/prettywriter.h"
@@ -19,6 +20,7 @@
 #include "problem.hpp"
 
 #include "ImpliedEngine.hpp"
+#include "ImpliedQuoteSubscriber.hpp"
 #include "Client.hpp"
 #include "SecPair.hpp"
 #include "impl.hpp"
@@ -26,6 +28,12 @@
 #define QUOTE(A, B) QuotePublishEvent(std::make_pair((A), (B)))
 
 using Price_Size_Pair = std::pair<int, size_t>;
+
+struct ImpliedServerException : public std::exception {
+    const char *what() const noexcept override {
+        return "Invalid Quote";
+    }
+};
 
 template<int N>
 class ImpliedServer;
@@ -36,7 +44,6 @@ class ImpliedServer
 public:
     ImpliedServer(bool sim_mode=true, int port=8008) :
             p_(std::make_unique<impl<ImpliedServer<N>>>(sim_mode, port)) { init_(); }
-    void process() { preload_tasks_(); profiled_process_tasks_(); };
 
     // Here come the delegators
     void publish_bid(const SecPair& sp, const QuotePublishEvent& e)  { (p_->IE_)->publish_bid(sp, e); }
@@ -61,12 +68,15 @@ public:
     Price_Size_Pair get_implied_bid(int leg) const { return (p_->IE_)->get_implied_bid(leg); }
     Price_Size_Pair get_ask(int leg) const         { return (p_->IE_)->get_ask(leg); }
     Price_Size_Pair get_user_ask(int leg) const    { return (p_->IE_)->get_user_ask(leg); }
-    Price_Size_Pair get_implied_ask(int leg) const  { return (p_->IE_)->get_implied_ask(leg); }
+    Price_Size_Pair get_implied_ask(int leg) const { return (p_->IE_)->get_implied_ask(leg); }
+
+    void process() { preload_tasks_(); profiled_process_tasks_(); };
 
 private:
     void preload_tasks_();
     void process_tasks_();
     void profiled_process_tasks_();
+    void quote_handler_(const rapidjson::Document &document);
 
     void init_();
     std::unique_ptr<impl<ImpliedServer<N>>> p_;
