@@ -48,11 +48,12 @@ QuoteServer::send(int num, int fd) {
   return 0;
 }
 
+
 void
 QuoteServer::poll(short max_served) {
 
   int ret_in;
-  time_t ticks;
+  // time_t ticks;
   bool tight_wait = true;
   short served = 0;
 
@@ -60,11 +61,13 @@ QuoteServer::poll(short max_served) {
       connfd_ = accept(listenfd_, (struct sockaddr *) NULL, NULL);
 
       // Do this everytime in a tight loop so that we
-      // can avoid shutdown when underlying file changes
+      // can detect when underlying file changes
       size_t f_size = file_size(filename_to_serve_);
-      char *sendBuff;
-      sendBuff = (char *)malloc(f_size * (size_t)sizeof(char));
-      // char sendBuff[f_size];
+
+      // char *sendBuff;
+      // sendBuff = (char *)malloc(f_size * (size_t)sizeof(char));
+
+      char sendBuff[f_size];
       memset(sendBuff, '0', f_size);
 
       size_t input_fd = open(filename_to_serve_, O_RDONLY);
@@ -73,7 +76,7 @@ QuoteServer::poll(short max_served) {
           exit(EXIT_FAILURE);
       }
 
-      ticks = time(NULL);
+      // ticks = time(NULL);
 
       struct stat file_stat;
       fstat(input_fd, &file_stat);
@@ -90,11 +93,9 @@ QuoteServer::poll(short max_served) {
           }
       }
 
-      snprintf(sendBuff, sizeof(sendBuff), "%.24s\r\n", ctime(&ticks));
+      // snprintf(sendBuff, sizeof(sendBuff), "%.24s\r\n", ctime(&ticks));
 
       close(connfd_);
-
-      sleep(1);
   }
 }
 

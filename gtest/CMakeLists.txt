@@ -19,7 +19,7 @@ add_executable(SecPair_gtest SecPair_gtest.cpp)
 target_link_libraries(SecPair_gtest LINK_PUBLIC IElib ${GTEST_LIBRARIES} boost_system pthread)
 
 # QuoteEngine test
-add_executable(QuoteEngine_gtest QuoteEngine_gtest.cpp ImpliedClient_gtest.cpp)
+add_executable(QuoteEngine_gtest QuoteEngine_gtest.cpp)
 target_link_libraries(QuoteEngine_gtest LINK_PUBLIC IElib ${GTEST_LIBRARIES} boost_system pthread)
 configure_file( serveme.dat serveme.dat COPYONLY)
 

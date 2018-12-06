@@ -1,6 +1,12 @@
 #ifndef __IMPLIEDSERVER_IMPL_HPP__
 #define __IMPLIEDSERVER_IMPL_HPP__
 
+#define QUOTE QuotePublishEvent(std::pair<int, size_t>)
+#define MAKE_QUOTE(A, B) QuotePublishEvent(std::make_pair((A), (B)))
+
+static std::regex leg_pat(R"((Leg_)([\d]+))");
+static std::regex spread_pat(R"((Spread_)([\d]+)[_]([\d]+))");
+
 template<int N>
 class ImpliedServer;
 
@@ -107,14 +113,9 @@ ImpliedServer<N>::preload_tasks_()
 
     Document document;
 
-#define QUOTE(A, B) QuotePublishEvent(std::make_pair((A), (B)))
     string tok;
     stringstream ss((p_->C_)->get_buf());
 
-    // XXX
-    // At least make this static
-    regex leg_pat(R"((Leg_)([\d]+))");
-    regex spread_pat(R"((Spread_)([\d]+)[_]([\d]+))");
     smatch match;
     string Inst;
     SecPair sp;
@@ -149,7 +150,7 @@ ImpliedServer<N>::preload_tasks_()
                 sz = static_cast<size_t>(document["size"].GetInt());
             }
             // Multi-threaded version call
-            std::function<void()> fn = [this,sp,pc,sz]() mutable { (p_->IE_)->publish_bid(sp, QUOTE(pc,sz)); };
+            std::function<void()> fn = [this,sp,pc,sz]() mutable { (p_->IE_)->publish_bid(sp, MAKE_QUOTE(pc,sz)); };
             tasks_.push_back(fn);
         }
         else if (document.HasMember("ask"))
@@ -173,13 +174,13 @@ ImpliedServer<N>::preload_tasks_()
             }
 
             // Multi-threaded version call
-            std::function<void()> fn = [this,sp,pc,sz]() mutable { (p_->IE_)->publish_ask(sp, QUOTE(pc,sz)); };
+            std::function<void()> fn = [this,sp,pc,sz]() mutable { (p_->IE_)->publish_ask(sp, MAKE_QUOTE(pc,sz)); };
             tasks_.push_back(fn);
         }
     }
-#undef ask_p
-#undef bid_p
+
 #undef QUOTE
+#undef MAKE_QUOTE
 
 }
 

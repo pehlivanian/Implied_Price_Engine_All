@@ -34,6 +34,10 @@ TEST(ServerClientTest, Connect) {
         close(pipefd[1]);
 
         // Poll on separate thread
+        // auto t = std::thread(&QuoteServer::poll, QS, 1);
+        // t.join();
+
+        // Poll on separate thread
         auto t = std::thread(&QuoteServer::poll, QS, 1);
         t.join();
 
