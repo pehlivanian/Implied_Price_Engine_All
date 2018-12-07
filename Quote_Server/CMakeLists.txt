@@ -9,5 +9,5 @@ include_directories("../include")
 
 FOREACH(source ${SOURCES})
     add_executable(${source} ${source}.cpp)
-    target_link_libraries(${source} LINK_PUBLIC IElib boost_system)
+    target_link_libraries(${source} LINK_PUBLIC IElib boost_system pthread)
 ENDFOREACH(source)

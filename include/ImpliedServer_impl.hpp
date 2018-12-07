@@ -15,13 +15,15 @@ class ImpliedServer;
 template<int N>
 struct impl<ImpliedServer<N>>
 {
-    impl(bool sim_mode, int port) :
+    impl(bool sim_mode, bool sync_mode, int port) :
             sim_mode_(sim_mode),
+            sync_mode_(sync_mode),
             IE_(std::make_unique<ImpliedEngine<N>>()),
             C_(std::make_unique<Client>(port, (char*)"0.0.0.0"))
            {}
 
     bool sim_mode_;
+    bool sync_mode_;
     std::unique_ptr<ImpliedEngine<N>> IE_;
     std::unique_ptr<Client> C_;
 
@@ -101,8 +103,10 @@ template<int N>
 void
 ImpliedServer<N>::process_tasks_()
 {
-    for(auto& task : tasks_)
-        int r = task();
+    for(auto& task : tasks_) {
+        task();
+        (p_->IE_)->write_user_curve();
+    }
 
 }
 
@@ -139,7 +143,6 @@ handler_(const rapidjson::Document &document, std::string typ) {
 
     return MAKE_SPREAD_QUOTE_PAIR( sp, pc, sz);
 
-
 }
 
 template<int N>
@@ -150,14 +153,20 @@ ImpliedServer<N>::quote_handler_(const rapidjson::Document &document) {
 
     if (document.HasMember("bid")) {
         auto q = handler_(document, std::string("bid"));
-        publisher = [this,q]() { return (p_->IE_)->publish_bid(q.first, q.second); };
+        // publisher = [this,q]() { return (p_->IE_)->publish_bid(q.first, q.second); };
+        publisher = [this,q]() { return (p_->IE_)->publish_bid_state(q.first, q.second);};
     }
     else if (document.HasMember("ask")) {
         auto q = handler_(document, std::string("ask"));
-        publisher = [this,q]() { return (p_->IE_)->publish_ask(q.first, q.second); };
+        // publisher = [this,q]() { return (p_->IE_)->publish_ask(q.first, q.second); };
+        publisher = [this,q]() { return (p_->IE_)->publish_ask_state(q.first, q.second); };
     }
 
-    tasks_.push_back(publisher);
+    if (p_->sync_mode_) {
+        tasks_.push_back(publisher);
+    } else {
+        pool_.submit(publisher);
+    }
 
 }
 
