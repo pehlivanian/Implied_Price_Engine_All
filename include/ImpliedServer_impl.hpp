@@ -106,6 +106,7 @@ ImpliedServer<N>::process_tasks_()
     for(auto& task : tasks_) {
         task();
         (p_->IE_)->write_user_curve();
+        (p_->IE_)->write_implied_curve();
     }
 
 }

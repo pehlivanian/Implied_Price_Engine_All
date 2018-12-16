@@ -6,7 +6,7 @@
 
 int main(int argc, char **argv)
 {
-    QuoteSimulator<6>* QS = new QuoteSimulator<6>(1000);
+    QuoteSimulator<2>* QS = new QuoteSimulator<2>(1000);
     QS->process();
 
     return 0;

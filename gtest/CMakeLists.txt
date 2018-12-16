@@ -21,7 +21,8 @@ target_link_libraries(SecPair_gtest LINK_PUBLIC IElib ${GTEST_LIBRARIES} boost_s
 # QuoteEngine test
 add_executable(QuoteEngine_gtest QuoteEngine_gtest.cpp)
 target_link_libraries(QuoteEngine_gtest LINK_PUBLIC IElib ${GTEST_LIBRARIES} boost_system pthread)
-configure_file( serveme.dat serveme.dat COPYONLY)
+configure_file( serveme_2outrights.dat serveme_2outrights.dat COPYONLY)
+configure_file( serveme_6outrights.dat serveme_6outrights.dat COPYONLY)
 
 # Threadpool test
 add_executable(ThreadPool_gtest ThreadPool_gtest.cpp)

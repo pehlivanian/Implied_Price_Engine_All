@@ -85,6 +85,13 @@ TEST(Publishers, PublishTest) {
         ask_results[i] = pool.submit(ask_p(leg, quote, IE)).get();
     }
 
+    ASSERT_EQ( IE->get_bid(0).first, 4504);
+    ASSERT_EQ( IE->get_ask(0).first, 4514);
+    ASSERT_EQ( IE->get_bid(1).first, 4604);
+    ASSERT_EQ( IE->get_ask(1).first, 4614);
+    ASSERT_EQ( IE->get_bid(2).first, 4704);
+    ASSERT_EQ( IE->get_ask(2).first, 4714);
+
     int r1 = pool.submit(ask_p( SecPair(1, -1, 1), QUOTE(4610, 17), IE)).get();
     int r2 = pool.submit(ask_p( SecPair(0, 3,  1), QUOTE(-300, 17), IE)).get();
     int r3 = pool.submit(bid_p( SecPair(1, 3, 1),  QUOTE(-200, 2), IE)).get();
@@ -93,9 +100,17 @@ TEST(Publishers, PublishTest) {
     int r5 = pool.submit(bid_p( SecPair(2, 3,  1), QUOTE(-100, 17), IE)).get();
     int r6 = pool.submit(bid_p( SecPair(3, -1, 1), QUOTE(4805, 17), IE)).get();
 
-    // IE->write_user_curve();
-    // IE->write_implied_curve();
-    // IE->write_merged_curve();
+    IE->write_user_curve();
+    IE->write_implied_curve();
+    IE->write_merged_curve();
+
+    IE->write_dot(0, "Leg0.dot");
+    IE->write_dot(1, "Leg1.dot");
+    IE->write_dot(2, "Leg2.dot");
+    IE->write_dot(3, "Leg3.dot");
+    IE->write_dot(4, "Leg4.dot");
+    IE->write_dot(5, "Leg5.dot");
+
 
     ASSERT_EQ( IE->get_bid(0).first, 4504);
     ASSERT_EQ( IE->get_ask(0).first, 4510);
@@ -114,3 +129,4 @@ int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
+

@@ -3,8 +3,8 @@
 
 // XXX
 // Temporary; used for display purposes only in .dot output
-const int large_int =  200000;
-const int small_int =  100000;
+const int large_int =  20000000;
+const int small_int =  10000000;
 
 template<int N>
 class ImpliedEngine;
@@ -45,8 +45,8 @@ struct impl<ImpliedEngine<N>>
   int n_;
   int m_;
 
-    using atomic_price = std::atomic<int>;
-    using atomic_size  = std::atomic<size_t>;
+  using atomic_price = std::atomic<int>;
+  using atomic_size  = std::atomic<size_t>;
 
   std::vector<std::vector<std::pair<int, size_t>>>     uQuote_;
   std::vector<std::vector<std::pair<int, size_t>>>     iQuote_;
