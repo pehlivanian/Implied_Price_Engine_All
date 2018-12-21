@@ -49,15 +49,6 @@ public:
   inline void publish_bid(const SecPair&, const QuotePublishEvent&);
   inline void publish_ask(const SecPair&, const QuotePublishEvent&);
 
-  void publish_bid_state(const SecPair& secpair, const QuotePublishEvent& quote) {
-      std::cout << "PUBLISH BID: " << secpair << " : (" << quote.payload_.first << ", " << quote.payload_.second << ")\n";
-      publish_bid( secpair, quote);
-  }
-  void publish_ask_state(const SecPair& secpair, const QuotePublishEvent& quote) {
-      std::cout << "PUBLISH ASK: " << secpair << " : (" << quote.payload_.first << ", " << quote.payload_.second << ")\n";
-      publish_ask( secpair, quote);
-  }
-
   void write_user_curve() const;
   void write_implied_curve() const;
   void write_merged_curve() const;

@@ -6,14 +6,15 @@
 #include <future>
 #include <thread>
 #include <mutex>
+#include <utility>
 #include <vector>
 #include <type_traits>
 
 #include "threadsafe_queue.h"
 
 class function_wrapper;
-static void swap(function_wrapper &first,
-		 function_wrapper &second);
+
+static void swap(function_wrapper &first, function_wrapper &second);
 
 class function_wrapper
 {
@@ -81,7 +82,6 @@ static void swap(function_wrapper &first,
    swap(first.impl, second.impl);
 }
 
-
 class join_threads
 {
    std::vector<std::thread>& threads_;
@@ -109,7 +109,7 @@ class threadpool
 	     function_wrapper task;
 	     if (work_queue.try_pop(task))
 	       {
-		  task();
+		        task();
 	       }
 	     else
 	       {
@@ -128,8 +128,7 @@ class threadpool
 	   {
 	     for(unsigned i=0;i<thread_count;++i)
 	       {
-		 threads.push_back(std::thread(
-					       &threadpool::worker_thread,this));
+		        threads.push_back(std::thread(&threadpool::worker_thread,this));
 	       }
 	   }
 	 catch(...)

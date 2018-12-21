@@ -6,6 +6,8 @@
 #include <time.h>
 #include <sys/time.h>
 #include <vector>
+#include <thread>
+#include <chrono>
 #include <algorithm>
 #include <memory>
 #include <regex>
@@ -44,13 +46,15 @@ class ImpliedServer
 {
 public:
     ImpliedServer() :
-            p_(std::make_unique<impl<ImpliedServer<N>>>(true, true, 8008)) { init_(); }
-    ImpliedServer(bool sim_mode) :
-            p_(std::make_unique<impl<ImpliedServer<N>>>(sim_mode, true, 8008)) { init_(); }
-    ImpliedServer(bool sim_mode, int port) :
-            p_(std::make_unique<impl<ImpliedServer<N>>>(sim_mode, true, port)) { init_(); }
-    ImpliedServer(bool sim_mode, bool sync_mode, int port) :
-            p_(std::make_unique<impl<ImpliedServer<N>>>(sim_mode, sync_mode, port)) { init_(); }
+            p_(std::make_unique<impl<ImpliedServer<N>>>(true, false, true, 8008)) { init_(); }
+    ImpliedServer(bool sim_batch_mode) :
+            p_(std::make_unique<impl<ImpliedServer<N>>>(sim_batch_mode, false, true, 8008)) { init_(); }
+    ImpliedServer(bool sim_batch_mode, bool sim_realtime_mode) :
+            p_(std::make_unique<impl<ImpliedServer<N>>>(sim_batch_mode, sim_realtime_mode, true, 8008)) { init_(); }
+    ImpliedServer(bool sim_batch_mode, bool sim_realtime_mode, int port) :
+            p_(std::make_unique<impl<ImpliedServer<N>>>(sim_batch_mode, sim_realtime_mode, true, port)) { init_(); }
+    ImpliedServer(bool sim_batch_mode, bool sim_realtime_mode, bool sync_mode, int port) :
+            p_(std::make_unique<impl<ImpliedServer<N>>>(sim_batch_mode, sim_realtime_mode, sync_mode, port)) { init_(); }
 
     // Here come the delegators
     void publish_bid(const SecPair& sp, const QuotePublishEvent& e)  { (p_->IE_)->publish_bid(sp, e); }
@@ -77,8 +81,8 @@ public:
     Price_Size_Pair get_user_ask(int leg) const    { return (p_->IE_)->get_user_ask(leg); }
     Price_Size_Pair get_implied_ask(int leg) const { return (p_->IE_)->get_implied_ask(leg); }
 
-    void process_profiled() { preload_tasks_(); profiled_process_tasks_(); };
-    void process() { preload_tasks_(); process_tasks_(); }
+    void process_profiled();
+    void process();
 
 private:
     void preload_tasks_();

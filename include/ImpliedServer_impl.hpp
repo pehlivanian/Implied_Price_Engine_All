@@ -15,14 +15,16 @@ class ImpliedServer;
 template<int N>
 struct impl<ImpliedServer<N>>
 {
-    impl(bool sim_mode, bool sync_mode, int port) :
-            sim_mode_(sim_mode),
+    impl(bool sim_batch_mode, bool sim_realtime_mode, bool sync_mode, int port) :
+            sim_batch_mode_(sim_batch_mode),
+            sim_realtime_mode_(sim_realtime_mode),
             sync_mode_(sync_mode),
             IE_(std::make_unique<ImpliedEngine<N>>()),
             C_(std::make_unique<Client>(port, (char*)"0.0.0.0"))
            {}
 
-    bool sim_mode_;
+    bool sim_batch_mode_;
+    bool sim_realtime_mode_;
     bool sync_mode_;
     std::unique_ptr<ImpliedEngine<N>> IE_;
     std::unique_ptr<Client> C_;
@@ -33,8 +35,27 @@ template<int N>
 void
 ImpliedServer<N>::init_()
 {
-    if (p_->sim_mode_)
+    if (p_->sim_batch_mode_)
         (p_->C_)->fetch();
+}
+
+template<int N>
+void
+ImpliedServer<N>::process() {
+    if (p_->sim_batch_mode_) {
+        preload_tasks_();
+        process_tasks_();
+    } else if (p_->sim_realtime_mode_ ) {
+        // Assumes QuoteSimulator is publishing on port port_
+        ;
+    }
+};
+
+template<int N>
+void
+ImpliedServer<N>::process_profiled() {
+    preload_tasks_();
+    profiled_process_tasks_();
 }
 
 template<int N>
@@ -155,12 +176,30 @@ ImpliedServer<N>::quote_handler_(const rapidjson::Document &document) {
     if (document.HasMember("bid")) {
         auto q = handler_(document, std::string("bid"));
         // publisher = [this,q]() { return (p_->IE_)->publish_bid(q.first, q.second); };
-        publisher = [this,q]() { return (p_->IE_)->publish_bid_state(q.first, q.second);};
+        if (!(p_->sync_mode_)) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+            publisher = [this, q]() {
+                // (this->p_->IE_)->write_user_curve();
+                // (this->p_->IE_)->write_implied_curve();
+                return (p_->IE_)->publish_bid(q.first, q.second);
+            };
+        } else {
+            publisher = [this, q]() { return (p_->IE_)->publish_bid(q.first, q.second); };
+        }
     }
     else if (document.HasMember("ask")) {
         auto q = handler_(document, std::string("ask"));
         // publisher = [this,q]() { return (p_->IE_)->publish_ask(q.first, q.second); };
-        publisher = [this,q]() { return (p_->IE_)->publish_ask_state(q.first, q.second); };
+        if (!(p_->sync_mode_)) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+            publisher = [this, q]() {
+                // (this->p_->IE_)->write_user_curve();
+                // (this->p_->IE_)->write_implied_curve();
+                return (p_->IE_)->publish_ask(q.first, q.second);
+            };
+        } else {
+            publisher = [this,q]() { return (p_->IE_)->publish_ask(q.first, q.second); };
+        }
     }
 
     if (p_->sync_mode_) {
