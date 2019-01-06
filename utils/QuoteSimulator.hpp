@@ -10,6 +10,9 @@
 #include <vector>
 #include <algorithm>
 
+#include "rapidjson/document.h"
+#include "rapidjson/prettywriter.h"
+
 #include "SecPair.hpp"
 #include "ImpliedServer.hpp"
 
@@ -37,10 +40,13 @@ class QuoteSimulator
 public:
     QuoteSimulator(int num_quotes=1000) :
             num_quotes_(num_quotes),
+            // Only needed to aid in sensible quote generation
             IS_(new ImpliedServer<N>(false)),
             quotes_(num_quotes)
     {}
     void process() { create_quotes_(); }
+    void dump();
+    void attach(std::function<void(const rapidjson::Document&)> &);
 private:
     void create_quotes_();
 
@@ -113,6 +119,7 @@ int move_ask_price(int bid, int ask, int move_type, int inc, bool is_spread=fals
     }
     return r;
 }
+
 
 template<int N>
 void
@@ -242,9 +249,33 @@ QuoteSimulator<N>::create_quotes_()
     }
 #undef QUOTE
 
-    std::for_each(quotes_.begin(), quotes_.end(), [](const quote& q){ std::cout << q; });
 }
 
+
+template<int N>
+void
+QuoteSimulator<N>::attach(std::function<void(const rapidjson::Document&)> &callback_) {
+
+    rapidjson::Document document;
+    std::ostringstream stream;
+
+
+    for (auto q: quotes_) {
+        stream << q;
+        std::string streamString = stream.str();
+        if (document.Parse(streamString.c_str()).HasParseError()) {
+            fprintf(stderr, "Parse error!");
+            return;
+        }
+        callback_(document);
+    }
+}
+
+template<int N>
+void
+QuoteSimulator<N>::dump() {
+    std::for_each(quotes_.begin(), quotes_.end(), [](auto &q){ std::cout << q; });
+}
 
 #if 0
 // Refactor this with rapidjson eventually

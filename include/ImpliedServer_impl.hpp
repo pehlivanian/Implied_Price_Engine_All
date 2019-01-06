@@ -9,6 +9,8 @@
 static std::regex leg_pat(R"((Leg_)([\d]+))");
 static std::regex spread_pat(R"((Spread_)([\d]+)[_]([\d]+))");
 
+const int NUM_QUOTES = 1000000;
+
 template<int N>
 class ImpliedServer;
 
@@ -46,7 +48,6 @@ ImpliedServer<N>::process() {
         preload_tasks_();
         process_tasks_();
     } else if (p_->sim_realtime_mode_ ) {
-        // Assumes QuoteSimulator is publishing on port port_
         ;
     }
 };
@@ -177,7 +178,7 @@ ImpliedServer<N>::quote_handler_(const rapidjson::Document &document) {
         auto q = handler_(document, std::string("bid"));
         // publisher = [this,q]() { return (p_->IE_)->publish_bid(q.first, q.second); };
         if (!(p_->sync_mode_)) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+            std::this_thread::sleep_for(std::chrono::milliseconds(2));
             publisher = [this, q]() {
                 // (this->p_->IE_)->write_user_curve();
                 // (this->p_->IE_)->write_implied_curve();
@@ -191,7 +192,7 @@ ImpliedServer<N>::quote_handler_(const rapidjson::Document &document) {
         auto q = handler_(document, std::string("ask"));
         // publisher = [this,q]() { return (p_->IE_)->publish_ask(q.first, q.second); };
         if (!(p_->sync_mode_)) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+            std::this_thread::sleep_for(std::chrono::milliseconds(2));
             publisher = [this, q]() {
                 // (this->p_->IE_)->write_user_curve();
                 // (this->p_->IE_)->write_implied_curve();

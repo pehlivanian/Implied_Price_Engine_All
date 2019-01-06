@@ -8,6 +8,7 @@ int main(int argc, char **argv)
 {
     QuoteSimulator<2>* QS = new QuoteSimulator<2>(1000);
     QS->process();
+    QS->dump();
 
     return 0;
 }
