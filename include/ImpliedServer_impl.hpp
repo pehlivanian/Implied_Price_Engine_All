@@ -22,7 +22,8 @@ struct impl<ImpliedServer<N>>
             sim_realtime_mode_(sim_realtime_mode),
             sync_mode_(sync_mode),
             IE_(std::make_unique<ImpliedEngine<N>>()),
-            C_(std::make_unique<Client>(port, (char*)"0.0.0.0"))
+            C_(std::make_unique<Client>(port, (char*)"0.0.0.0")),
+            QS_(std::make_unique<QuoteSimulator<N>>(NuM_QUOTES))
            {}
 
     bool sim_batch_mode_;
@@ -30,7 +31,7 @@ struct impl<ImpliedServer<N>>
     bool sync_mode_;
     std::unique_ptr<ImpliedEngine<N>> IE_;
     std::unique_ptr<Client> C_;
-
+    std::unique_ptr<QuoteSimulator<N>> QS_;
 };
 
 template<int N>

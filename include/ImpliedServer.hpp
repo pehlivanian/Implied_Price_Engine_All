@@ -26,6 +26,7 @@
 #include "ImpliedQuoteSubscriber.hpp"
 #include "Client.hpp"
 #include "SecPair.hpp"
+#include "QuoteSimulator.hpp"
 #include "impl.hpp"
 
 #define QUOTE(A, B) QuotePublishEvent(std::make_pair((A), (B)))

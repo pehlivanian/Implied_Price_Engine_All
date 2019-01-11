@@ -1,5 +1,5 @@
 #ifndef __FIXED_POOL_CONTROLLER_HPP__
-#define __FIXED_POOl_CONTROLLER_HPP__
+#define __FIXED_POOL_CONTROLLER_HPP__
 
 #include <cstdlib>
 #include <algorithm>

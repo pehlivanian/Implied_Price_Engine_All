@@ -3,6 +3,7 @@
 
 #include "QuoteSubscriber.hpp"
 #include "BookPublisher.hpp"
+#include "BookSubscriber.hpp"
 
 using Price_Size_Pair = std::pair<int, size_t>;
 using QuotePublishEvent = QuoteSubscriber<Price_Size_Pair>::QuotePublishEvent;
@@ -12,14 +13,17 @@ class UserQuoteSubscriber : public QuoteSubscriber<Price_Size_Pair>, public Book
 {
 public:
   UserQuoteSubscriber()  = default;
+
   void update(const QuotePublishEvent& e ) override
   {
     notify(BookPublishEvent(e.payload_));
   }
+
   void update_bid(const QuotePublishEvent& e) override
   {
     notify_bid(BookPublishEvent(e.payload_));
   }
+
   void update_ask(const QuotePublishEvent& e) override
   {
     notify_ask(BookPublishEvent(e.payload_));

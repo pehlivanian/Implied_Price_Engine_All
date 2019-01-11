@@ -8,9 +8,9 @@ find_package(GTest REQUIRED)
 set(Boost_DEBUG on)
 
 # Locate Boost
-# find_package(Boost)
-# include_directories(${Boost_INCLUDE_DIRS} ${GTEST_INCLUDE_DIRS} "../include")
-# link_directories(${Boost_LIBRARY_DIR})
+find_package(Boost)
+include_directories(${Boost_INCLUDE_DIRS} ${GTEST_INCLUDE_DIRS} "../include")
+link_directories(${Boost_LIBRARY_DIR})
 
 #Link runTests with what we want to test and GTest and pthread libraries
 

@@ -57,7 +57,7 @@ void
 Publisher<T>::add_subscriber(std::shared_ptr<Subscriber<T>> S)
 {
   subscribers_.push_back(S);
-    futures_.push_back(std::future<int>());
+  futures_.push_back(std::future<int>());
 }
 
 template<typename T>
@@ -65,7 +65,7 @@ void
 Publisher<T>::add_bid_subscriber(Subscriber<T>* S)
 {
   bid_subscribers_.push_back(std::shared_ptr<Subscriber<T>>(S));
-    bid_futures_.push_back(std::future<int>());
+  bid_futures_.push_back(std::future<int>());
 }
 
 template<typename T>
@@ -73,7 +73,7 @@ void
 Publisher<T>::add_ask_subscriber(Subscriber<T>* S)
 {
   ask_subscribers_.push_back(std::shared_ptr<Subscriber<T>>(S));
-    ask_futures_.push_back(std::future<int>());
+  ask_futures_.push_back(std::future<int>());
 }
 
 template<typename T>
@@ -81,7 +81,7 @@ void
 Publisher<T>::add_bid_subscriber(std::shared_ptr<Subscriber<T>> S)
 {
   bid_subscribers_.push_back(S);
-    bid_futures_.push_back(std::future<int>());
+  bid_futures_.push_back(std::future<int>());
 }
 
 template<typename T>
@@ -89,7 +89,7 @@ void
 Publisher<T>::add_ask_subscriber(std::shared_ptr<Subscriber<T>> S)
 {
   ask_subscribers_.push_back(S);
-    ask_futures_.push_back(std::future<int>());
+  ask_futures_.push_back(std::future<int>());
 }
 
 #endif
