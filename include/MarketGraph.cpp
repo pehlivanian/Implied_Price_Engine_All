@@ -1,20 +1,17 @@
 #include "MarketGraph.hpp"
 
-template<class Intrinsic>
-MarketGraph<Intrinsic>::MarketGraph(MarketGraph&& rhs) noexcept :
+MarketGraph::MarketGraph(MarketGraph&& rhs) noexcept :
    vertex_props_(std::move(rhs.vertex_props_)),
    edge_props_(std::move(rhs.edge_props_)) {}
 
-template<class Intrinsic>
 MarketGraph&
-MarketGraph<Intrinsic>::operator=(MarketGraph&& rhs) noexcept
+MarketGraph::operator=(MarketGraph&& rhs) noexcept
 {
   return rhs;
 }
 
-template<class Intrinsic>
 SecPair
-MarketGraph<Intrinsic>::edgeProp(int u, int v) const
+MarketGraph::edgeProp(int u, int v) const
 {
 
   auto ib = edge_props_[u].begin();
@@ -28,23 +25,20 @@ MarketGraph<Intrinsic>::edgeProp(int u, int v) const
   return SecPair(-1, -1, 1);
 }
 
-template<class Intrinsic>
 SecPair
-MarketGraph<Intrinsic>::vertexProp(int u) const
+MarketGraph::vertexProp(int u) const
 {
   return vertex_props_[u];
 }
 
-template<class Intrinsic>
 void
-MarketGraph<Intrinsic>::addEdgeProp(int u, int v, const SecPair& p)
+MarketGraph::addEdgeProp(int u, int v, const SecPair& p)
 {
   edge_props_[u].emplace_front(v, p);
 }
 
-template<class Intrinsic>
 void
-MarketGraph<Intrinsic>::addVertexProp(int u, const SecPair& p)
+MarketGraph::addVertexProp(int u, const SecPair& p)
 {
   vertex_props_[u] = p;
 }

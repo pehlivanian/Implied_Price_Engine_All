@@ -11,7 +11,7 @@
 #include "Graph.hpp"
 #include "BinaryHeap.hpp"
 
-class cat1_visitor : public Visitor<Graph>
+class cat1_visitor : public Visitor
 {
 public:
   cat1_visitor() : s_(0) {}
@@ -23,7 +23,7 @@ public:
   size_t get_size(int k) const              { return size_[k]; }
   int get_predecessor(int k) const          { return pred_[k]; }
 private:
-  void generate(Graph*) override;
+  void generate(DataElement*) override;
   
   int s_;
   std::vector<int> pred_;

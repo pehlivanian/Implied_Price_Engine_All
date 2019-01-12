@@ -4,8 +4,10 @@ class NegativeCycle: public std::exception
 { const char* what() const throw() { return "Graph has a negative cycle"; }} NegativeCycle;
 
 void
-cat1_visitor::generate(Graph* d)
+cat1_visitor::generate(DataElement* d)
 {
+
+  Graph* g = dynamic_cast<Graph*>(d);
 
   const int n = g->numVertices();
   pred_.assign(n, -1);

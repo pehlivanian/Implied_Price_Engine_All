@@ -9,8 +9,7 @@
 #include "SecPair.hpp"
 #include "Graph.hpp"
 
-template<class Intrinsic>
-class MarketGraph : public Graph<Intrinsic>
+class MarketGraph : public Graph
 {
 public:
 
@@ -21,13 +20,13 @@ public:
   using VertexPropIterator = VertexPropList::iterator;
   using EdgePropIterator   = EdgePropList::iterator;
   
-  MarketGraph() : Graph<Intrinsic>(), 
+  MarketGraph() : Graph(), 
 		  vertex_props_(VertexPropList(1)),
 		  edge_props_(std::vector<EdgePropList>(1)) {}
-  MarketGraph(int n, bool d) : Graph<Intrinsic>(n, d),
+  MarketGraph(int n, bool d) : Graph(n, d),
 			       vertex_props_(VertexPropList(n)),
 			       edge_props_(std::vector<EdgePropList>(n)) {}
-  MarketGraph(int n) : Graph<Intrinsic>(n),
+  MarketGraph(int n) : Graph(n),
 		       vertex_props_(VertexPropList(n)),
 		       edge_props_(std::vector<EdgePropList>(n)) {}
   

@@ -37,8 +37,7 @@ using SERIALIZER_R = boost::shared_lock<boost::shared_mutex>;
 #define SERIALIZE_WRITES SERIALIZER_W lg(mut_);
 #define SERIALIZE_READS SERIALIZER_R ls(mut_);
 
-template<class Intrinsic>
-class Graph : public DataElement<Intrinsic>
+class Graph : public DataElement
 {
 public:
   using Graph_iterator = VertexList::const_iterator;
@@ -62,7 +61,7 @@ public:
   Graph(Graph&&) noexcept;
   Graph& operator=(Graph&&) noexcept;
 
-  inline void accept(Visitor<Graph>* v) {
+  inline void accept(Visitor* v) {
     // SERIALIZE_READS;
     v->visit(this);
   };

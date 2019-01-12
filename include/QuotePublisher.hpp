@@ -22,13 +22,10 @@ public:
 
   QuotePublisher() {}
 protected:
-  // These probably should use weak_ptrs but we don't want
-  // to incur the cost of calling .lock() to check for valid pointee.
-  // Instead we just assume it is not dangling.
   inline void notify(const QuotePublishEvent&) override;
   inline void notify_bid(const QuotePublishEvent&) override;
   inline void notify_ask(const QuotePublishEvent&) override;
-    // LW_threadpool<void> pool_;
+  // LW_threadpool<void> pool_;
 };
 
 

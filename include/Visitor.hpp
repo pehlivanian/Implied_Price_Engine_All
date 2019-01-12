@@ -1,16 +1,15 @@
 #ifndef __VISITOR_HPP__
 #define __VISITOR_HPP__
 
-template<template<typename> class Element>
+class DataElement;
+
 class Visitor
 {
 public:
-  template<typename Intrinsic>
-  inline void visit(Element<Intrinsic>* d) { generate(d); }
+  inline void visit(DataElement* d) { generate(d); }
   virtual ~Visitor() {}
 private:
-  template<typename Intrinsic>
-  void generate(Element<Intrinsic>*);
+  virtual void generate(DataElement*) = 0;
 protected:
   Visitor() {}
 };
