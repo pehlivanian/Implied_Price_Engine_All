@@ -29,7 +29,7 @@ public:
   void insert(int, int);
   // The reason we create our own binary heap
   // instead of using std::priority_queue<T> or
-  // a boost object : efficient implementation of the 
+  // a boost object is efficient implementation of the
   // following
   void decreaseKey(int, int);
 
@@ -37,7 +37,6 @@ private:
   int n_;
   ELEMENT_VEC elements_;
   INT_VEC pos_;
-
 };
 
 #endif

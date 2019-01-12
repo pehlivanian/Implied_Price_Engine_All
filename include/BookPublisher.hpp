@@ -3,49 +3,48 @@
 
 #include <list>
 #include <memory>
+#include <functional>
 
 #include "Publisher.hpp"
 #include "QuoteSubscriber.hpp"
 #include "MarketGraph.hpp"
 
-using Price_Size_Pair = std::pair<int, size_t>;
+using Price_Size_Pair  = std::pair<int, size_t>;
+using BookPublishEvent = QuoteSubscriber<Price_Size_Pair>::QuotePublishEvent;
+
 
 class BookPublisher : public Publisher<Price_Size_Pair>
 {
 public:
 
-  using BookPublishEvent = QuoteSubscriber<Price_Size_Pair>::QuotePublishEvent;
-
   BookPublisher() {}
 protected:
-  // These probably should use weak_ptrs but we don't want
-  // to incur the cost of calling .lock() to check for valid pointee.
-  // Instead we just assume it is not dangling.
-  inline void notify(const BookPublishEvent&) override;
+  inline void notify(const BookPublishEvent&)     override;
   inline void notify_bid(const BookPublishEvent&) override;
   inline void notify_ask(const BookPublishEvent&) override;
-  
+
 };
+
+inline void notify_(const BookPublishEvent& e, const typename Publisher<Price_Size_Pair>::Subscribers& s) {
+  std::for_each(s.begin(), s.end(), [&e](auto s_) { s_->update(e); } );
+}
 
 inline void
 BookPublisher::notify(const BookPublishEvent& e)
 {
-  for(auto& s : subscribers_)
-    s->update(e);
+  notify_( e, subscribers_);
 }
 
 inline void
 BookPublisher::notify_bid(const BookPublishEvent& e)
 {
-  for(auto& s : bid_subscribers_)
-    s->update_bid(e);
+  notify_(e, bid_subscribers_);
 }
 
 inline void
 BookPublisher::notify_ask(const BookPublishEvent& e)
 {
-  for(auto& s : ask_subscribers_)
-    s->update_ask(e);
+  notify_(e, ask_subscribers_);
 }
 
 #endif

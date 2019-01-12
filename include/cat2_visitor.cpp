@@ -1,9 +1,8 @@
 #include "cat2_visitor.hpp"
 
 void 
-cat2_visitor::generate(DataElement* d)
+cat2_visitor::generate(Graph* d)
 {
-  Graph *g = dynamic_cast<Graph*>(d);
 
   const int n = g->numVertices();
   pred_.assign(n, -1);

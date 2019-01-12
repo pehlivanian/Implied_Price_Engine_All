@@ -1,6 +1,7 @@
 #include "Graph.hpp"
 
-Graph::Graph(const Graph& rhs)
+template<class Intrinsic>
+Graph<Intrinsic>::Graph(const Graph& rhs)
 {
   // SERIALIZE_WRITES;
   n_ = rhs.n_;
@@ -8,20 +9,23 @@ Graph::Graph(const Graph& rhs)
   std::copy(rhs.vertices_.begin(), rhs.vertices_.end(), vertices_.begin());
 }
 
-Graph::Graph(Graph&& rhs) noexcept :
+template<class Intrinsic>
+Graph<Intrinsic>::Graph(Graph&& rhs) noexcept :
   n_(rhs.n_),
   directed_(rhs.directed_),
   vertices_(std::move(rhs.vertices_))
 {}
 
-Graph&
-Graph::operator=(Graph&& rhs) noexcept
+template<class Intrinsic>
+Graph<Intrinsic>&
+Graph<Intrinsic>::operator=(Graph&& rhs) noexcept
 {
   return rhs;
 }	
 
+template<class Intrinsic>
 inline bool
-Graph::isEdge(int v1, int v2) const
+Graph<Intrinsic>::isEdge(int v1, int v2) const
 {
   // SERIALIZE_READS;
   for(CVertexIterator ei = vertices_[v1].begin(),
@@ -35,8 +39,9 @@ Graph::isEdge(int v1, int v2) const
   return false;
 }
 
+template<class Intrinsic>
 inline bool
-Graph::isEdge(int v1, int v2, std::pair<int,size_t>& w) const
+Graph<Intrinsic>::isEdge(int v1, int v2, std::pair<int,size_t>& w) const
 {
   // SERIALIZE_READS;
   for(CVertexIterator ei = vertices_[v1].begin(),
@@ -53,8 +58,9 @@ Graph::isEdge(int v1, int v2, std::pair<int,size_t>& w) const
   return false;
 }
 
+template<class Intrinsic>
 inline int
-Graph::edgeWeight(int v1, int v2) const
+Graph<Intrinsic>::edgeWeight(int v1, int v2) const
 {
   // SERIALIZE_READS;
     CVertexIterator ei = vertices_[v1].begin();
@@ -69,8 +75,9 @@ Graph::edgeWeight(int v1, int v2) const
 
 }
 
+template<class Intrinsic>
 void 
-Graph::load (std::string filename) {
+Graph<Intrinsic>::load (std::string filename) {
   FILE *fp = fopen (filename.c_str(), "r");
   int nv, ne;
 
@@ -115,8 +122,9 @@ Graph::load (std::string filename) {
   fclose(fp);
 }
 
+template<class Intrinsic>
 void
-Graph::addEdge(int v1, int v2, const std::pair<int, size_t>& p)
+Graph<Intrinsic>::addEdge(int v1, int v2, const std::pair<int, size_t>& p)
 {
     // No need to SERIALIZE as we are assuming this is only called on init_()
     vertices_[v1].emplace_front(v2, p);
@@ -125,23 +133,25 @@ Graph::addEdge(int v1, int v2, const std::pair<int, size_t>& p)
         vertices_[v2].emplace_front(v1, p);
 }
 
+template<class Intrinsic>
 void
-Graph::addEdge(int v1, int v2, int w1, int w2)
+Graph<Intrinsic>::addEdge(int v1, int v2, int w1, int w2)
 {
 
     addEdge(v1, v2, std::make_pair(w1, w2));
 }
 
+template<class Intrinsic>
 void
-Graph::addEdge(int v1, int v2)
+Graph<Intrinsic>::addEdge(int v1, int v2)
 {
   // No need to SERIALLIZE as we are assuming this is only called on init_()
   addEdge(v1, v2, 1, 0);
 }
 
-
+template<class Intrinsic>
 bool
-Graph::removeEdge(int v1, int v2)
+Graph<Intrinsic>::removeEdge(int v1, int v2)
 {
   // No need to SERIALIZE as we are assuming this is only called on init_()
   bool found = false;
@@ -172,9 +182,10 @@ Graph::removeEdge(int v1, int v2)
   return true;
 }
 
+template<class Intrinsic>
 // This function will assuredly be hot
 bool
-Graph::updateEdgeWeight(int v1, int v2, int w1, size_t w2)
+Graph<Intrinsic>::updateEdgeWeight(int v1, int v2, int w1, size_t w2)
 {
   // SERIALIZE_WRITES;
   // VertexList vl = vertices_[v1];

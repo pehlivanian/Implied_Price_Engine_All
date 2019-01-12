@@ -86,7 +86,7 @@ BinaryHeap::decreaseKey(int id, int newPriority)
   int size = n_;
   
   // truncate heap (temporarily) and act like the binary heap up to
-  // but not including this one is all that exists (cute, huh?) 
+  // but not including this one is all that exists
   n_ = pos_[id] - 1;
 
   // now we insert and the binary heap is shuffled appropriately
