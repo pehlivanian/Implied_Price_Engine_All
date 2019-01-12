@@ -15,7 +15,7 @@ include_directories(${BOOST_INCLUDE_DIR})
 link_directories(${BOOST_LIBRARY_DIR})
 
 add_subdirectory(include)
-add_subdirectory(utils)
+add_subdirectory(examples)
 add_subdirectory(Timed_examples)
 add_subdirectory(Quote_Server)
 if(BUILD_LTTNG)

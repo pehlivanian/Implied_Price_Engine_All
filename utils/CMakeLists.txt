@@ -5,10 +5,8 @@ set(warnings "-Wall -Wparenthesis -Wno-unused-variable -Wno-sign-compare ")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} "../include")
 
-set(SOURCES Create_QuoteStream)
-
-FOREACH(source ${SOURCES})
-    add_executable(${source} ${source}.cpp)
-    target_link_libraries(${source} LINK_PUBLIC IElib pthread boost_thread boost_system)
-ENDFOREACH(source)
+# FOREACH(source ${SOURCES})
+#     add_executable(${source} ${source}.cpp)
+#     target_link_libraries(${source} LINK_PUBLIC IElib pthread boost_thread boost_system)
+# ENDFOREACH(source)
 

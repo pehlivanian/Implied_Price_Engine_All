@@ -28,12 +28,12 @@ public:
                             connfd_(0),
                             assigned_port_(-1)
     { filename_to_serve_ = new char(24); strcpy(filename_to_serve_, "serveme.dat"); bind_and_listen(); }
-    QuoteServer(char* filename) : port_(0),
+    QuoteServer(const char* filename) : port_(0),
                                   listenfd_(0),
                                   connfd_(0),
                                   assigned_port_(-1)
     { filename_to_serve_ = new char(strlen(filename)); strcpy(filename_to_serve_, filename); }
-    QuoteServer(char* filename, int port) : port_(port),
+    QuoteServer(const char* filename, int port) : port_(port),
                                             listenfd_(0),
                                             connfd_(0),
                                             assigned_port_(-1)

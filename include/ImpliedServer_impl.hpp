@@ -23,7 +23,7 @@ struct impl<ImpliedServer<N>>
             sync_mode_(sync_mode),
             IE_(std::make_unique<ImpliedEngine<N>>()),
             C_(std::make_unique<Client>(port, (char*)"0.0.0.0")),
-            QS_(std::make_unique<QuoteSimulator<N>>(NuM_QUOTES))
+            QS_(std::make_unique<QuoteSimulator<N>>(NUM_QUOTES))
            {}
 
     bool sim_batch_mode_;
@@ -48,8 +48,10 @@ ImpliedServer<N>::process() {
     if (p_->sim_batch_mode_) {
         preload_tasks_();
         process_tasks_();
-    } else if (p_->sim_realtime_mode_ ) {
-        ;
+    } else if (p_->sim_realtime_mode_ ) {   
+      (p_->QS_)->process();
+      auto mp = std::bind(&ImpliedServer<N>::quote_handler_, this, std::placeholders::_1 );
+      (p_->QS_)->attach( std::ref(mp));
     }
 };
 
