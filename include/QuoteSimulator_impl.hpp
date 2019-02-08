@@ -191,11 +191,15 @@ QuoteSimulator<N>::attach( std::function<void(const rapidjson::Document &)> call
     for (auto q: quotes_) {
         stream << q;
         std::string streamString = stream.str();
-        if (document.Parse(streamString.c_str()).HasParseError()) {
-            fprintf(stderr, "Parse error!");
-            return;
-        }
         callback(std::forward<rapidjson::Document>(document));
+
+	/*
+	  if (document.Parse(streamString.c_str()).HasParseError()) {
+	  fprintf(stderr, "Parse error!");
+	  return;
+	  }
+	*/
+
     }
 }
 

@@ -7,8 +7,6 @@ set(warnings "-Wall -Wparenthesis -Wno-unused-variable -Wno-sign-compare ")
 option(BUILD_GTESTS "Builds the googletest subdirectory" ON)
 option(BUILD_LTTNG "Builds the lttng trace subdirectory" OFF)
 
-message(WARNING "CMAKE_SOURCE_DIR is ${CMAKE_SOURCE_DIR}")
-
 # Handle Boost here
 find_package(Boost COMPONENTS system filesystem REQUIRED)
 include_directories(${BOOST_INCLUDE_DIR})

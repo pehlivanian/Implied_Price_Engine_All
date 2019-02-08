@@ -207,7 +207,12 @@ ImpliedServer<N>::quote_handler_(const rapidjson::Document &document) {
     }
 
     if (p_->sync_mode_) {
+      if (p_->sim_realtime_mode_) {
+	publisher();
+      }
+      else {
         tasks_.push_back(publisher);
+      }
     } else {
         pool_.submit(publisher);
     }

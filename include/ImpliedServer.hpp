@@ -52,6 +52,8 @@ public:
             p_(std::make_unique<impl<ImpliedServer<N>>>(sim_batch_mode, false, true, 8008)) { init_(); }
     ImpliedServer(bool sim_batch_mode, bool sim_realtime_mode) :
             p_(std::make_unique<impl<ImpliedServer<N>>>(sim_batch_mode, sim_realtime_mode, true, 8008)) { init_(); }
+    ImpliedServer(bool sim_batch_mode, bool sim_realtime_mode, bool sync_mode) :
+      p_(std::make_unique<impl<ImpliedServer<N>>>(sim_batch_mode, sim_realtime_mode, sync_mode, 8008)) { init_(); }
     ImpliedServer(bool sim_batch_mode, bool sim_realtime_mode, int port) :
             p_(std::make_unique<impl<ImpliedServer<N>>>(sim_batch_mode, sim_realtime_mode, true, port)) { init_(); }
     ImpliedServer(bool sim_batch_mode, bool sim_realtime_mode, bool sync_mode, int port) :
