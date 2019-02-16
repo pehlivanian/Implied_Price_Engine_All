@@ -184,23 +184,28 @@ QuoteSimulator<N>::create_quotes_()
 template<int N>
 void
 QuoteSimulator<N>::attach( std::function<void(const rapidjson::Document &)> callback) {
+  std::string tok;
+  
+  for (auto it=quotes_.begin(); it!=quotes_.end(); ++it) {
+    std::stringstream stream = std::stringstream();
     rapidjson::Document document;
-    std::ostringstream stream;
 
+    stream << *it;
+    tok = stream.str();
 
-    for (auto q: quotes_) {
-        stream << q;
-        std::string streamString = stream.str();
-        callback(std::forward<rapidjson::Document>(document));
-
-	/*
-	  if (document.Parse(streamString.c_str()).HasParseError()) {
-	  fprintf(stderr, "Parse error!");
-	  return;
-	  }
-	*/
-
+    if (document.Parse(tok.c_str()).HasParseError()) {
+      if (document.IsArray()) {
+	std::cout << "ARRAY " << std::distance(quotes_.begin(), it) << " : " << tok << "\n";
+      }
+      else {
+	std::cout << "SOME ERROR " << std::distance(quotes_.begin(), it) << " : " << tok << "\n";
+      }
     }
+    else {
+      std::cout << "CLEAN " << std::distance(quotes_.begin(), it) << " : " << tok << "\n";
+    }
+    callback(document);
+  }
 }
 
 template<int N>

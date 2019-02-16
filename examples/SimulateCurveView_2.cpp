@@ -2,6 +2,7 @@
 
 auto main(int argc, char **argv) -> int {
 
+  // sim_batch_mode, sim_realtime_mode, sync_mode
   ImpliedServer<6> *IS = new ImpliedServer<6>(false, true, true);
   
   IS->process();

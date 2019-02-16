@@ -44,9 +44,13 @@ auto main(int argc, char **argv) -> int {
     sleep(2);
 
     std::cerr << "Creating implied client...\n";
-    ImpliedServer<6> *IS = new ImpliedServer<6>(true, false, port);
+    // Batch mode
+    // ImpliedServer<6> *IS = new ImpliedServer<6>(true, false, true, port);
+    // Realtime mode
+    ImpliedServer<6> *IS = new ImpliedServer<6>(false, true, true, port);
     IS->process();
 
+    IS->write_user_curve();
     IS->write_merged_curve();
     
     return 0;

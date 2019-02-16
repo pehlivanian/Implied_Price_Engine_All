@@ -9,7 +9,7 @@
 static std::regex leg_pat(R"((Leg_)([\d]+))");
 static std::regex spread_pat(R"((Spread_)([\d]+)[_]([\d]+))");
 
-const int NUM_QUOTES = 1000000;
+const int NUM_QUOTES = 10000;
 
 template<int N>
 class ImpliedServer;
@@ -18,20 +18,20 @@ template<int N>
 struct impl<ImpliedServer<N>>
 {
     impl(bool sim_batch_mode, bool sim_realtime_mode, bool sync_mode, int port) :
-            sim_batch_mode_(sim_batch_mode),
-            sim_realtime_mode_(sim_realtime_mode),
-            sync_mode_(sync_mode),
-            IE_(std::make_unique<ImpliedEngine<N>>()),
-            C_(std::make_unique<Client>(port, (char*)"0.0.0.0")),
-            QS_(std::make_unique<QuoteSimulator<N>>(NUM_QUOTES))
-           {}
-
-    bool sim_batch_mode_;
-    bool sim_realtime_mode_;
-    bool sync_mode_;
-    std::unique_ptr<ImpliedEngine<N>> IE_;
-    std::unique_ptr<Client> C_;
-    std::unique_ptr<QuoteSimulator<N>> QS_;
+      sim_batch_mode_(sim_batch_mode),
+      sim_realtime_mode_(sim_realtime_mode),
+      sync_mode_(sync_mode),
+      IE_(std::make_unique<ImpliedEngine<N>>()),
+      C_(std::make_unique<Client>(port, (char*)"0.0.0.0")),
+      QS_(std::make_unique<QuoteSimulator<N>>(NUM_QUOTES))
+  {}
+  
+  bool sim_batch_mode_;
+  bool sim_realtime_mode_;
+  bool sync_mode_;
+  std::unique_ptr<ImpliedEngine<N>> IE_;
+  std::unique_ptr<Client> C_;
+  std::unique_ptr<QuoteSimulator<N>> QS_;
 };
 
 template<int N>
