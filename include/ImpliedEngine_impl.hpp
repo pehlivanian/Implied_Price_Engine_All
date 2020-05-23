@@ -243,6 +243,13 @@ ImpliedEngine<N>::init_subscribers_()
 	    {
 	      int v1 = j, v2 = eb->first;
 	      SecPair mkt = eb->second;
+
+	      std::cout << i << " : " << j << " : " << mkt.leg0() << " : " << mkt.leg1() << " : " << mkt << std::endl;
+
+	      if ((i == 2) && (j == 2)) {
+		printf("BOMB\n");
+	      }
+
 	      int ind = (p_->Decomposer_)->node_from_market_decomp(mkt.abs());
 
 	      IQSub IQSubscriber     = std::make_shared<ImpliedQuoteSubscriber>(v1, v2, (p_->G_)[i], i);
@@ -464,3 +471,4 @@ ImpliedEngine<N>::init_()
 }
 
 #endif
+

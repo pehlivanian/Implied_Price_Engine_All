@@ -28,8 +28,8 @@ int send(int num, int fd)
 {
   int converted_number = htonl(num);
  
- write(fd, &converted_number, sizeof(converted_number));
- return 0;
+  write(fd, &converted_number, sizeof(converted_number));
+  return 0;
 }
 
 int main(int argc, char **argv)
