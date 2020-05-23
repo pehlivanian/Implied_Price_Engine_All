@@ -3,7 +3,8 @@
 void 
 cat2_visitor::generate(DataElement* d)
 {
-  Graph *g = dynamic_cast<Graph*>(d);
+
+  Graph* g = dynamic_cast<Graph*>(d);
 
   const int n = g->numVertices();
   pred_.assign(n, -1);

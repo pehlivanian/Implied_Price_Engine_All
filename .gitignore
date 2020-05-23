@@ -1,4 +1,5 @@
 *~
+*#
 *.txt
 out
 *.pyc
@@ -7,5 +8,11 @@ out
 *.d
 *.cmake
 Makefile
-
+gmon.out
+*.xml
+*.iml
+cmake-build-debug/
+html/
+.idea/
+latex/
 

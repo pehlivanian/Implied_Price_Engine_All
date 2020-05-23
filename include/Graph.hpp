@@ -16,6 +16,7 @@
 #include <boost/thread/shared_mutex.hpp>
 
 #include "DataElement.hpp"
+#include "Visitor.hpp"
 #include "IE_types.hpp"
 
 const size_t NUM_INSERTS = 100;
@@ -35,7 +36,6 @@ using SERIALIZER_R = boost::shared_lock<boost::shared_mutex>;
 
 #define SERIALIZE_WRITES SERIALIZER_W lg(mut_);
 #define SERIALIZE_READS SERIALIZER_R ls(mut_);
-
 
 class Graph : public DataElement
 {
@@ -61,7 +61,7 @@ public:
   Graph(Graph&&) noexcept;
   Graph& operator=(Graph&&) noexcept;
 
-  inline void accept(Visitor* v) override {
+  inline void accept(Visitor* v) {
     // SERIALIZE_READS;
     v->visit(this);
   };
@@ -72,8 +72,8 @@ public:
   inline bool isEdge(int, int, std::pair<int, size_t>&) const;
   inline int edgeWeight(int, int) const;
 
-    void addEdge(int, int,  const std::pair<int,size_t>&);
-    void addEdge(int, int);
+  void addEdge(int, int,  const std::pair<int,size_t>&);
+  void addEdge(int, int);
   void addEdge(int, int, int, int);
   bool removeEdge(int, int);
   bool updateEdgeWeight(int, int, int, size_t);

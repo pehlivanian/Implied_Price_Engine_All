@@ -6,6 +6,7 @@ class NegativeCycle: public std::exception
 void
 cat1_visitor::generate(DataElement* d)
 {
+
   Graph* g = dynamic_cast<Graph*>(d);
 
   const int n = g->numVertices();

@@ -3,8 +3,8 @@
 
 // XXX
 // Temporary; used for display purposes only in .dot output
-const int large_int =   200000;
-const int small_int =  100000;
+const int large_int =  20000000;
+const int small_int =  10000000;
 
 template<int N>
 class ImpliedEngine;
@@ -45,8 +45,8 @@ struct impl<ImpliedEngine<N>>
   int n_;
   int m_;
 
-    using atomic_price = std::atomic<int>;
-    using atomic_size = std::atomic<size_t>;
+  using atomic_price = std::atomic<int>;
+  using atomic_size  = std::atomic<size_t>;
 
   std::vector<std::vector<std::pair<int, size_t>>>     uQuote_;
   std::vector<std::vector<std::pair<int, size_t>>>     iQuote_;
@@ -61,7 +61,7 @@ struct impl<ImpliedEngine<N>>
 
 template<int N>
 Price_Size_Pair
-ImpliedEngine<N>::merge_quote_bid_(int leg)
+ImpliedEngine<N>::merge_quote_bid_(int leg) const
 {
     // SERIALIZE_READS;
     Price_Size_Pair uq = (p_->uQuote_)[0][leg];
@@ -76,7 +76,7 @@ ImpliedEngine<N>::merge_quote_bid_(int leg)
 
 template<int N>
 Price_Size_Pair
-ImpliedEngine<N>::merge_quote_ask_(int leg)
+ImpliedEngine<N>::merge_quote_ask_(int leg) const
 {
     // SERIALIZE_READS;
     Price_Size_Pair uq = (p_->uQuote_)[1][leg];
@@ -165,17 +165,17 @@ ImpliedEngine<N>::init_markets_()
       auto ib = (p_->all_markets_).begin();
       auto ie = (p_->all_markets_).end();
       while(ib != ie)
-	{
-	  if ((ib->f_ == i) && (ib->b_ >= 0))
-	    {
-	      (p_->G_)[i]->addVertexProp(node_num++, *ib);
-	    }
-	  if ((ib->b_ == i) && (ib->f_ >= 0))
-	    {
-	      SecPair p(ib->f_, ib->b_, -1 * ib->mult_);
-	      (p_->G_)[i]->addVertexProp(node_num++, p);
-	    }
-	  ++ib;
+	  {
+          if ((ib->leg0() == i) && (ib->leg1() >= 0))
+            {
+              (p_->G_)[i]->addVertexProp(node_num++, *ib);
+            }
+          if ((ib->leg1() == i) && (ib->leg0() >= 0))
+            {
+              SecPair p(ib->leg0(), ib->leg1(), -1 * ib->mult());
+              (p_->G_)[i]->addVertexProp(node_num++, p);
+            }
+          ++ib;
 	}
 
       // Add all edge markets

@@ -16,12 +16,12 @@ class cat1_visitor : public Visitor
 public:
   cat1_visitor() : s_(0) {}
   cat1_visitor(int s) : s_(s) {}
-  std::vector<int> get_distance() const { return dist_; }
-  std::vector<size_t> get_size() const { return size_; }
+  std::vector<int> get_distance() const     { return dist_; }
+  std::vector<size_t> get_size() const      { return size_; }
   std::vector<int> get_predecessor () const { return pred_; }
-    int get_distance(int k) const { return dist_[k]; }
-    size_t get_size(int k) const { return size_[k]; }
-    int get_predecessor(int k) const { return pred_[k]; }
+  int get_distance(int k) const             { return dist_[k]; }
+  size_t get_size(int k) const              { return size_[k]; }
+  int get_predecessor(int k) const          { return pred_[k]; }
 private:
   void generate(DataElement*) override;
   

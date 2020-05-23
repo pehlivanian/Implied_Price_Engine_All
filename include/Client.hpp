@@ -36,15 +36,22 @@ struct quote_msg
 class ClientComponent
 {
 public:
-  ClientComponent(int port, char* IP_addr) : port_(port), IP_addr_(IP_addr) {}
+  ClientComponent(int port, char* IP_addr) : port_(port),
+                                             IP_addr_(IP_addr),
+                                             bytes_read_(0)
+  {}
   ClientComponent() = default;
-  inline char* fetch() { status_ = fill_buf(); }
-  inline char* get_buf() { return recvBuff_; }
+
+  int fetch() { status_ = fill_buf(); return status_; }
+  char* get_buf() const { return recvBuff_; }
+  int get_bytes_read() const { return bytes_read_; }
+
   virtual ~ClientComponent();
 protected:
   virtual int fill_buf() = 0;
   int port_;
   int status_;
+  int bytes_read_;
   char* IP_addr_;
   char *recvBuff_;
 };
@@ -56,6 +63,11 @@ public:
   Client() = default;
   Client(const Client& rhs);
   int fill_buf() override;
+
+  int get_port() const { return port_; }
+  int get_status() const { return status_; }
+  char* get_buf() const { return recvBuff_; }
+
 private:
   void receive(uint32_t*, int);
 };

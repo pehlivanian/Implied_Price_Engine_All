@@ -20,6 +20,7 @@
 #include <boost/graph/edge_list.hpp>
 #include <boost/graph/dijkstra_shortest_paths.hpp>
 #include <boost/property_map/property_map.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include "Graph.hpp"
 #include "MarketGraph.hpp"
@@ -36,6 +37,14 @@ using vIt = graph_traits<graph_t>::vertex_iterator;
 using Vertexcont = std::list<Vertex>;
 using outIt = graph_traits<graph_t>::out_edge_iterator;
 using inIt = graph_traits<graph_t>::in_edge_iterator;
+
+
+std::string _display_digits(int in_digits) {
+    if (in_digits > 1000000) {
+        return std::string("NA");
+    }
+    return boost::lexical_cast<std::string>(in_digits);
+}
 
 class graph_utils
 {
@@ -112,7 +121,7 @@ public:
 	  {
 	    int u = i, v = gb->first, wt = (gb->second).first, sz = (gb->second).second;
 	    dot_file << g->vertexProp(u) << " -> " << g->vertexProp(v)
-		     << "[label=\"" << g->edgeProp(u,v)  << " : " << wt << "\"";
+		     << "[label=\"" << g->edgeProp(u,v)  << " : " << _display_digits( wt) << "\"";
 	    if ((p.size() > 1) && (p[v] == u))
 	      dot_file << ", color=\"black\"";
 	    else

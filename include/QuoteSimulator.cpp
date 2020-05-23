@@ -1,0 +1,2 @@
+#include "QuoteSimulator.hpp"
+

@@ -41,14 +41,14 @@ int receive(uint32_t* num, int fd)
 
 int main(int argc, char *argv[])
 {
-  int port = atoi(argv[2]);
+  int port = atoi(argv[1]);
     int sockfd = 0, n = 0;
     int sizeBuff[1];
     struct sockaddr_in serv_addr; 
 
-    if(argc != 3)
+    if(argc != 2)
     {
-        printf("\n Usage: %s <ip of server> \n",argv[0]);
+        printf("\n Usage: %s <port of server> \n",argv[0]);
         return 1;
     } 
 
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(port); 
 
-    if(inet_pton(AF_INET, argv[1], &serv_addr.sin_addr)<=0)
+    if(inet_pton(AF_INET, "0.0.0.0", &serv_addr.sin_addr)<=0)
     {
         printf("\n inet_pton error occured\n");
         return 1;

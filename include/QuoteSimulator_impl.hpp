@@ -1,72 +1,5 @@
-//
-// Created by charles on 10/13/16.
-//
-
-#ifndef __QUOTESIMULATOR_HPP__
-#define __QUOTESIMULATOR_HPP__
-
-#include <iostream>
-#include <random>
-#include <vector>
-#include <algorithm>
-
-#include "SecPair.hpp"
-#include "ImpliedServer.hpp"
-
-struct quote
-{
-
-    enum QUOTE_TYPE { Bid, Ask, N};
-
-    quote() = default;
-    quote(QUOTE_TYPE t, const SecPair& sp, int p, size_t s) :
-            t_(t),
-            sp_(sp),
-            p_(p),
-            s_(s) {}
-
-    QUOTE_TYPE t_;
-    SecPair sp_;
-    int p_;
-    size_t s_;
-};
-
-template<int N>
-class QuoteSimulator
-{
-public:
-    QuoteSimulator(int num_quotes=1000) :
-            num_quotes_(num_quotes),
-            IS_(ImpliedServer<N>(false)),
-            quotes_(num_quotes)
-    {}
-    void process() { create_quotes_(); }
-private:
-    void create_quotes_();
-
-    int num_quotes_;
-    ImpliedServer<N> IS_;
-    std::vector<quote> quotes_;
-};
-
-// Do this with rapidjson eventually
-std::ostream& operator<<(std::ostream& out, const quote& q)
-{
-    std::string type_str = "\"bid\"";
-    if (q.t_ == quote::QUOTE_TYPE::Ask)
-        type_str = "\"ask\"";
-    std::string inst = "\"Spread_" + std::to_string((q.sp_).leg0()) + std::string("_") + std::to_string((q.sp_).leg1()) + "\"";
-    if ((q.sp_).isLeg())
-        inst = "\"Leg_" + std::to_string((q.sp_).leg0()) + "\"";
-
-    out << "{ \"Inst\" : ";
-    out << inst << ", ";
-    out << type_str << " : "
-        << q.p_ << ", \"size\" : "
-        << q.s_;
-    out << " }\n";
-    return out;
-}
+#ifndef __QUOTESIMULATOR_IMPL_HPP__
+#define __QUOTESIMULATOR_IMPL_HPP__
 
 int move_bid_price(int bid, int ask, int move_type, int inc, bool is_spread=false)
 {
@@ -114,36 +47,39 @@ int move_ask_price(int bid, int ask, int move_type, int inc, bool is_spread=fals
     return r;
 }
 
+
 template<int N>
 void
 QuoteSimulator<N>::create_quotes_()
 {
     int quote_count = 0;
-    int num_legs = IS_.get_num_legs();
+    int num_legs = UE_->get_num_legs();
 
     for(size_t i=0; i<num_legs; ++i) {
         quote q = quote(quote::QUOTE_TYPE::Bid, SecPair(i, -1, 1), 4604 + (i * 2), 10);
         quotes_[quote_count++] = q;
-        IS_.publish_bid(q.sp_, q.p_, q.s_);
+        UE_->publish_bid(q.sp_, std::make_pair(q.p_, q.s_));
     }
     for(size_t i=0; i<num_legs; ++i) {
         quote q = quote(quote::QUOTE_TYPE::Ask, SecPair(i, -1, 1), 4606 + (i * 4), 10);
         quotes_[quote_count++] = q;
-        IS_.publish_ask(q.sp_, q.p_, q.s_);
+        UE_->publish_ask(q.sp_, std::make_pair(q.p_, q.s_));
     }
+
     for(size_t i=0; i<num_legs; ++i)
         for(size_t j=i+1; j<num_legs; ++j)
         {
-            int bid_price = IS_.get_user_bid(i).first - IS_.get_user_ask(j).first;
-            int ask_price = IS_.get_user_ask(i).first - IS_.get_user_bid(j).first;
+            int bid_price = UE_->get_user_bid(i).first - UE_->get_user_ask(j).first;
+            int ask_price = UE_->get_user_ask(i).first - UE_->get_user_bid(j).first;
             int mid = static_cast<int>(.5 * (bid_price + ask_price));
             quote q1 = quote(quote::QUOTE_TYPE::Bid, SecPair(i,j,1), mid - i - (j-i-1), 11);
             quote q2 = quote(quote::QUOTE_TYPE::Ask, SecPair(i,j,1), mid,               11);
             quotes_[quote_count++] = q1;
             quotes_[quote_count++] = q2;
-            IS_.publish_bid(q1.sp_, q1.p_, q1.s_);
-            IS_.publish_ask(q2.sp_, q2.p_, q2.s_);
+            UE_->publish_bid(q1.sp_, std::make_pair(q1.p_, q1.s_));
+            UE_->publish_ask(q2.sp_, std::make_pair(q2.p_, q2.s_));
         }
+
     std::mt19937 gen;
     gen.seed(std::random_device()());
     std::uniform_int_distribution<std::mt19937::result_type> dist_leg(0,num_legs-1);
@@ -164,8 +100,8 @@ QuoteSimulator<N>::create_quotes_()
         int inc = dist_inc(gen);
 
         int curr_price;
-        int curr_bid0 = IS_.get_user_bid(leg_num).first;
-        int curr_ask0 = IS_.get_user_ask(leg_num).first;
+        int curr_bid0 = UE_->get_user_bid(leg_num).first;
+        int curr_ask0 = UE_->get_user_ask(leg_num).first;
         bool mkts_locked = false;
         quote::QUOTE_TYPE t = (quote::QUOTE_TYPE)(bid_ask);
         if ((inst_type == 0) || (leg_num == num_legs-1)) {
@@ -173,7 +109,7 @@ QuoteSimulator<N>::create_quotes_()
                 case quote::QUOTE_TYPE::Bid :
                     curr_price = move_bid_price(curr_bid0, curr_ask0, price_move_type, inc);
                     try {
-                        IS_.publish_bid(SecPair(leg_num, -1, 1), QUOTE(curr_price, sz));
+                        UE_->publish_bid(SecPair(leg_num, -1, 1), std::make_pair(curr_price, sz));
                     }
                     catch(...)
                     {
@@ -184,7 +120,7 @@ QuoteSimulator<N>::create_quotes_()
                 case quote::QUOTE_TYPE::Ask :
                     curr_price = move_ask_price(curr_bid0, curr_ask0, price_move_type, inc);
                     try {
-                        IS_.publish_ask(SecPair(leg_num, -1, 1), QUOTE(curr_price, sz));
+                        UE_->publish_ask(SecPair(leg_num, -1, 1), std::make_pair(curr_price, sz));
                     }
                     catch(...)
                     {
@@ -204,15 +140,15 @@ QuoteSimulator<N>::create_quotes_()
         {
             std::uniform_int_distribution<std::mt19937::result_type> dist_leg1(leg_num+1,num_legs-1);
             int leg1_num = dist_leg1(gen);
-            int curr_bid1 = IS_.get_user_bid(leg1_num).first;
-            int curr_ask1 = IS_.get_user_ask(leg1_num).first;
+            int curr_bid1 = UE_->get_user_bid(leg1_num).first;
+            int curr_ask1 = UE_->get_user_ask(leg1_num).first;
             int mid = .5 * ((curr_bid0 - curr_ask1) + (curr_ask0-curr_bid1));
 
             switch (t) {
                 case quote::QUOTE_TYPE::Bid :
                     curr_price = move_bid_price(mid - leg_num - (leg1_num-leg_num-1), mid, price_move_type, inc);
                     try {
-                        IS_.publish_bid(SecPair(leg_num, leg1_num, 1), QUOTE(curr_price, sz));
+                        UE_->publish_bid(SecPair(leg_num, leg1_num, 1), std::make_pair(curr_price, sz));
                     }
                     catch(...)
                     {
@@ -223,7 +159,7 @@ QuoteSimulator<N>::create_quotes_()
                 case quote::QUOTE_TYPE::Ask :
                     curr_price = move_ask_price(mid,  mid + leg_num + (leg1_num-leg_num-1), price_move_type, inc);
                     try {
-                        IS_.publish_ask(SecPair(leg_num, leg1_num, 1), QUOTE(curr_price, sz));
+                        UE_->publish_ask(SecPair(leg_num, leg1_num, 1), std::make_pair(curr_price, sz));
                     }
                     catch(...)
                     {
@@ -242,9 +178,47 @@ QuoteSimulator<N>::create_quotes_()
     }
 #undef QUOTE
 
-    std::for_each(quotes_.begin(), quotes_.end(), [](const quote& q){ std::cout << q; });
 }
 
+
+template<int N>
+void
+QuoteSimulator<N>::attach( std::function<void(const rapidjson::Document &)> callback) {
+  std::string tok;
+  
+  for (auto it=quotes_.begin(); it!=quotes_.end(); ++it) {
+    std::stringstream stream = std::stringstream();
+    rapidjson::Document document;
+
+    stream << *it;
+    tok = stream.str();
+
+    if (document.Parse(tok.c_str()).HasParseError()) {
+      if (document.IsArray()) {
+	std::cout << "ARRAY " << std::distance(quotes_.begin(), it) << " : " << tok << "\n";
+      }
+      else {
+	std::cout << "SOME ERROR " << std::distance(quotes_.begin(), it) << " : " << tok << "\n";
+      }
+    }
+    else {
+      std::cout << "CLEAN " << std::distance(quotes_.begin(), it) << " : " << tok << "\n";
+    }
+    callback(document);
+  }
+}
+
+template<int N>
+void
+QuoteSimulator<N>::dump() {
+    std::for_each(quotes_.begin(), quotes_.end(), [](auto &q){ std::cout << q; });
+}
+
+template<int N>
+void
+QuoteSimulator<N>::dump_to_file(std::ofstream& ofs) {
+  std::for_each(quotes_.begin(), quotes_.end(), [&ofs](auto &q){ ofs << q; });
+}
 
 #if 0
 // Refactor this with rapidjson eventually
