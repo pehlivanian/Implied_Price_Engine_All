@@ -53,7 +53,7 @@ ImpliedServer<N>::process() {
       auto mp = std::bind(&ImpliedServer<N>::quote_handler_, this, std::placeholders::_1 );
       (p_->QS_)->attach( std::ref(mp));
     }
-};
+}
 
 template<int N>
 void

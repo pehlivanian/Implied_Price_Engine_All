@@ -92,9 +92,9 @@ public:
 
   }
 
-  static void toDot(MarketGraph *g, std::string filename, 
-		    const std::vector<int>& d=std::vector<int>{0}, 
-		    const std::vector<int>& p=std::vector<int>{0})
+    static void toDot(MarketGraph* g, std::string filename,
+            const std::vector<int>&d=std::vector<int>{0},
+            const std::vector<int>& p=std::vector<int>{0})
   {
     std::ofstream dot_file(filename.c_str());
 
@@ -134,7 +134,7 @@ public:
     
   }
 
-  static void printPath(Graph *g, std::string filename,
+  static void printPath(Graph* g, std::string filename,
 			std::vector<int>& d, std::vector<int>& p)
   {
     std::vector<std::string> name;
@@ -171,6 +171,7 @@ public:
       }
 
     toDot(dynamic_cast<MarketGraph*>(g), filename, d, p);
+
 
   }
 

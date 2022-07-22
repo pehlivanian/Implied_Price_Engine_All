@@ -7,30 +7,25 @@ class UserEngine;
 template<int N>
 struct impl<UserEngine<N>> {
 
-  using pVec   = std::vector<std::vector<int>>;
-  using sVec   = std::vector<std::vector<size_t>>;
-  using pubVec = std::vector<std::vector<QuotePublisher>>;
-
   impl() :
-    n_(N),
-    uQuote_(2),
-    quote_publishers_(2)
-  {
-    for(size_t i=0; i<2; ++i)
-      uQuote_[i] = std::vector<std::pair<int, size_t>>(n_, (i == 0) ? std::make_pair(std::numeric_limits<int>::min(), 0) :
-						       std::make_pair(std::numeric_limits<int>::max(), 0));
-    for(size_t i=0; i<2; ++i)
-      quote_publishers_[i] = std::vector<QuotePublisher>(n_);
-  }
+    n_(N)
+    {
+      for (size_t i = 0; i < 2; ++i) {
+          auto val = (i == 0) ? std::make_pair(std::numeric_limits<int>::min(), 0) :
+                     std::make_pair(std::numeric_limits<int>::max(), 0);
+          uQuote_[i].fill(val);
+      }
+      for (size_t i=0; i<2; ++i)
+          quote_publishers_[i] = std::array<QuotePublisher, N>();
+    }
 
   int n_;
 
   using atomic_price = std::atomic<int>;
   using atomic_size  = std::atomic<size_t>;
 
-  std::vector<std::vector<Price_Size_Pair>> uQuote_;
-  std::vector<std::vector<QuotePublisher>>  quote_publishers_;
-  std::list<SecPair>                        all_markets_;
+  std::array<std::array<Price_Size_Pair, N>, 2> uQuote_;
+  std::array<std::array<QuotePublisher, N>, 2> quote_publishers_;
 };
 
 using UQSub = std::shared_ptr<UserQuoteSubscriber>;
@@ -45,17 +40,15 @@ UserEngine<N>::init_subscribers_() {
   // User quotes associated with legs. 
   // No implied considerations
   for(size_t i=0; i<nl; ++i) {
-    SecPair mkt = SecPair(i, -1, 1);
-    
-    std::shared_ptr<UserQuoteSubscriber> UQSbid = std::make_shared<UserQuoteSubscriber>();
-    std::shared_ptr<UserBookSubscriber>  UBSbid = std::make_shared<UserBookSubscriber>(&(p_->uQuote_[0][i]));
-    UQSbid->attach_bid(UBSbid);
-    (p_->quote_publishers_)[0][i].attach_bid(UQSbid);
+      std::shared_ptr<UserQuoteSubscriber> UQSbid = std::make_shared<UserQuoteSubscriber>();
+      std::shared_ptr<UserBookSubscriber>  UBSbid = std::make_shared<UserBookSubscriber>(&(p_->uQuote_[0][i]));
+      UQSbid->attach_bid(UBSbid);
+      (p_->quote_publishers_)[0][i].attach_bid(UQSbid);
 
-    std::shared_ptr<UserQuoteSubscriber> UQSask = std::make_shared<UserQuoteSubscriber>();
-    std::shared_ptr<UserBookSubscriber>  UBSask = std::make_shared<UserBookSubscriber>(&(p_->uQuote_[1][i]));
-    UQSask->attach_ask(UBSask);
-    (p_->quote_publishers_)[1][i].attach_ask(UQSask);
+      std::shared_ptr<UserQuoteSubscriber> UQSask = std::make_shared<UserQuoteSubscriber>();
+      std::shared_ptr<UserBookSubscriber>  UBSask = std::make_shared<UserBookSubscriber>(&(p_->uQuote_[1][i]));
+      UQSask->attach_ask(UBSask);
+      (p_->quote_publishers_)[1][i].attach_ask(UQSask);
   }
 }
 
@@ -75,7 +68,7 @@ UserEngine<N>::publish_ask(const SecPair& mkt, const QuotePublishEvent &pe) {
 
 template<int N>
 void
-UserEngine<N>::write_curve_(const std::vector<std::vector<std::pair<int, size_t>>>& quote) const
+UserEngine<N>::write_curve_(const std::array<std::array<std::pair<int, size_t>, N>, 2>& quote) const
   {
     int l = 0;
     std::for_each((quote[1]).begin(), (quote[1]).end(),

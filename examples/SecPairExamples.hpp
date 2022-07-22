@@ -2,7 +2,10 @@
 // Created by charles on 11/14/20.
 //
 
-#ifndef IMPLIED_PRICE_ENGINE_SECPAIREXAMPLES_HPP
-#define IMPLIED_PRICE_ENGINE_SECPAIREXAMPLES_HPP
+#ifndef __SECPAIREXAMPLES_HPP__
+#define __SECPAIREXAMPLES_HPP__
+
+#include <iostream>
+#include "SecPair.hpp"
 
 #endif //IMPLIED_PRICE_ENGINE_SECPAIREXAMPLES_HPP

@@ -223,7 +223,7 @@ iomanip
 -
 fstream
 -
-vector
+array
 -
 algorithm
 -
@@ -291,6 +291,8 @@ BookPublisher.hpp
 /home/charles/CLionProjects/Implied_Price_Engine_All/include/BookPublisher.hpp
 MarketGraph.hpp
 /home/charles/CLionProjects/Implied_Price_Engine_All/include/MarketGraph.hpp
+cat1_visitor.hpp
+/home/charles/CLionProjects/Implied_Price_Engine_All/include/cat1_visitor.hpp
 cat2_visitor.hpp
 /home/charles/CLionProjects/Implied_Price_Engine_All/include/cat2_visitor.hpp
 
@@ -497,8 +499,6 @@ SecPair.hpp
 /home/charles/CLionProjects/Implied_Price_Engine_All/include/SecPair.hpp
 iostream
 -
-vector
--
 algorithm
 -
 functional
@@ -541,7 +541,7 @@ iomanip
 -
 fstream
 -
-vector
+array
 -
 algorithm
 -
@@ -673,9 +673,9 @@ pool_memory_manager_impl.hpp
 /home/charles/CLionProjects/Implied_Price_Engine_All/include/problem.hpp
 
 /home/charles/CLionProjects/Implied_Price_Engine_All/include/report.cpp
-stdio.h
+cstdio
 -
-string.h
+cstring
 -
 vector
 -

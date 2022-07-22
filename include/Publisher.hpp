@@ -3,6 +3,7 @@
 
 #include <future>
 #include <list>
+#include <vector>
 
 #include "Subscriber.hpp"
 

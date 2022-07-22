@@ -5,6 +5,9 @@
 // Temporary; used for display purposes only in .dot output
 const int large_int =  20000000;
 const int small_int =  10000000;
+const size_t NUM_SIDES = 2;
+
+enum class SIDE: uint8_t { BID=0, ASK=1 };
 
 template<int N>
 class ImpliedEngine;
@@ -12,50 +15,44 @@ class ImpliedEngine;
 template<int N>
 struct impl<ImpliedEngine<N>>
 {
-  using pVec =      std::vector<std::vector<int>>;
-  using sVec =      std::vector<std::vector<size_t>>;
-  using pubVec =    std::vector<std::vector<QuotePublisher>>;
-  using graphVec =  std::vector<MarketGraph*>;
 
-  impl() :      n_(N),
-	   m_( n_*(n_ - 1)/2),
-	   uQuote_(2),
-	   iQuote_(2),
-	   G_(n_),
-	   quote_publishers_(2),
-	   Decomposer_(std::make_unique<Decomposer>())
-
+  impl() :
+          n_(N),
+          m_( n_*(n_ - 1)/2),
+          G_(n_),
+          Decomposer_(std::make_unique<Decomposer>())
   {
-    for(size_t i=0; i<2; ++i)
-      uQuote_[i] = std::vector<std::pair<int, size_t>>(n_, (i == 0) ? std::make_pair(std::numeric_limits<int>::min(), 0) :
-                                        std::make_pair(std::numeric_limits<int>::max(), 0));
-    for(size_t i=0; i<2; ++i)
-      iQuote_[i] = std::vector<std::pair<int, size_t>>(n_, (i == 0) ? std::make_pair(std::numeric_limits<int>::min(), 0) :
-                                        std::make_pair(std::numeric_limits<int>::max(), 0));
-    for(size_t i=0; i<2; ++i)
-      quote_publishers_[i] = std::vector<QuotePublisher>(m_ + n_);
+      for (size_t i=0; i<NUM_SIDES; ++i) {
+          auto val = (i == 0) ? std::make_pair(std::numeric_limits<int>::min(), 0) :
+                     std::make_pair(std::numeric_limits<int>::max(), 0);
+          uQuote_[i].fill(val);
+      }
+      for (size_t i=0; i<NUM_SIDES; ++i) {
+          auto val = (i == 0) ? std::make_pair(std::numeric_limits<int>::min(), 0) :
+                     std::make_pair(std::numeric_limits<int>::max(), 0);
+          iQuote_[i].fill(val);
+      }
   }
 
-  ~impl()
-  {
-    for(size_t i=0; i<G_.size(); ++i)
-      delete G_[i];
-  }
+    int n_;
+    int m_;
 
-  int n_;
-  int m_;
+    using atomic_price = std::atomic<int>;
+    using atomic_size  = std::atomic<size_t>;
 
-  using atomic_price = std::atomic<int>;
-  using atomic_size  = std::atomic<size_t>;
+    std::array<std::array<std::pair<int, size_t>, N>, 2> uQuote_;
+    std::array<std::array<std::pair<int, size_t>, N>, 2> iQuote_;
 
-  std::vector<std::vector<std::pair<int, size_t>>>     uQuote_;
-  std::vector<std::vector<std::pair<int, size_t>>>     iQuote_;
+    std::vector<MarketGraph*> G_;
+    std::array<std::array<QuotePublisher, N+N*(N-1)/2>, 2> quote_publishers_;
 
-  std::vector<MarketGraph*> G_;
+    std::unique_ptr<Decomposer> Decomposer_;
+    std::list<SecPair> all_markets_;
 
-  std::vector<std::vector<QuotePublisher>>      quote_publishers_;
-  std::unique_ptr<Decomposer>                   Decomposer_;
-  std::list<SecPair>                            all_markets_;
+    ~impl() {
+        for (size_t i=0; i<G_.size(); ++i)
+            delete G_[i];
+    }
 
 };
 
@@ -66,6 +63,7 @@ ImpliedEngine<N>::merge_quote_bid_(int leg) const
     // SERIALIZE_READS;
     Price_Size_Pair uq = (p_->uQuote_)[0][leg];
     Price_Size_Pair iq = (p_->iQuote_)[0][leg];
+
     if (uq.first == iq.first)
         return Price_Size_Pair(uq.first, uq.second + iq.second);
     else if (uq.first > iq.first )
@@ -138,13 +136,13 @@ ImpliedEngine<N>::init_graphs_()
 	}
 
       for(size_t j=2; j<=nl; ++j)
-	{
-	  for(size_t k=j+1; k<=nl; ++k)
-	    {
-	      (p_->G_)[i]->addEdge(j, k, 0, 0);
-	      (p_->G_)[i]->addEdge(k, j, 0, 0);
-	    }
-	}
+      {
+          for(size_t k=j+1; k<=nl; ++k)
+          {
+              (p_->G_)[i]->addEdge(j, k, 0, 0);
+              (p_->G_)[i]->addEdge(k, j, 0, 0);
+          }
+      }
     }
 }
 
@@ -319,7 +317,7 @@ template<int N>
 void
 ImpliedEngine<N>::write_dot(int leg_num, char* filename) const
 {
-  graph_utils::toDot((p_->G_)[leg_num], std::string(filename));
+    graph_utils::toDot((p_->G_)[leg_num], std::string(filename));
 }
 
 template<int N>
@@ -357,9 +355,7 @@ ImpliedEngine<N>::write_merged_curve() const
     std::cout << " : MERGED PRICES\n";
     std::cout << " : =============\n";
 
-    std::vector<std::vector<std::pair<int, size_t>>> mQuote(2);
-    mQuote[0].resize((p_->iQuote_[0]).size());
-    mQuote[1].resize((p_->iQuote_[0]).size());
+    std::array<std::array<std::pair<int, size_t>, N>, 2> mQuote;
     for(size_t i=0; i<mQuote[0].size(); ++i)
     {
         if ( ((p_->uQuote_)[0][i].first) == ((p_->iQuote_)[0][i].first))
@@ -388,8 +384,7 @@ ImpliedEngine<N>::write_merged_curve() const
 
 template<int N>
 void
-ImpliedEngine<N>::write_curve_(const std::vector<std::vector<std::pair<int, size_t>>>& quote) const
-  {
+ImpliedEngine<N>::write_curve_(const std::array<std::array<std::pair<int, size_t>, N>, 2>& quote) const {
     int l = 0;
     std::for_each((quote[1]).begin(), (quote[1]).end(),
 		  [&l](auto a){
@@ -438,7 +433,7 @@ ImpliedEngine<N>::write_implied_quote(int c, std::ostream& fsi) const
 
 template<int N>
 void
-ImpliedEngine<N>::write_quote_(const std::vector<std::vector<std::pair<int, size_t>>>& q, int c, std::ostream& fs) const
+ImpliedEngine<N>::write_quote_(const std::array<std::array<std::pair<int, size_t>, N>, 2>& q, int c, std::ostream& fs) const
 {
     fs << "ask_price_it" + std::to_string(c);
     for(auto k : std::vector<std::pair<int, size_t>>(q[1].begin(), q[1].end()))

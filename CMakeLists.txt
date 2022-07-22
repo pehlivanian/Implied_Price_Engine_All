@@ -1,9 +1,16 @@
 cmake_minimum_required(VERSION 2.6)
+
 project(Implied_Price_Engine)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -pg -ggdb -std=c++14 -pedantic")
+# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -pg -ggdb -std=c++14 -pedantic -fPIE")
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -std=c++14 -pedantic")
-set(warnings "-Wall -Wparenthesis -Wno-unused-variable -Wno-sign-compare ")
+# set(warnings "-Wall -Wparenthesis -Wno-unused-variable -Wno-sign-compare ")
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 option(BUILD_GTESTS "Builds the googletest subdirectory" ON)
 option(BUILD_LTTNG "Builds the lttng trace subdirectory" OFF)

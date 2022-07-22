@@ -139,8 +139,6 @@ Subscriber.hpp
 ../include/SecPair.hpp
 iostream
 -
-vector
--
 algorithm
 -
 functional
@@ -167,7 +165,7 @@ iomanip
 -
 fstream
 -
-vector
+array
 -
 algorithm
 -

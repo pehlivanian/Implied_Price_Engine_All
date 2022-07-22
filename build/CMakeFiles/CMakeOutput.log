@@ -1,4 +1,4 @@
-The system is: Linux - 5.4.0-53-generic - x86_64
+The system is: Linux - 5.4.0-122-generic - x86_64
 Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
 Compiler: /usr/local/bin/clang 
 Build flags: 
@@ -28,13 +28,13 @@ The CXX compiler identification is Clang, found in "/home/charles/CLionProjects/
 Determining if the C compiler works passed with the following output:
 Change Dir: /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_ecb1a/fast && /usr/bin/make -f CMakeFiles/cmTC_ecb1a.dir/build.make CMakeFiles/cmTC_ecb1a.dir/build
+Run Build Command(s):/usr/bin/make cmTC_7034e/fast && /usr/bin/make -f CMakeFiles/cmTC_7034e.dir/build.make CMakeFiles/cmTC_7034e.dir/build
 make[1]: Entering directory '/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_ecb1a.dir/testCCompiler.c.o
-/usr/local/bin/clang    -o CMakeFiles/cmTC_ecb1a.dir/testCCompiler.c.o   -c /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp/testCCompiler.c
-Linking C executable cmTC_ecb1a
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ecb1a.dir/link.txt --verbose=1
-/usr/local/bin/clang      -rdynamic CMakeFiles/cmTC_ecb1a.dir/testCCompiler.c.o  -o cmTC_ecb1a 
+Building C object CMakeFiles/cmTC_7034e.dir/testCCompiler.c.o
+/usr/local/bin/clang    -o CMakeFiles/cmTC_7034e.dir/testCCompiler.c.o   -c /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTC_7034e
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7034e.dir/link.txt --verbose=1
+/usr/local/bin/clang      -rdynamic CMakeFiles/cmTC_7034e.dir/testCCompiler.c.o  -o cmTC_7034e 
 make[1]: Leaving directory '/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp'
 
 
@@ -42,10 +42,10 @@ make[1]: Leaving directory '/home/charles/CLionProjects/Implied_Price_Engine_All
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_2962e/fast && /usr/bin/make -f CMakeFiles/cmTC_2962e.dir/build.make CMakeFiles/cmTC_2962e.dir/build
+Run Build Command(s):/usr/bin/make cmTC_c6d4c/fast && /usr/bin/make -f CMakeFiles/cmTC_c6d4c.dir/build.make CMakeFiles/cmTC_c6d4c.dir/build
 make[1]: Entering directory '/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_2962e.dir/CMakeCCompilerABI.c.o
-/usr/local/bin/clang   -v -o CMakeFiles/cmTC_2962e.dir/CMakeCCompilerABI.c.o   -c /usr/local/share/cmake-3.15/Modules/CMakeCCompilerABI.c
+Building C object CMakeFiles/cmTC_c6d4c.dir/CMakeCCompilerABI.c.o
+/usr/local/bin/clang   -v -o CMakeFiles/cmTC_c6d4c.dir/CMakeCCompilerABI.c.o   -c /usr/local/share/cmake-3.15/Modules/CMakeCCompilerABI.c
 clang version 10.0.0 (trunk 375507)
 Target: x86_64-unknown-linux-gnu
 Thread model: posix
@@ -58,7 +58,7 @@ Selected GCC installation: /usr/lib/gcc/x86_64-linux-gnu/7.5.0
 Candidate multilib: .;@m64
 Selected multilib: .;@m64
 Found CUDA installation: /usr/local/cuda-10.2, version unknown
- "/usr/local/bin/clang-10" -cc1 -triple x86_64-unknown-linux-gnu -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model static -mthread-model posix -mframe-pointer=all -fmath-errno -masm-verbose -mconstructor-aliases -munwind-tables -fuse-init-array -target-cpu x86-64 -dwarf-column-info -debugger-tuning=gdb -v -resource-dir /usr/local/lib/clang/10.0.0 -cxx-isystem /usr/local/cuda-10.2/targets/x86_64-linux/include -internal-isystem /usr/local/include -internal-isystem /usr/local/lib/clang/10.0.0/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdebug-compilation-dir /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp -ferror-limit 19 -fmessage-length 0 -fgnuc-version=4.2.1 -fobjc-runtime=gcc -fdiagnostics-show-option -faddrsig -o CMakeFiles/cmTC_2962e.dir/CMakeCCompilerABI.c.o -x c /usr/local/share/cmake-3.15/Modules/CMakeCCompilerABI.c
+ "/usr/local/bin/clang-10" -cc1 -triple x86_64-unknown-linux-gnu -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model static -mthread-model posix -mframe-pointer=all -fmath-errno -masm-verbose -mconstructor-aliases -munwind-tables -fuse-init-array -target-cpu x86-64 -dwarf-column-info -debugger-tuning=gdb -v -resource-dir /usr/local/lib/clang/10.0.0 -cxx-isystem /usr/local/cuda-10.2/targets/x86_64-linux/include -cxx-isystem /usr/local/cuda-10.2/targets/x86_64-linux/include -internal-isystem /usr/local/include -internal-isystem /usr/local/lib/clang/10.0.0/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdebug-compilation-dir /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp -ferror-limit 19 -fmessage-length 0 -fgnuc-version=4.2.1 -fobjc-runtime=gcc -fdiagnostics-show-option -faddrsig -o CMakeFiles/cmTC_c6d4c.dir/CMakeCCompilerABI.c.o -x c /usr/local/share/cmake-3.15/Modules/CMakeCCompilerABI.c
 clang -cc1 version 10.0.0 based upon LLVM 10.0.0svn default target x86_64-unknown-linux-gnu
 ignoring nonexistent directory "/include"
 #include "..." search starts here:
@@ -68,9 +68,9 @@ ignoring nonexistent directory "/include"
  /usr/include/x86_64-linux-gnu
  /usr/include
 End of search list.
-Linking C executable cmTC_2962e
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2962e.dir/link.txt --verbose=1
-/usr/local/bin/clang     -v -rdynamic CMakeFiles/cmTC_2962e.dir/CMakeCCompilerABI.c.o  -o cmTC_2962e 
+Linking C executable cmTC_c6d4c
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c6d4c.dir/link.txt --verbose=1
+/usr/local/bin/clang     -v -rdynamic CMakeFiles/cmTC_c6d4c.dir/CMakeCCompilerABI.c.o  -o cmTC_c6d4c 
 clang version 10.0.0 (trunk 375507)
 Target: x86_64-unknown-linux-gnu
 Thread model: posix
@@ -83,7 +83,7 @@ Selected GCC installation: /usr/lib/gcc/x86_64-linux-gnu/7.5.0
 Candidate multilib: .;@m64
 Selected multilib: .;@m64
 Found CUDA installation: /usr/local/cuda-10.2, version unknown
- "/usr/bin/ld" -export-dynamic -z relro --hash-style=gnu --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_2962e /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0 -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../.. -L/usr/local/bin/../lib -L/lib -L/usr/lib CMakeFiles/cmTC_2962e.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-linux-gnu/7.5.0/crtend.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crtn.o
+ "/usr/bin/ld" -export-dynamic -z relro --hash-style=gnu --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_c6d4c /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0 -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../.. -L/usr/local/bin/../lib -L/lib -L/usr/lib CMakeFiles/cmTC_c6d4c.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-linux-gnu/7.5.0/crtend.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crtn.o
 make[1]: Leaving directory '/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp'
 
 
@@ -107,10 +107,10 @@ Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command(s):/usr/bin/make cmTC_2962e/fast && /usr/bin/make -f CMakeFiles/cmTC_2962e.dir/build.make CMakeFiles/cmTC_2962e.dir/build]
+  ignore line: [Run Build Command(s):/usr/bin/make cmTC_c6d4c/fast && /usr/bin/make -f CMakeFiles/cmTC_c6d4c.dir/build.make CMakeFiles/cmTC_c6d4c.dir/build]
   ignore line: [make[1]: Entering directory '/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp']
-  ignore line: [Building C object CMakeFiles/cmTC_2962e.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/usr/local/bin/clang   -v -o CMakeFiles/cmTC_2962e.dir/CMakeCCompilerABI.c.o   -c /usr/local/share/cmake-3.15/Modules/CMakeCCompilerABI.c]
+  ignore line: [Building C object CMakeFiles/cmTC_c6d4c.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/local/bin/clang   -v -o CMakeFiles/cmTC_c6d4c.dir/CMakeCCompilerABI.c.o   -c /usr/local/share/cmake-3.15/Modules/CMakeCCompilerABI.c]
   ignore line: [clang version 10.0.0 (trunk 375507)]
   ignore line: [Target: x86_64-unknown-linux-gnu]
   ignore line: [Thread model: posix]
@@ -125,7 +125,7 @@ Parsed C implicit link information from above output:
   ignore line: [Selected multilib: .]
   ignore line: [@m64]
   ignore line: [Found CUDA installation: /usr/local/cuda-10.2, version unknown]
-  ignore line: [ "/usr/local/bin/clang-10" -cc1 -triple x86_64-unknown-linux-gnu -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model static -mthread-model posix -mframe-pointer=all -fmath-errno -masm-verbose -mconstructor-aliases -munwind-tables -fuse-init-array -target-cpu x86-64 -dwarf-column-info -debugger-tuning=gdb -v -resource-dir /usr/local/lib/clang/10.0.0 -cxx-isystem /usr/local/cuda-10.2/targets/x86_64-linux/include -internal-isystem /usr/local/include -internal-isystem /usr/local/lib/clang/10.0.0/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdebug-compilation-dir /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp -ferror-limit 19 -fmessage-length 0 -fgnuc-version=4.2.1 -fobjc-runtime=gcc -fdiagnostics-show-option -faddrsig -o CMakeFiles/cmTC_2962e.dir/CMakeCCompilerABI.c.o -x c /usr/local/share/cmake-3.15/Modules/CMakeCCompilerABI.c]
+  ignore line: [ "/usr/local/bin/clang-10" -cc1 -triple x86_64-unknown-linux-gnu -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model static -mthread-model posix -mframe-pointer=all -fmath-errno -masm-verbose -mconstructor-aliases -munwind-tables -fuse-init-array -target-cpu x86-64 -dwarf-column-info -debugger-tuning=gdb -v -resource-dir /usr/local/lib/clang/10.0.0 -cxx-isystem /usr/local/cuda-10.2/targets/x86_64-linux/include -cxx-isystem /usr/local/cuda-10.2/targets/x86_64-linux/include -internal-isystem /usr/local/include -internal-isystem /usr/local/lib/clang/10.0.0/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdebug-compilation-dir /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp -ferror-limit 19 -fmessage-length 0 -fgnuc-version=4.2.1 -fobjc-runtime=gcc -fdiagnostics-show-option -faddrsig -o CMakeFiles/cmTC_c6d4c.dir/CMakeCCompilerABI.c.o -x c /usr/local/share/cmake-3.15/Modules/CMakeCCompilerABI.c]
   ignore line: [clang -cc1 version 10.0.0 based upon LLVM 10.0.0svn default target x86_64-unknown-linux-gnu]
   ignore line: [ignoring nonexistent directory "/include"]
   ignore line: [#include "..." search starts here:]
@@ -135,9 +135,9 @@ Parsed C implicit link information from above output:
   ignore line: [ /usr/include/x86_64-linux-gnu]
   ignore line: [ /usr/include]
   ignore line: [End of search list.]
-  ignore line: [Linking C executable cmTC_2962e]
-  ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2962e.dir/link.txt --verbose=1]
-  ignore line: [/usr/local/bin/clang     -v -rdynamic CMakeFiles/cmTC_2962e.dir/CMakeCCompilerABI.c.o  -o cmTC_2962e ]
+  ignore line: [Linking C executable cmTC_c6d4c]
+  ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c6d4c.dir/link.txt --verbose=1]
+  ignore line: [/usr/local/bin/clang     -v -rdynamic CMakeFiles/cmTC_c6d4c.dir/CMakeCCompilerABI.c.o  -o cmTC_c6d4c ]
   ignore line: [clang version 10.0.0 (trunk 375507)]
   ignore line: [Target: x86_64-unknown-linux-gnu]
   ignore line: [Thread model: posix]
@@ -152,7 +152,7 @@ Parsed C implicit link information from above output:
   ignore line: [Selected multilib: .]
   ignore line: [@m64]
   ignore line: [Found CUDA installation: /usr/local/cuda-10.2, version unknown]
-  link line: [ "/usr/bin/ld" -export-dynamic -z relro --hash-style=gnu --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_2962e /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0 -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../.. -L/usr/local/bin/../lib -L/lib -L/usr/lib CMakeFiles/cmTC_2962e.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-linux-gnu/7.5.0/crtend.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crtn.o]
+  link line: [ "/usr/bin/ld" -export-dynamic -z relro --hash-style=gnu --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_c6d4c /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0 -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../.. -L/usr/local/bin/../lib -L/lib -L/usr/lib CMakeFiles/cmTC_c6d4c.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-linux-gnu/7.5.0/crtend.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/bin/ld] ==> ignore
     arg [-export-dynamic] ==> ignore
     arg [-zrelro] ==> ignore
@@ -164,7 +164,7 @@ Parsed C implicit link information from above output:
     arg [-dynamic-linker] ==> ignore
     arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_2962e] ==> ignore
+    arg [cmTC_c6d4c] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7.5.0/crtbegin.o] ==> ignore
@@ -177,7 +177,7 @@ Parsed C implicit link information from above output:
     arg [-L/usr/local/bin/../lib] ==> dir [/usr/local/bin/../lib]
     arg [-L/lib] ==> dir [/lib]
     arg [-L/usr/lib] ==> dir [/usr/lib]
-    arg [CMakeFiles/cmTC_2962e.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTC_c6d4c.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [--as-needed] ==> ignore
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -206,13 +206,13 @@ Parsed C implicit link information from above output:
 Determining if the CXX compiler works passed with the following output:
 Change Dir: /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_2aaab/fast && /usr/bin/make -f CMakeFiles/cmTC_2aaab.dir/build.make CMakeFiles/cmTC_2aaab.dir/build
+Run Build Command(s):/usr/bin/make cmTC_b0c77/fast && /usr/bin/make -f CMakeFiles/cmTC_b0c77.dir/build.make CMakeFiles/cmTC_b0c77.dir/build
 make[1]: Entering directory '/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_2aaab.dir/testCXXCompiler.cxx.o
-/usr/local/bin/clang++     -o CMakeFiles/cmTC_2aaab.dir/testCXXCompiler.cxx.o -c /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
-Linking CXX executable cmTC_2aaab
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2aaab.dir/link.txt --verbose=1
-/usr/local/bin/clang++       -rdynamic CMakeFiles/cmTC_2aaab.dir/testCXXCompiler.cxx.o  -o cmTC_2aaab 
+Building CXX object CMakeFiles/cmTC_b0c77.dir/testCXXCompiler.cxx.o
+/usr/local/bin/clang++     -o CMakeFiles/cmTC_b0c77.dir/testCXXCompiler.cxx.o -c /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTC_b0c77
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b0c77.dir/link.txt --verbose=1
+/usr/local/bin/clang++       -rdynamic CMakeFiles/cmTC_b0c77.dir/testCXXCompiler.cxx.o  -o cmTC_b0c77 
 make[1]: Leaving directory '/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp'
 
 
@@ -220,10 +220,10 @@ make[1]: Leaving directory '/home/charles/CLionProjects/Implied_Price_Engine_All
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_39c4b/fast && /usr/bin/make -f CMakeFiles/cmTC_39c4b.dir/build.make CMakeFiles/cmTC_39c4b.dir/build
+Run Build Command(s):/usr/bin/make cmTC_32a67/fast && /usr/bin/make -f CMakeFiles/cmTC_32a67.dir/build.make CMakeFiles/cmTC_32a67.dir/build
 make[1]: Entering directory '/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_39c4b.dir/CMakeCXXCompilerABI.cpp.o
-/usr/local/bin/clang++    -v -o CMakeFiles/cmTC_39c4b.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-3.15/Modules/CMakeCXXCompilerABI.cpp
+Building CXX object CMakeFiles/cmTC_32a67.dir/CMakeCXXCompilerABI.cpp.o
+/usr/local/bin/clang++    -v -o CMakeFiles/cmTC_32a67.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-3.15/Modules/CMakeCXXCompilerABI.cpp
 clang version 10.0.0 (trunk 375507)
 Target: x86_64-unknown-linux-gnu
 Thread model: posix
@@ -236,9 +236,10 @@ Selected GCC installation: /usr/lib/gcc/x86_64-linux-gnu/7.5.0
 Candidate multilib: .;@m64
 Selected multilib: .;@m64
 Found CUDA installation: /usr/local/cuda-10.2, version unknown
- "/usr/local/bin/clang-10" -cc1 -triple x86_64-unknown-linux-gnu -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model static -mthread-model posix -mframe-pointer=all -fmath-errno -masm-verbose -mconstructor-aliases -munwind-tables -fuse-init-array -target-cpu x86-64 -dwarf-column-info -debugger-tuning=gdb -v -resource-dir /usr/local/lib/clang/10.0.0 -cxx-isystem /usr/local/cuda-10.2/targets/x86_64-linux/include -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../../include/c++/7.5.0 -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../../include/x86_64-linux-gnu/c++/7.5.0 -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../../include/x86_64-linux-gnu/c++/7.5.0 -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../../include/c++/7.5.0/backward -internal-isystem /usr/local/include -internal-isystem /usr/local/lib/clang/10.0.0/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -fdebug-compilation-dir /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp -ferror-limit 19 -fmessage-length 0 -fgnuc-version=4.2.1 -fobjc-runtime=gcc -fcxx-exceptions -fexceptions -fdiagnostics-show-option -faddrsig -o CMakeFiles/cmTC_39c4b.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/local/share/cmake-3.15/Modules/CMakeCXXCompilerABI.cpp
+ "/usr/local/bin/clang-10" -cc1 -triple x86_64-unknown-linux-gnu -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model static -mthread-model posix -mframe-pointer=all -fmath-errno -masm-verbose -mconstructor-aliases -munwind-tables -fuse-init-array -target-cpu x86-64 -dwarf-column-info -debugger-tuning=gdb -v -resource-dir /usr/local/lib/clang/10.0.0 -cxx-isystem /usr/local/cuda-10.2/targets/x86_64-linux/include -cxx-isystem /usr/local/cuda-10.2/targets/x86_64-linux/include -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../../include/c++/7.5.0 -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../../include/x86_64-linux-gnu/c++/7.5.0 -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../../include/x86_64-linux-gnu/c++/7.5.0 -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../../include/c++/7.5.0/backward -internal-isystem /usr/local/include -internal-isystem /usr/local/lib/clang/10.0.0/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -fdebug-compilation-dir /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp -ferror-limit 19 -fmessage-length 0 -fgnuc-version=4.2.1 -fobjc-runtime=gcc -fcxx-exceptions -fexceptions -fdiagnostics-show-option -faddrsig -o CMakeFiles/cmTC_32a67.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/local/share/cmake-3.15/Modules/CMakeCXXCompilerABI.cpp
 clang -cc1 version 10.0.0 based upon LLVM 10.0.0svn default target x86_64-unknown-linux-gnu
 ignoring nonexistent directory "/include"
+ignoring duplicate directory "/usr/local/cuda-10.2/targets/x86_64-linux/include"
 ignoring duplicate directory "/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../../include/x86_64-linux-gnu/c++/7.5.0"
 #include "..." search starts here:
 #include <...> search starts here:
@@ -251,9 +252,9 @@ ignoring duplicate directory "/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../../in
  /usr/include/x86_64-linux-gnu
  /usr/include
 End of search list.
-Linking CXX executable cmTC_39c4b
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_39c4b.dir/link.txt --verbose=1
-/usr/local/bin/clang++      -v -rdynamic CMakeFiles/cmTC_39c4b.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_39c4b 
+Linking CXX executable cmTC_32a67
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_32a67.dir/link.txt --verbose=1
+/usr/local/bin/clang++      -v -rdynamic CMakeFiles/cmTC_32a67.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_32a67 
 clang version 10.0.0 (trunk 375507)
 Target: x86_64-unknown-linux-gnu
 Thread model: posix
@@ -266,7 +267,7 @@ Selected GCC installation: /usr/lib/gcc/x86_64-linux-gnu/7.5.0
 Candidate multilib: .;@m64
 Selected multilib: .;@m64
 Found CUDA installation: /usr/local/cuda-10.2, version unknown
- "/usr/bin/ld" -export-dynamic -z relro --hash-style=gnu --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_39c4b /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0 -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../.. -L/usr/local/bin/../lib -L/lib -L/usr/lib CMakeFiles/cmTC_39c4b.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7.5.0/crtend.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crtn.o
+ "/usr/bin/ld" -export-dynamic -z relro --hash-style=gnu --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_32a67 /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0 -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../.. -L/usr/local/bin/../lib -L/lib -L/usr/lib CMakeFiles/cmTC_32a67.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7.5.0/crtend.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crtn.o
 make[1]: Leaving directory '/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp'
 
 
@@ -298,10 +299,10 @@ Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command(s):/usr/bin/make cmTC_39c4b/fast && /usr/bin/make -f CMakeFiles/cmTC_39c4b.dir/build.make CMakeFiles/cmTC_39c4b.dir/build]
+  ignore line: [Run Build Command(s):/usr/bin/make cmTC_32a67/fast && /usr/bin/make -f CMakeFiles/cmTC_32a67.dir/build.make CMakeFiles/cmTC_32a67.dir/build]
   ignore line: [make[1]: Entering directory '/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp']
-  ignore line: [Building CXX object CMakeFiles/cmTC_39c4b.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/usr/local/bin/clang++    -v -o CMakeFiles/cmTC_39c4b.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-3.15/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Building CXX object CMakeFiles/cmTC_32a67.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/local/bin/clang++    -v -o CMakeFiles/cmTC_32a67.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-3.15/Modules/CMakeCXXCompilerABI.cpp]
   ignore line: [clang version 10.0.0 (trunk 375507)]
   ignore line: [Target: x86_64-unknown-linux-gnu]
   ignore line: [Thread model: posix]
@@ -316,9 +317,10 @@ Parsed CXX implicit link information from above output:
   ignore line: [Selected multilib: .]
   ignore line: [@m64]
   ignore line: [Found CUDA installation: /usr/local/cuda-10.2, version unknown]
-  ignore line: [ "/usr/local/bin/clang-10" -cc1 -triple x86_64-unknown-linux-gnu -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model static -mthread-model posix -mframe-pointer=all -fmath-errno -masm-verbose -mconstructor-aliases -munwind-tables -fuse-init-array -target-cpu x86-64 -dwarf-column-info -debugger-tuning=gdb -v -resource-dir /usr/local/lib/clang/10.0.0 -cxx-isystem /usr/local/cuda-10.2/targets/x86_64-linux/include -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../../include/c++/7.5.0 -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../../include/x86_64-linux-gnu/c++/7.5.0 -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../../include/x86_64-linux-gnu/c++/7.5.0 -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../../include/c++/7.5.0/backward -internal-isystem /usr/local/include -internal-isystem /usr/local/lib/clang/10.0.0/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -fdebug-compilation-dir /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp -ferror-limit 19 -fmessage-length 0 -fgnuc-version=4.2.1 -fobjc-runtime=gcc -fcxx-exceptions -fexceptions -fdiagnostics-show-option -faddrsig -o CMakeFiles/cmTC_39c4b.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/local/share/cmake-3.15/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [ "/usr/local/bin/clang-10" -cc1 -triple x86_64-unknown-linux-gnu -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model static -mthread-model posix -mframe-pointer=all -fmath-errno -masm-verbose -mconstructor-aliases -munwind-tables -fuse-init-array -target-cpu x86-64 -dwarf-column-info -debugger-tuning=gdb -v -resource-dir /usr/local/lib/clang/10.0.0 -cxx-isystem /usr/local/cuda-10.2/targets/x86_64-linux/include -cxx-isystem /usr/local/cuda-10.2/targets/x86_64-linux/include -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../../include/c++/7.5.0 -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../../include/x86_64-linux-gnu/c++/7.5.0 -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../../include/x86_64-linux-gnu/c++/7.5.0 -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../../include/c++/7.5.0/backward -internal-isystem /usr/local/include -internal-isystem /usr/local/lib/clang/10.0.0/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -fdebug-compilation-dir /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp -ferror-limit 19 -fmessage-length 0 -fgnuc-version=4.2.1 -fobjc-runtime=gcc -fcxx-exceptions -fexceptions -fdiagnostics-show-option -faddrsig -o CMakeFiles/cmTC_32a67.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/local/share/cmake-3.15/Modules/CMakeCXXCompilerABI.cpp]
   ignore line: [clang -cc1 version 10.0.0 based upon LLVM 10.0.0svn default target x86_64-unknown-linux-gnu]
   ignore line: [ignoring nonexistent directory "/include"]
+  ignore line: [ignoring duplicate directory "/usr/local/cuda-10.2/targets/x86_64-linux/include"]
   ignore line: [ignoring duplicate directory "/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../../include/x86_64-linux-gnu/c++/7.5.0"]
   ignore line: [#include "..." search starts here:]
   ignore line: [#include <...> search starts here:]
@@ -331,9 +333,9 @@ Parsed CXX implicit link information from above output:
   ignore line: [ /usr/include/x86_64-linux-gnu]
   ignore line: [ /usr/include]
   ignore line: [End of search list.]
-  ignore line: [Linking CXX executable cmTC_39c4b]
-  ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_39c4b.dir/link.txt --verbose=1]
-  ignore line: [/usr/local/bin/clang++      -v -rdynamic CMakeFiles/cmTC_39c4b.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_39c4b ]
+  ignore line: [Linking CXX executable cmTC_32a67]
+  ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_32a67.dir/link.txt --verbose=1]
+  ignore line: [/usr/local/bin/clang++      -v -rdynamic CMakeFiles/cmTC_32a67.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_32a67 ]
   ignore line: [clang version 10.0.0 (trunk 375507)]
   ignore line: [Target: x86_64-unknown-linux-gnu]
   ignore line: [Thread model: posix]
@@ -348,7 +350,7 @@ Parsed CXX implicit link information from above output:
   ignore line: [Selected multilib: .]
   ignore line: [@m64]
   ignore line: [Found CUDA installation: /usr/local/cuda-10.2, version unknown]
-  link line: [ "/usr/bin/ld" -export-dynamic -z relro --hash-style=gnu --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_39c4b /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0 -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../.. -L/usr/local/bin/../lib -L/lib -L/usr/lib CMakeFiles/cmTC_39c4b.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7.5.0/crtend.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crtn.o]
+  link line: [ "/usr/bin/ld" -export-dynamic -z relro --hash-style=gnu --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_32a67 /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0 -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../.. -L/usr/local/bin/../lib -L/lib -L/usr/lib CMakeFiles/cmTC_32a67.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7.5.0/crtend.o /usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/bin/ld] ==> ignore
     arg [-export-dynamic] ==> ignore
     arg [-zrelro] ==> ignore
@@ -360,7 +362,7 @@ Parsed CXX implicit link information from above output:
     arg [-dynamic-linker] ==> ignore
     arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_39c4b] ==> ignore
+    arg [cmTC_32a67] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7.5.0/../../../x86_64-linux-gnu/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7.5.0/crtbegin.o] ==> ignore
@@ -373,7 +375,7 @@ Parsed CXX implicit link information from above output:
     arg [-L/usr/local/bin/../lib] ==> dir [/usr/local/bin/../lib]
     arg [-L/lib] ==> dir [/lib]
     arg [-L/usr/lib] ==> dir [/usr/lib]
-    arg [CMakeFiles/cmTC_39c4b.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [CMakeFiles/cmTC_32a67.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -400,13 +402,13 @@ Parsed CXX implicit link information from above output:
 Determining if the include file pthread.h exists passed with the following output:
 Change Dir: /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_fc2b7/fast && /usr/bin/make -f CMakeFiles/cmTC_fc2b7.dir/build.make CMakeFiles/cmTC_fc2b7.dir/build
+Run Build Command(s):/usr/bin/make cmTC_c59f0/fast && /usr/bin/make -f CMakeFiles/cmTC_c59f0.dir/build.make CMakeFiles/cmTC_c59f0.dir/build
 make[1]: Entering directory '/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_fc2b7.dir/CheckIncludeFile.c.o
-/usr/local/bin/clang    -o CMakeFiles/cmTC_fc2b7.dir/CheckIncludeFile.c.o   -c /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
-Linking C executable cmTC_fc2b7
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fc2b7.dir/link.txt --verbose=1
-/usr/local/bin/clang      -rdynamic CMakeFiles/cmTC_fc2b7.dir/CheckIncludeFile.c.o  -o cmTC_fc2b7 
+Building C object CMakeFiles/cmTC_c59f0.dir/CheckIncludeFile.c.o
+/usr/local/bin/clang   -fPIE   -o CMakeFiles/cmTC_c59f0.dir/CheckIncludeFile.c.o   -c /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_c59f0
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c59f0.dir/link.txt --verbose=1
+/usr/local/bin/clang      CMakeFiles/cmTC_c59f0.dir/CheckIncludeFile.c.o  -o cmTC_c59f0 
 make[1]: Leaving directory '/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp'
 
 
@@ -414,13 +416,13 @@ make[1]: Leaving directory '/home/charles/CLionProjects/Implied_Price_Engine_All
 Determining if the function pthread_create exists in the pthread passed with the following output:
 Change Dir: /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_0a886/fast && /usr/bin/make -f CMakeFiles/cmTC_0a886.dir/build.make CMakeFiles/cmTC_0a886.dir/build
+Run Build Command(s):/usr/bin/make cmTC_3a8d5/fast && /usr/bin/make -f CMakeFiles/cmTC_3a8d5.dir/build.make CMakeFiles/cmTC_3a8d5.dir/build
 make[1]: Entering directory '/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_0a886.dir/CheckFunctionExists.c.o
-/usr/local/bin/clang   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_0a886.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.15/Modules/CheckFunctionExists.c
-Linking C executable cmTC_0a886
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0a886.dir/link.txt --verbose=1
-/usr/local/bin/clang  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_0a886.dir/CheckFunctionExists.c.o  -o cmTC_0a886 -lpthread 
+Building C object CMakeFiles/cmTC_3a8d5.dir/CheckFunctionExists.c.o
+/usr/local/bin/clang   -DCHECK_FUNCTION_EXISTS=pthread_create -fPIE   -o CMakeFiles/cmTC_3a8d5.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.15/Modules/CheckFunctionExists.c
+Linking C executable cmTC_3a8d5
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3a8d5.dir/link.txt --verbose=1
+/usr/local/bin/clang  -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTC_3a8d5.dir/CheckFunctionExists.c.o  -o cmTC_3a8d5 -lpthread 
 make[1]: Leaving directory '/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp'
 
 

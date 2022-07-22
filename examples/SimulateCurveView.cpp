@@ -11,7 +11,7 @@ auto main(int argc, char **argv) -> int {
   // File for quotes
   std::string ofile = "quote_stream.dat";
 
-  pid =fork();
+  pid = fork();
   
   if (pid > 0) {
     // Parent

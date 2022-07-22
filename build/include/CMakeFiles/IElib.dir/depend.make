@@ -69,6 +69,7 @@ include/CMakeFiles/IElib.dir/ImpliedQuoteSubscriber.cpp.o: ../include/QuoteSubsc
 include/CMakeFiles/IElib.dir/ImpliedQuoteSubscriber.cpp.o: ../include/SecPair.hpp
 include/CMakeFiles/IElib.dir/ImpliedQuoteSubscriber.cpp.o: ../include/Subscriber.hpp
 include/CMakeFiles/IElib.dir/ImpliedQuoteSubscriber.cpp.o: ../include/Visitor.hpp
+include/CMakeFiles/IElib.dir/ImpliedQuoteSubscriber.cpp.o: ../include/cat1_visitor.hpp
 include/CMakeFiles/IElib.dir/ImpliedQuoteSubscriber.cpp.o: ../include/cat2_visitor.hpp
 include/CMakeFiles/IElib.dir/ImpliedQuoteSubscriber.cpp.o: ../include/pool_allocator.hpp
 

@@ -70,6 +70,7 @@ include/CMakeFiles/IElib.dir/ImpliedQuoteSubscriber.cpp.o
  /home/charles/CLionProjects/Implied_Price_Engine_All/include/SecPair.hpp
  /home/charles/CLionProjects/Implied_Price_Engine_All/include/Subscriber.hpp
  /home/charles/CLionProjects/Implied_Price_Engine_All/include/Visitor.hpp
+ /home/charles/CLionProjects/Implied_Price_Engine_All/include/cat1_visitor.hpp
  /home/charles/CLionProjects/Implied_Price_Engine_All/include/cat2_visitor.hpp
  /home/charles/CLionProjects/Implied_Price_Engine_All/include/pool_allocator.hpp
 include/CMakeFiles/IElib.dir/ImpliedServer.cpp.o

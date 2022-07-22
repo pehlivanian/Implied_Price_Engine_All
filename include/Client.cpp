@@ -67,7 +67,7 @@ Client::fill_buf()
       return 2;
     }
 
-    // fprintf(stderr, "BYTES READ: %d\n", bytes_read);
+    // fprintf(stderr, "BYTES READ: %d\n", bytes_read_);
     // fprintf(stderr, "%s", recvBuff_);
 
     return 0;

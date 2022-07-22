@@ -4,7 +4,7 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <vector>
+#include <array>
 #include <algorithm>
 #include <functional>
 #include <iterator>
@@ -45,13 +45,13 @@ public:
   Price_Size_Pair get_user_bid(int leg) const                      { return get_bid(leg); }
   Price_Size_Pair get_ask(int leg) const                           { return (p_->uQuote_)[1][leg]; }
   Price_Size_Pair get_user_ask(int leg) const                      { return get_ask(leg); }
-  std::vector<std::vector<Price_Size_Pair>> get_quote() const      { return p_->uQuote; }
-  std::vector<std::vector<Price_Size_Pair>> get_user_quote() const { return p_->uQuote; }
-  
+  std::array<Price_Size_Pair, N> get_quote() const                 { return p_->uQuote; }
+  std::array<Price_Size_Pair, N> get_user_quote() const            { return p_->uQuote; }
+
 private:
   void init_();
   void init_subscribers_();
-  void write_curve_(const std::vector<std::vector<std::pair<int, size_t>>>&) const;
+  void write_curve_(const std::array<std::array<std::pair<int, size_t>, N>, 2>&) const;
   
   mutable boost::shared_mutex mut_;
   std::unique_ptr<impl<UserEngine<N>>> p_;

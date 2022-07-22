@@ -19,6 +19,14 @@ SecPair::normalize() {
     return;
   }
 
+  // Degenerate case
+  if (f_ == b_) {
+      f_ = -1;
+      b_ = -1;
+      mult_ = -1;
+      return;
+  }
+
   if (f_ < 0) {
     f_ = b_;
     b_ = -1;
@@ -27,18 +35,11 @@ SecPair::normalize() {
   else if (b_ < 0) {
     b_ = -1;
   }
-  else {
-    if (f_ == b_) {
-      f_ = -1;
-      b_ = -1;
-      mult_ = -1;
-    }
-    else if (f_ > b_) {
+  else if (f_ > b_) {
       std::swap(f_,b_);
       mult_ *= -1;
     }
-    else { return; }
-  }
+  else { return; }
 }
 
 bool
@@ -63,15 +64,28 @@ SecPair::operator!=(const SecPair& rhs) const
 }
 
 SecPair&
-SecPair::operator=(const SecPair& rhs)
-{
-
+SecPair::operator=(SecPair&& rhs) noexcept {
+  
   f_ = rhs.leg0();
   b_ = rhs.leg1();
   mult_ = rhs.mult();
   normalize();
+  
+  return *this;
+}
 
-  return *this;    
+SecPair&
+SecPair::operator=(const SecPair& rhs)
+{
+    if (rhs == *this)
+        return *this;
+
+    f_ = rhs.leg0();
+    b_ = rhs.leg1();
+    mult_ = rhs.mult();
+    normalize();
+    
+    return *this;    
 }
 
 inline void error(const std::string& s) { throw std::runtime_error(s); }
@@ -79,11 +93,11 @@ inline void error(const std::string& s) { throw std::runtime_error(s); }
 SecPair&
 SecPair::operator+=(const SecPair& rhs) {
 
-  if (rhs.isTrivialSpread()) {
+  if (rhs._is_trivial()) {
     return *this;
   }
 
-  if (this->isTrivialSpread()) {
+  if (this->_is_trivial()) {
     f_ = rhs.leg0();
     b_ = rhs.leg1();
     mult_ = rhs.mult();
@@ -91,9 +105,9 @@ SecPair::operator+=(const SecPair& rhs) {
     return *this;
    }
 
-  auto f_r = rhs.leg0();
-  auto b_r = rhs.leg1();
-  auto m_r = rhs.mult();
+  int f_r = rhs.leg0();
+  int b_r = rhs.leg1();
+  int m_r = rhs.mult();
 
   if ((f_ == f_r) && (b_ == b_r)) {
     mult_ += m_r;
@@ -127,9 +141,6 @@ SecPair::operator+=(const SecPair& rhs) {
       return *this;
     }
   }
-  else {
-    throw SecPairException();
-  }
 
   throw SecPairException();
 
@@ -146,7 +157,7 @@ SecPair::operator+(const SecPair& rhs) const
 SecPair&
 SecPair::operator*=(int m)
 {
-  if (isTrivialSpread()) { return *this; }
+  if (_is_trivial()) { return *this; }
 
   mult_ *= m;
   normalize();
@@ -169,7 +180,6 @@ SecPair::operator-=(const SecPair& rhs)
   SecPair rhs_tmp = SecPair(rhs);
   rhs_tmp *= -1;
   *this = *this + rhs_tmp;
-
   normalize();
 
   return *this;
@@ -194,7 +204,7 @@ SecPair::operator<(const SecPair& rhs) const
 SecPair
 SecPair::abs() const
 {
-  return SecPair(f_, b_, 1);
+  return SecPair{f_, b_, 1};
 }
 
 bool
@@ -209,11 +219,6 @@ SecPair::isLeg() const
     return ((f_ >= 0) && (b_ < 0));
 }
 
-bool
-SecPair::isTrivialSpread() const
-{
-  return ((f_ < 0) && (b_ < 0)) || mult_ == 0;
-}
 int
 SecPair::leg0() const
 {
@@ -244,7 +249,7 @@ SecPair::isOutright() const {
 
 std::ostream& operator<<(std::ostream& out, const SecPair& p)
 {
-  if ((p.leg0() < 0) && (p.leg1() < 0))
+  if ((p.leg0() < 0) && (p.leg1() < 0) || (p.mult() == 0))
     {
       out << "0";
       return out;

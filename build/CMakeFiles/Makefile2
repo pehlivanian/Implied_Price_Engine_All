@@ -128,6 +128,7 @@ include/CMakeFiles/IElib.dir/clean:
 # Directory level rules for directory examples
 
 # Recursive "all" directory target.
+examples/all: examples/CMakeFiles/SecPairExamples.dir/all
 examples/all: examples/CMakeFiles/SimulateCurveView.dir/all
 examples/all: examples/CMakeFiles/SimulateQuotes.dir/all
 examples/all: examples/CMakeFiles/SimpleSimulator.dir/all
@@ -135,6 +136,7 @@ examples/all: examples/CMakeFiles/SimpleSimulator.dir/all
 .PHONY : examples/all
 
 # Recursive "clean" directory target.
+examples/clean: examples/CMakeFiles/SecPairExamples.dir/clean
 examples/clean: examples/CMakeFiles/SimulateCurveView.dir/clean
 examples/clean: examples/CMakeFiles/SimulateQuotes.dir/clean
 examples/clean: examples/CMakeFiles/SimpleSimulator.dir/clean
@@ -147,13 +149,40 @@ examples/preinstall:
 .PHONY : examples/preinstall
 
 #=============================================================================
+# Target rules for target examples/CMakeFiles/SecPairExamples.dir
+
+# All Build rule for target.
+examples/CMakeFiles/SecPairExamples.dir/all: include/CMakeFiles/IElib.dir/all
+	$(MAKE) -f examples/CMakeFiles/SecPairExamples.dir/build.make examples/CMakeFiles/SecPairExamples.dir/depend
+	$(MAKE) -f examples/CMakeFiles/SecPairExamples.dir/build.make examples/CMakeFiles/SecPairExamples.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=41,42 "Built target SecPairExamples"
+.PHONY : examples/CMakeFiles/SecPairExamples.dir/all
+
+# Build rule for subdir invocation for target.
+examples/CMakeFiles/SecPairExamples.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles 28
+	$(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/SecPairExamples.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles 0
+.PHONY : examples/CMakeFiles/SecPairExamples.dir/rule
+
+# Convenience name for target.
+SecPairExamples: examples/CMakeFiles/SecPairExamples.dir/rule
+
+.PHONY : SecPairExamples
+
+# clean rule for target.
+examples/CMakeFiles/SecPairExamples.dir/clean:
+	$(MAKE) -f examples/CMakeFiles/SecPairExamples.dir/build.make examples/CMakeFiles/SecPairExamples.dir/clean
+.PHONY : examples/CMakeFiles/SecPairExamples.dir/clean
+
+#=============================================================================
 # Target rules for target examples/CMakeFiles/SimulateCurveView.dir
 
 # All Build rule for target.
 examples/CMakeFiles/SimulateCurveView.dir/all: include/CMakeFiles/IElib.dir/all
 	$(MAKE) -f examples/CMakeFiles/SimulateCurveView.dir/build.make examples/CMakeFiles/SimulateCurveView.dir/depend
 	$(MAKE) -f examples/CMakeFiles/SimulateCurveView.dir/build.make examples/CMakeFiles/SimulateCurveView.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=45,46 "Built target SimulateCurveView"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=47,48 "Built target SimulateCurveView"
 .PHONY : examples/CMakeFiles/SimulateCurveView.dir/all
 
 # Build rule for subdir invocation for target.
@@ -180,7 +209,7 @@ examples/CMakeFiles/SimulateCurveView.dir/clean:
 examples/CMakeFiles/SimulateQuotes.dir/all: include/CMakeFiles/IElib.dir/all
 	$(MAKE) -f examples/CMakeFiles/SimulateQuotes.dir/build.make examples/CMakeFiles/SimulateQuotes.dir/depend
 	$(MAKE) -f examples/CMakeFiles/SimulateQuotes.dir/build.make examples/CMakeFiles/SimulateQuotes.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=47,48 "Built target SimulateQuotes"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=49,50 "Built target SimulateQuotes"
 .PHONY : examples/CMakeFiles/SimulateQuotes.dir/all
 
 # Build rule for subdir invocation for target.
@@ -207,7 +236,7 @@ examples/CMakeFiles/SimulateQuotes.dir/clean:
 examples/CMakeFiles/SimpleSimulator.dir/all: include/CMakeFiles/IElib.dir/all
 	$(MAKE) -f examples/CMakeFiles/SimpleSimulator.dir/build.make examples/CMakeFiles/SimpleSimulator.dir/depend
 	$(MAKE) -f examples/CMakeFiles/SimpleSimulator.dir/build.make examples/CMakeFiles/SimpleSimulator.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=43,44 "Built target SimpleSimulator"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=45,46 "Built target SimpleSimulator"
 .PHONY : examples/CMakeFiles/SimpleSimulator.dir/all
 
 # Build rule for subdir invocation for target.
@@ -264,7 +293,7 @@ Timed_examples/preinstall:
 Timed_examples/CMakeFiles/allocatortest.dir/all: include/CMakeFiles/IElib.dir/all
 	$(MAKE) -f Timed_examples/CMakeFiles/allocatortest.dir/build.make Timed_examples/CMakeFiles/allocatortest.dir/depend
 	$(MAKE) -f Timed_examples/CMakeFiles/allocatortest.dir/build.make Timed_examples/CMakeFiles/allocatortest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=51,52 "Built target allocatortest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=53,54 "Built target allocatortest"
 .PHONY : Timed_examples/CMakeFiles/allocatortest.dir/all
 
 # Build rule for subdir invocation for target.
@@ -291,7 +320,7 @@ Timed_examples/CMakeFiles/allocatortest.dir/clean:
 Timed_examples/CMakeFiles/typetest.dir/all: include/CMakeFiles/IElib.dir/all
 	$(MAKE) -f Timed_examples/CMakeFiles/typetest.dir/build.make Timed_examples/CMakeFiles/typetest.dir/depend
 	$(MAKE) -f Timed_examples/CMakeFiles/typetest.dir/build.make Timed_examples/CMakeFiles/typetest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=61,62 "Built target typetest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=63,64 "Built target typetest"
 .PHONY : Timed_examples/CMakeFiles/typetest.dir/all
 
 # Build rule for subdir invocation for target.
@@ -318,7 +347,7 @@ Timed_examples/CMakeFiles/typetest.dir/clean:
 Timed_examples/CMakeFiles/grouptest.dir/all: include/CMakeFiles/IElib.dir/all
 	$(MAKE) -f Timed_examples/CMakeFiles/grouptest.dir/build.make Timed_examples/CMakeFiles/grouptest.dir/depend
 	$(MAKE) -f Timed_examples/CMakeFiles/grouptest.dir/build.make Timed_examples/CMakeFiles/grouptest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=57,58 "Built target grouptest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=59,60 "Built target grouptest"
 .PHONY : Timed_examples/CMakeFiles/grouptest.dir/all
 
 # Build rule for subdir invocation for target.
@@ -372,7 +401,7 @@ Timed_examples/CMakeFiles/CLlegtest.dir/clean:
 Timed_examples/CMakeFiles/cat2_visitortest.dir/all: include/CMakeFiles/IElib.dir/all
 	$(MAKE) -f Timed_examples/CMakeFiles/cat2_visitortest.dir/build.make Timed_examples/CMakeFiles/cat2_visitortest.dir/depend
 	$(MAKE) -f Timed_examples/CMakeFiles/cat2_visitortest.dir/build.make Timed_examples/CMakeFiles/cat2_visitortest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=53,54 "Built target cat2_visitortest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=55,56 "Built target cat2_visitortest"
 .PHONY : Timed_examples/CMakeFiles/cat2_visitortest.dir/all
 
 # Build rule for subdir invocation for target.
@@ -399,7 +428,7 @@ Timed_examples/CMakeFiles/cat2_visitortest.dir/clean:
 Timed_examples/CMakeFiles/gentest.dir/all: include/CMakeFiles/IElib.dir/all
 	$(MAKE) -f Timed_examples/CMakeFiles/gentest.dir/build.make Timed_examples/CMakeFiles/gentest.dir/depend
 	$(MAKE) -f Timed_examples/CMakeFiles/gentest.dir/build.make Timed_examples/CMakeFiles/gentest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=55,56 "Built target gentest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=57,58 "Built target gentest"
 .PHONY : Timed_examples/CMakeFiles/gentest.dir/all
 
 # Build rule for subdir invocation for target.
@@ -426,7 +455,7 @@ Timed_examples/CMakeFiles/gentest.dir/clean:
 Timed_examples/CMakeFiles/mempooltest.dir/all: include/CMakeFiles/IElib.dir/all
 	$(MAKE) -f Timed_examples/CMakeFiles/mempooltest.dir/build.make Timed_examples/CMakeFiles/mempooltest.dir/depend
 	$(MAKE) -f Timed_examples/CMakeFiles/mempooltest.dir/build.make Timed_examples/CMakeFiles/mempooltest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=59,60 "Built target mempooltest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=61,62 "Built target mempooltest"
 .PHONY : Timed_examples/CMakeFiles/mempooltest.dir/all
 
 # Build rule for subdir invocation for target.
@@ -609,7 +638,7 @@ gtest/preinstall:
 gtest/CMakeFiles/ThreadPool_gtest.dir/all: include/CMakeFiles/IElib.dir/all
 	$(MAKE) -f gtest/CMakeFiles/ThreadPool_gtest.dir/build.make gtest/CMakeFiles/ThreadPool_gtest.dir/depend
 	$(MAKE) -f gtest/CMakeFiles/ThreadPool_gtest.dir/build.make gtest/CMakeFiles/ThreadPool_gtest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=49,50 "Built target ThreadPool_gtest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=51,52 "Built target ThreadPool_gtest"
 .PHONY : gtest/CMakeFiles/ThreadPool_gtest.dir/all
 
 # Build rule for subdir invocation for target.
@@ -636,7 +665,7 @@ gtest/CMakeFiles/ThreadPool_gtest.dir/clean:
 gtest/CMakeFiles/SecPair_gtest.dir/all: include/CMakeFiles/IElib.dir/all
 	$(MAKE) -f gtest/CMakeFiles/SecPair_gtest.dir/build.make gtest/CMakeFiles/SecPair_gtest.dir/depend
 	$(MAKE) -f gtest/CMakeFiles/SecPair_gtest.dir/build.make gtest/CMakeFiles/SecPair_gtest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=41,42 "Built target SecPair_gtest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles --progress-num=43,44 "Built target SecPair_gtest"
 .PHONY : gtest/CMakeFiles/SecPair_gtest.dir/all
 
 # Build rule for subdir invocation for target.

@@ -151,7 +151,7 @@ iomanip
 -
 fstream
 -
-vector
+array
 -
 algorithm
 -
@@ -215,6 +215,8 @@ BookPublisher.hpp
 ../include/BookPublisher.hpp
 MarketGraph.hpp
 ../include/MarketGraph.hpp
+cat1_visitor.hpp
+../include/cat1_visitor.hpp
 cat2_visitor.hpp
 ../include/cat2_visitor.hpp
 
@@ -264,8 +266,6 @@ Subscriber.hpp
 
 ../include/SecPair.hpp
 iostream
--
-vector
 -
 algorithm
 -

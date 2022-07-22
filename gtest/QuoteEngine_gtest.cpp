@@ -25,9 +25,10 @@ TEST(ServerClientTest, Connect) {
 
     if (pid > 0) {
         // Parent
+        const char* path = "serveme_6outrights.dat";
         int port = 50001, port_assigned;
 
-        QuoteServer *QS = new QuoteServer( port);
+        QuoteServer *QS = new QuoteServer( path, port);
         port_assigned = QS->get_port();
 
         write(pipefd[1], &port_assigned, sizeof(port_assigned));

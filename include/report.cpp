@@ -9,9 +9,10 @@
  */
 
 
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 #include <vector>
+#include <numeric>
 #include <algorithm>
 
 #include "report.hpp"
@@ -89,11 +90,9 @@ char buf[1024];
  */
 char *buildRow(long n, long **times, int T) {
   long sum = 0, min, max;
-  int i, ct;
+  int ct;
   double mean;
   double calc = 0.;
-  int minIdx = 0;
-  int maxIdx = 0;
 
   // Can't help myself
 
@@ -102,7 +101,7 @@ char *buildRow(long n, long **times, int T) {
     std::sort(v.begin(), v.end());
     std::vector<long> d(v.begin()+exclude, v.end()-exclude);
 
-    sum = std::accumulate(d.begin(), d.end(), 0);
+    sum = std::accumulate(d.begin(), d.end(), 0L);
     ct =  d.size();
 
     min = d[0];

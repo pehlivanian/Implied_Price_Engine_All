@@ -21,12 +21,12 @@
 struct quote
 {
 
-    enum QUOTE_TYPE { Bid, Ask, N};
+    enum class QUOTE_TYPE { Bid, Ask, N};
 
     quote() = default;
-    quote(QUOTE_TYPE t, const SecPair& sp, int p, size_t s) :
+    quote(QUOTE_TYPE t, SecPair sp, int p, size_t s):
             t_(t),
-            sp_(sp),
+            sp_(std::move(sp)),
             p_(p),
             s_(s) {}
 
@@ -40,7 +40,7 @@ template<int N>
 class QuoteSimulator
 {
 public:
-    QuoteSimulator(int num_quotes=1000) :
+    explicit QuoteSimulator(int num_quotes=1000) :
             num_quotes_(num_quotes),
             // Only needed to aid in sensible quote generation
 	    UE_(new UserEngine<N>()),
