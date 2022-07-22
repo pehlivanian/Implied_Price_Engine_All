@@ -1,8 +1,22 @@
 # Implied_Price_Engine_All
-Fast implied price server for energy complex. An algorithm is presented for the computation of implied quotes in a hypothetical market closely resembling CME WTI Crude (CL) futures, ICE/IPE Brent futures (B), or any one of the US crude product or natural gas markets. The algorithm produces a full set of implied quote prices and sizes using only user-entered quote information. Each leg quote (size, price) is computed on its own execution thread. We exploit this structure to test a cpu-distributed version, using a consumer-producer queue with worker tasks consuming a user quote and generating multiple downstream implied quotes per input. The algorithm computes the entire complex of n implied inside bids and asks in <img src="https://latex.codecogs.com/svg.image?\mathcal{O}\(n^2t\)" title="\mathcal{O}\(n^2\log{n}\)" /> while consuming n user-entered bids and asks.
+Implementation of fast implied order book server modeled on CME, ICE
+energy complex. The market modeled closely resembles CME WTI Crude
+(CL) futures, ICE/IPE Brent (B) futures, CME Heating Oil, RBOB, ICE
+Gasoil, etc. The main engine ingests streaming bid offer price &
+size data for outright leg months and calendar spreads, and gives as
+output 3 markets:
 
-### Normalized 12-market setup for fast computation
+- User quotes   [BBO for outrights (legs) based on only user inputs in
+outright markets]
+- Impled quotes [BBO for implied outrights (legs) based on user inputs
+in outright, calendar spread markets]
+- Merged quotes [BBO for merged User + Implied quotes]
+
+
+### Underlying graph for 12-month market setup, optimized for
+efficient computation
 ![plot](https://github.com/pehlivanian/Implied_Price_Engine_All/blob/master/docs/test_case.jpg?raw=true)
 
-### Algorithm runtimes as function of n
+### Algorithm runtimes as function of n [Merged BBO runtimes are
+O(n^2*log(n)) in the number of markets]
 ![plot](https://github.com/pehlivanian/Implied_Price_Engine_All/blob/master/docs/algo_complexity.jpg?raw=true)
