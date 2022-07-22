@@ -1,0 +1,63 @@
+Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
+Change Dir: /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_2d0a9/fast && /usr/bin/make -f CMakeFiles/cmTC_2d0a9.dir/build.make CMakeFiles/cmTC_2d0a9.dir/build
+make[1]: Entering directory '/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_2d0a9.dir/src.c.o
+/usr/local/bin/clang   -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_2d0a9.dir/src.c.o   -c /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_2d0a9
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2d0a9.dir/link.txt --verbose=1
+/usr/local/bin/clang  -DCMAKE_HAVE_LIBC_PTHREAD    -rdynamic CMakeFiles/cmTC_2d0a9.dir/src.c.o  -o cmTC_2d0a9 
+CMakeFiles/cmTC_2d0a9.dir/src.c.o: In function `main':
+src.c:(.text+0x35): undefined reference to `pthread_create'
+src.c:(.text+0x41): undefined reference to `pthread_detach'
+src.c:(.text+0x53): undefined reference to `pthread_join'
+src.c:(.text+0x6a): undefined reference to `pthread_atfork'
+clang-10: error: linker command failed with exit code 1 (use -v to see invocation)
+CMakeFiles/cmTC_2d0a9.dir/build.make:86: recipe for target 'cmTC_2d0a9' failed
+make[1]: *** [cmTC_2d0a9] Error 1
+make[1]: Leaving directory '/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_2d0a9/fast' failed
+make: *** [cmTC_2d0a9/fast] Error 2
+
+
+Source file was:
+#include <pthread.h>
+
+void* test_func(void* data)
+{
+  return data;
+}
+
+int main(void)
+{
+  pthread_t thread;
+  pthread_create(&thread, NULL, test_func, NULL);
+  pthread_detach(thread);
+  pthread_join(thread, NULL);
+  pthread_atfork(NULL, NULL, NULL);
+  pthread_exit(NULL);
+
+  return 0;
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_5f165/fast && /usr/bin/make -f CMakeFiles/cmTC_5f165.dir/build.make CMakeFiles/cmTC_5f165.dir/build
+make[1]: Entering directory '/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_5f165.dir/CheckFunctionExists.c.o
+/usr/local/bin/clang   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_5f165.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.15/Modules/CheckFunctionExists.c
+Linking C executable cmTC_5f165
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5f165.dir/link.txt --verbose=1
+/usr/local/bin/clang  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_5f165.dir/CheckFunctionExists.c.o  -o cmTC_5f165 -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+clang-10: error: linker command failed with exit code 1 (use -v to see invocation)
+CMakeFiles/cmTC_5f165.dir/build.make:86: recipe for target 'cmTC_5f165' failed
+make[1]: *** [cmTC_5f165] Error 1
+make[1]: Leaving directory '/home/charles/CLionProjects/Implied_Price_Engine_All/build/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_5f165/fast' failed
+make: *** [cmTC_5f165/fast] Error 2
+
+
+

@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/problem.hpp
+
+../include/report.hpp
+math.h
+-
+time.h
+-
+sys/time.h
+-
+
+/home/charles/CLionProjects/Implied_Price_Engine_All/Timed_examples/typetest.cpp
+typetest.h
+/home/charles/CLionProjects/Implied_Price_Engine_All/Timed_examples/typetest.h
+
+/home/charles/CLionProjects/Implied_Price_Engine_All/Timed_examples/typetest.h
+stdio.h
+-
+string.h
+-
+stdlib.h
+-
+time.h
+-
+sys/time.h
+-
+math.h
+-
+vector
+-
+algorithm
+-
+report.hpp
+/home/charles/CLionProjects/Implied_Price_Engine_All/Timed_examples/report.hpp
+problem.hpp
+/home/charles/CLionProjects/Implied_Price_Engine_All/Timed_examples/problem.hpp
+
